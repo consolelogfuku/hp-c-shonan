@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
 import { nav, site } from "@/lib/site";
@@ -9,19 +10,29 @@ import { nav, site } from "@/lib/site";
 // 塗り壁の背景となじむよう、罫線ではなく半透明 + ぼかしで区切る
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isCurrent = (href: string) => {
+    const normalizedHref = href === "/" ? href : href.replace(/\/$/, "");
+    return pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-white/[0.68] shadow-[0_1px_0_rgba(28,91,126,0.06)] backdrop-blur-[14px] backdrop-saturate-[1.1]">
-      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-6 px-5 md:h-[72px] md:px-6">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-5 px-5 md:h-[72px] md:px-6">
         <Link href="/" className="flex shrink-0 items-center" aria-label={site.name}>
-          <Image src={site.logo} alt={site.name} width={310} height={52} priority className="h-7 w-auto md:h-9" />
+          <Image src={site.logo} alt={site.name} width={310} height={52} priority className="h-7 w-auto md:h-[34px]" />
         </Link>
 
         <nav aria-label="メイン" className="hidden xl:block">
-          <ul className="flex items-center gap-6 text-[15px] font-medium tracking-[0.04em]">
+          <ul className="flex items-center gap-[18px] text-[13.5px] font-medium tracking-[0.025em]">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="whitespace-nowrap transition-colors hover:text-accent">
+                <Link
+                  href={item.href}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  className="relative whitespace-nowrap transition-colors after:absolute after:inset-x-0 after:-bottom-2 after:h-px after:bg-accent after:opacity-0 hover:text-accent aria-[current=page]:text-accent aria-[current=page]:after:opacity-100"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -30,12 +41,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href={site.telHref} className="hidden text-[16px] font-medium tabular-nums hover:text-accent lg:inline-flex">
+          <a href={site.telHref} className="hidden whitespace-nowrap text-[15px] font-medium tabular-nums hover:text-accent lg:inline-flex">
             {site.tel}
           </a>
           <Link
             href="/contact/"
-            className="inline-flex h-10 items-center whitespace-nowrap bg-accent px-3 text-[14px] font-medium text-on-accent transition-[background-color,transform] hover:bg-accent-hover active:scale-[0.98] md:px-4 md:text-[15px]"
+            className="inline-flex h-10 items-center whitespace-nowrap bg-accent px-[15px] text-[14px] font-medium text-on-accent transition-[background-color,transform] hover:bg-accent-hover active:scale-[0.98]"
           >
             お問い合わせ
           </Link>
@@ -56,7 +67,12 @@ export function Header() {
         <ul className="mx-auto grid max-w-[1280px] gap-1 px-5 py-4 md:px-6">
           {nav.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} onClick={() => setOpen(false)} className="block px-3 py-3 text-[16px] font-medium hover:bg-tint">
+              <Link
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                onClick={() => setOpen(false)}
+                className="block px-3 py-3 text-[16px] font-medium hover:bg-tint aria-[current=page]:bg-tint aria-[current=page]:text-accent"
+              >
                 {item.label}
               </Link>
             </li>

@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { CompanyPage } from "@/components/subpages/CompanyPage";
+import { ConceptPage } from "@/components/subpages/ConceptPage";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { NewsPage } from "@/components/subpages/NewsPage";
+import { RentPage } from "@/components/subpages/RentPage";
+import { SalePage } from "@/components/subpages/SalePage";
+import { VoicesPage } from "@/components/subpages/VoicesPage";
+import { WorksPage } from "@/components/subpages/WorksPage";
 import { nav, site } from "@/lib/site";
 
 const titles: Record<string, string> = Object.fromEntries(
@@ -10,10 +18,31 @@ const titles: Record<string, string> = Object.fromEntries(
   ),
 );
 
-// 下層ページは次フェーズで移行する。現段階では現行サイトの該当ページへ案内する。
+export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const title = titles[slug[0] ?? ""] ?? "ページ";
+  return { title: `${title} | ${site.name}` };
+}
+
 export default async function SectionPlaceholder({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params;
   const section = slug[0] ?? "";
+
+  if (slug.length === 1) {
+    const pages: Record<string, React.ReactNode> = {
+      news: <NewsPage />,
+      concept: <ConceptPage />,
+      sale: <SalePage />,
+      rent: <RentPage />,
+      works: <WorksPage />,
+      comments: <VoicesPage />,
+      voices: <VoicesPage />,
+      company: <CompanyPage />,
+    };
+
+    if (pages[section]) return pages[section];
+  }
+
   const title = titles[section] ?? "ページ";
   const currentPath = `/${slug.join("/")}`;
 

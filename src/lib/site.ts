@@ -31,9 +31,9 @@ export const site = {
 
 export const nav = [
   { label: "お知らせ", href: "/news/" },
-  { label: "家創りのコンセプト", href: "/concept/" },
+  { label: "コンセプト", href: "/concept/" },
   { label: "売買物件", href: "/sale/" },
-  { label: "賃貸物件", href: "/rent/" },
+  { label: "賃貸物件・貸駐車場", href: "/rent/" },
   { label: "施工事例", href: "/works/" },
   { label: "お客様の声", href: "/comments/" },
   { label: "会社案内", href: "/company/" },
@@ -60,14 +60,30 @@ export const hero = {
 
 export const concept = {
   photos: [
-    { src: `${IMG}/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg`, alt: "茅ヶ崎市下寺尾 U様邸のLDK", caption: "茅ヶ崎市下寺尾 U様邸。1階LDKの吹き抜けを、2階の回廊が囲む" },
-    { src: `${IMG}/units/img/4638-16-20191206023713_b5de940499cf62.jpg`, alt: "茅ヶ崎市中海岸 N様邸のリビングダイニング", caption: "茅ヶ崎市中海岸 N様邸。ロフトを含めた、ゆったりとした大空間" },
-    { src: `${IMG}/units/img/5279-17-20191219162420_b5dfb25a47b79d.jpg`, alt: "茅ヶ崎市下寺尾 U様邸のLDKを別角度から", caption: "茅ヶ崎市下寺尾 U様邸。無垢材の床と、光の入る大きな窓" },
-    { src: `${IMG}/units/img/10249-10-20210823155914_b61234742609c0.jpg`, alt: "茅ケ崎市東海岸 N様邸の外観", caption: "茅ケ崎市東海岸 N様邸。湘南の青空に映えるアメリカンスタイル" },
+    {
+      src: `${IMG}/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg`,
+      alt: "茅ヶ崎市下寺尾 U様邸のLDK",
+      caption: "茅ヶ崎市下寺尾 U様邸。1階LDKの吹き抜けを、2階の回廊が囲む",
+    },
+    {
+      src: `${IMG}/units/img/4638-16-20191206023713_b5de940499cf62.jpg`,
+      alt: "茅ヶ崎市中海岸 N様邸のリビングダイニング",
+      caption: "茅ヶ崎市中海岸 N様邸。ロフトを含めた、ゆったりとした大空間",
+    },
+    {
+      src: `${IMG}/units/img/5279-17-20191219162420_b5dfb25a47b79d.jpg`,
+      alt: "茅ヶ崎市下寺尾 U様邸のLDKを別角度から",
+      caption: "茅ヶ崎市下寺尾 U様邸。無垢材の床と、光の入る大きな窓",
+    },
+    {
+      src: `${IMG}/units/img/10249-10-20210823155914_b61234742609c0.jpg`,
+      alt: "茅ケ崎市東海岸 N様邸の外観",
+      caption: "茅ケ崎市東海岸 N様邸。湘南の青空に映えるアメリカンスタイル",
+    },
   ],
   items: [
     {
-      title: "建築家と創る、こだわりの家",
+      title: "建築家と創る、こだわりの憩いの家",
       body: "センスと実力を備えた建築家と、納得いくまで間取りを相談できます。設計料の目安は建物価格の約1割ですが、その負担を大幅に軽減してご提供しています。",
     },
     {
@@ -86,7 +102,11 @@ export const architect = {
   house: `${IMG}/units/img/7942-5-20200207101750_b5e3cbabe744a4.jpg`,
   houseAlt: "建築家と創った住まいの外観",
   houseCaption: "建築家との協業で建てた住まい。",
-  quote: ["建築は丈夫でなければならない。", "機能的でなければならない。", "美しくなければならない。"],
+  quote: [
+    "建築は丈夫でなければならない。",
+    "機能的でなければならない。",
+    "美しくなければならない。",
+  ],
   body: "建物の敷地は、世界で唯一その場所だけです。その場所のポテンシャルをしっかり把握して、住まう人の考えと融合させる。敷地を読む、環境を読む、居心地を考える。いつも心がけています。",
   signature: `${IMG}/units/img/7947-5-20220509115412_b627882545cd4e.png`,
   signatureAlt: "吉田靖の署名",
@@ -97,7 +117,12 @@ export const architect = {
 export const facts = [
   { value: 26, unit: "年", note: "2000年の創業から、茅ヶ崎で" },
   { value: 200, unit: "棟以上", note: "一級建築士とともに手がけた住まい" },
-  { value: 3, prefix: "等級", unit: "", note: "最高ランクの耐震等級を多数施工" },
+  {
+    value: 3,
+    prefix: "等級",
+    unit: "",
+    note: "最高ランクの耐震等級を多数施工",
+  },
 ];
 
 export const featured = {
@@ -202,17 +227,67 @@ export const rentals = [
 ];
 
 export const parkingLots = [
-  { name: "萩園駐車場", address: "茅ヶ崎市萩園2329-5", price: "7,000円/月", vacancy: 2 },
-  { name: "松林駐車場（3か所）", address: "茅ヶ崎市松林2丁目・3丁目", price: "7,000円/月", vacancy: 5 },
-  { name: "鶴嶺駐車場", address: "茅ヶ崎市浜之郷中谷338-9", price: "7,000円/月", vacancy: 1 },
-  { name: "みずき駐車場", address: "茅ヶ崎市みずき2-18-11", price: "5,000円/月", vacancy: 1 },
-  { name: "中谷駐車場", address: "茅ヶ崎市浜之郷中谷340", price: "8,000円/月", vacancy: 0 },
+  {
+    name: "萩園駐車場",
+    address: "茅ヶ崎市萩園2329-5",
+    price: "7,000円/月",
+    vacancy: 2,
+  },
+  {
+    name: "松林駐車場（3か所）",
+    address: "茅ヶ崎市松林2丁目・3丁目",
+    price: "7,000円/月",
+    vacancy: 5,
+  },
+  {
+    name: "鶴嶺駐車場",
+    address: "茅ヶ崎市浜之郷中谷338-9",
+    price: "7,000円/月",
+    vacancy: 1,
+  },
+  {
+    name: "みずき駐車場",
+    address: "茅ヶ崎市みずき2-18-11",
+    price: "5,000円/月",
+    vacancy: 1,
+  },
+  {
+    name: "中谷駐車場",
+    address: "茅ヶ崎市浜之郷中谷340",
+    price: "8,000円/月",
+    vacancy: 0,
+  },
 ];
 
 export const news = [
-  { date: "2026.07.25", title: "夏季休暇について", href: "/news/2026svc.html", tag: "お知らせ" },
-  { date: "2026.06.26", title: "石川矢畑NO6 お蔭様でご成約となりました", href: "/news/yabata2652.html", tag: "売買" },
-  { date: "2026.04.10", title: "岡田貸家 お申込みを頂きました", href: "/news/samoka3581renta.html", tag: "賃貸" },
-  { date: "2026.03.29", title: "月極駐車場空き状況について", href: "/news/2512parking-copy-copy.html", tag: "駐車場" },
-  { date: "2026.03.21", title: "岡田貸家 募集中です", href: "/news/samoka3581rent.html", tag: "賃貸" },
+  {
+    date: "2026.07.25",
+    title: "夏季休暇について",
+    href: "/news/2026svc.html",
+    tag: "お知らせ",
+  },
+  {
+    date: "2026.06.26",
+    title: "石川矢畑NO6 お蔭様でご成約となりました",
+    href: "/news/yabata2652.html",
+    tag: "売買",
+  },
+  {
+    date: "2026.04.10",
+    title: "岡田貸家 お申込みを頂きました",
+    href: "/news/samoka3581renta.html",
+    tag: "賃貸",
+  },
+  {
+    date: "2026.03.29",
+    title: "月極駐車場空き状況について",
+    href: "/news/2512parking-copy-copy.html",
+    tag: "駐車場",
+  },
+  {
+    date: "2026.03.21",
+    title: "岡田貸家 募集中です",
+    href: "/news/samoka3581rent.html",
+    tag: "賃貸",
+  },
 ];

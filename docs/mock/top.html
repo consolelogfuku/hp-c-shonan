@@ -1614,6 +1614,7 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="mock-header.css" />
   </head>
   <body>
     <header>
@@ -1628,13 +1629,13 @@
         /></a>
         <nav aria-label="メイン">
           <ul>
-            <li><a href="#news">お知らせ</a></li>
-            <li><a href="#concept">家創りのコンセプト</a></li>
-            <li><a href="#sale">売買物件</a></li>
-            <li><a href="#rent">賃貸物件</a></li>
-            <li><a href="#works">施工事例</a></li>
-            <li><a href="#voices">お客様の声</a></li>
-            <li><a href="#company">会社案内</a></li>
+            <li><a href="news.html">お知らせ</a></li>
+            <li><a href="concept.html">コンセプト</a></li>
+            <li><a href="sale.html">売買物件</a></li>
+            <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="voices.html">お客様の声</a></li>
+            <li><a href="company.html">会社案内</a></li>
           </ul>
         </nav>
         <div style="display: flex; align-items: center; gap: 12px">
@@ -1783,7 +1784,7 @@
         </div>
         <div class="wrap rows reveal">
           <div class="row">
-            <h3>建築家と創る、こだわりの家</h3>
+            <h3>建築家と創る、<br />こだわりの憩いの家</h3>
             <p>
               センスと実力を備えた建築家と、納得いくまで間取りを相談できます。設計料の目安は建物価格の約1割ですが、その負担を大幅に軽減してご提供しています。
             </p>
@@ -1802,7 +1803,7 @@
           </div>
           <div class="end">
             <a class="link" href="#"
-              >家創りのコンセプトを読む <span class="arrow"></span
+              >コンセプトを読む <span class="arrow"></span
             ></a>
           </div>
         </div>
@@ -2239,13 +2240,13 @@
           </div>
           <nav aria-label="フッター">
             <ul>
-              <li><a href="#news">お知らせ</a></li>
-              <li><a href="#concept">家創りのコンセプト</a></li>
-              <li><a href="#sale">売買物件</a></li>
-              <li><a href="#rent">賃貸物件</a></li>
-              <li><a href="#works">施工事例</a></li>
-              <li><a href="#voices">お客様の声</a></li>
-              <li><a href="#company">会社案内</a></li>
+              <li><a href="news.html">お知らせ</a></li>
+              <li><a href="concept.html">コンセプト</a></li>
+              <li><a href="sale.html">売買物件</a></li>
+              <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+              <li><a href="works.html">施工事例</a></li>
+              <li><a href="voices.html">お客様の声</a></li>
+              <li><a href="company.html">会社案内</a></li>
               <li><a href="#contact-cta">お問い合わせ</a></li>
               <li><a href="#">プライバシーポリシー</a></li>
               <li><a href="#">サイトマップ</a></li>
@@ -2337,40 +2338,89 @@
           next = c.querySelector(".nav.next");
         var cur = c.querySelector("[data-current]"),
           total = c.querySelector("[data-total]");
-        var items = track.children;
-        if (total) total.textContent = items.length;
+        var originals = Array.prototype.slice.call(track.children);
+        var originalCount = originals.length;
+        var currentIndex = 0;
+        var scrollTimer;
+
+        function cloneItem(item) {
+          var clone = item.cloneNode(true);
+          clone.setAttribute("aria-hidden", "true");
+          clone.setAttribute("inert", "");
+          clone.querySelectorAll("a, button, [tabindex]").forEach(function (el) {
+            el.setAttribute("tabindex", "-1");
+          });
+          return clone;
+        }
+
+        var before = document.createDocumentFragment();
+        var after = document.createDocumentFragment();
+        originals.forEach(function (item) {
+          before.appendChild(cloneItem(item));
+          after.appendChild(cloneItem(item));
+        });
+        track.insertBefore(before, track.firstChild);
+        track.appendChild(after);
+
+        if (total) total.textContent = originalCount;
         function step() {
           return c.dataset.step === "page"
             ? track.clientWidth
-            : items[0].getBoundingClientRect().width +
+            : originals[0].getBoundingClientRect().width +
                 parseFloat(getComputedStyle(track).gap || 0);
         }
-        function maxLeft() {
-          return track.scrollWidth - track.clientWidth;
+        function groupWidth() {
+          return step() * originalCount;
+        }
+        function jumpTo(left) {
+          var behavior = track.style.scrollBehavior;
+          track.style.scrollBehavior = "auto";
+          track.scrollLeft = left;
+          track.getBoundingClientRect();
+          requestAnimationFrame(function () {
+            track.style.scrollBehavior = behavior;
+          });
         }
         function update() {
+          var physicalIndex = Math.round(track.scrollLeft / step());
+          currentIndex =
+            ((physicalIndex - originalCount) % originalCount + originalCount) %
+            originalCount;
           if (cur) {
-            cur.textContent =
-              Math.round(track.scrollLeft / track.clientWidth) + 1;
+            cur.textContent = currentIndex + 1;
           }
         }
-        // 端まで来たら反対側へ戻り、同じボタンを押し続けてループできる
-        prev.addEventListener("click", function () {
-          if (track.scrollLeft <= 2) {
-            track.scrollTo({ left: maxLeft(), behavior: "smooth" });
-          } else {
-            track.scrollBy({ left: -step(), behavior: "smooth" });
+        function normalizePosition() {
+          var width = groupWidth();
+          if (track.scrollLeft < width - 2) {
+            jumpTo(track.scrollLeft + width);
+          } else if (track.scrollLeft >= width * 2 - 2) {
+            jumpTo(track.scrollLeft - width);
           }
+          update();
+        }
+
+        jumpTo(groupWidth());
+
+        prev.addEventListener("click", function () {
+          track.scrollBy({ left: -step(), behavior: "smooth" });
         });
         next.addEventListener("click", function () {
-          if (track.scrollLeft >= maxLeft() - 2) {
-            track.scrollTo({ left: 0, behavior: "smooth" });
-          } else {
-            track.scrollBy({ left: step(), behavior: "smooth" });
-          }
+          track.scrollBy({ left: step(), behavior: "smooth" });
         });
-        track.addEventListener("scroll", update, { passive: true });
-        window.addEventListener("resize", update);
+        track.addEventListener(
+          "scroll",
+          function () {
+            update();
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(normalizePosition, 120);
+          },
+          { passive: true },
+        );
+        window.addEventListener("resize", function () {
+          jumpTo(groupWidth() + currentIndex * step());
+          update();
+        });
         update();
       });
 

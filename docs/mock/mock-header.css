@@ -1,0 +1,112 @@
+/* Shared header contract for every static mock. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 1px 0 rgba(28, 91, 126, 0.06);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+}
+
+.header-row {
+  position: relative;
+  display: flex;
+  height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand img {
+  width: auto;
+  height: 34px;
+}
+
+.global-nav ul {
+  display: none;
+  align-items: center;
+  gap: 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+
+.global-nav a {
+  position: relative;
+  transition: color 0.2s;
+}
+
+.global-nav a:hover,
+.global-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+.global-nav a[aria-current="page"]::after {
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  left: 0;
+  height: 1px;
+  background: var(--accent);
+  content: "";
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-tel {
+  display: none;
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.header-cta {
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  padding-inline: 15px;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.header-cta:hover {
+  background: var(--accent-hover);
+}
+
+@media (min-width: 1024px) {
+  .header-tel {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1280px) {
+  .global-nav ul {
+    display: flex;
+  }
+
+  .menu-button,
+  .mobile-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-row {
+    height: 64px;
+  }
+
+  .brand img {
+    height: 28px;
+  }
+}

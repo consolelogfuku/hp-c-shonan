@@ -46,7 +46,7 @@ export function Concept() {
         ))}
         <div className="border-t border-line pt-7 text-center">
           <Link href="/concept/" className="inline-flex items-center gap-2 text-[15px] font-medium text-accent hover:underline underline-offset-4">
-            家創りのコンセプトを読む
+            コンセプトを読む
             <ArrowRight size={16} aria-hidden />
           </Link>
         </div>

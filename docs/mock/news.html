@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>モック: お知らせ | 株式会社コミュニティ湘南</title>
+    <meta
+      name="description"
+      content="株式会社コミュニティ湘南からのお知らせ、売買物件、賃貸物件、月極駐車場の最新情報をご案内します。"
+    />
+    <link
+      rel="icon"
+      href="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --plaster: #fbfbfb;
+        --surface: #ffffff;
+        --fg: #1b262e;
+        --muted: #5f6d76;
+        --line: #e1e7eb;
+        --tint: #f4f7f9;
+        --accent: #1c5b7e;
+        --accent-hover: #164b68;
+        --on-accent: #ffffff;
+        --scrim: #0b1a24;
+        --w: 1280px;
+        --pad: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-feature-settings: "palt" 1;
+      }
+
+      body {
+        margin: 0;
+        background: url("nurikabe.png") center/cover no-repeat fixed var(--plaster);
+        color: var(--fg);
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        line-height: 2;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: 500;
+        text-wrap: balance;
+        word-break: auto-phrase;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .wrap {
+        width: min(100%, var(--w));
+        margin: 0 auto;
+        padding-inline: var(--pad);
+      }
+
+      .arrow {
+        width: 14px;
+        height: 14px;
+        border-top: 1.5px solid currentColor;
+        border-right: 1.5px solid currentColor;
+        transform: rotate(45deg) scale(0.72);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn {
+        display: inline-flex;
+        height: 52px;
+        align-items: center;
+        gap: 10px;
+        padding: 0 28px;
+        border: 1px solid transparent;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s,
+          transform 0.1s;
+      }
+
+      .btn:hover .arrow {
+        transform: rotate(45deg) scale(0.72) translate(2px, -2px);
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .skip-link {
+        position: fixed;
+        left: 16px;
+        top: 12px;
+        z-index: 100;
+        padding: 8px 14px;
+        background: var(--accent);
+        color: white;
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus {
+        transform: none;
+      }
+
+      /* Header */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.68);
+        box-shadow: 0 1px 0 rgba(28, 91, 126, 0.06);
+        backdrop-filter: blur(14px) saturate(1.1);
+        -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      }
+
+      .header-row {
+        display: flex;
+        height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand img {
+        width: auto;
+        height: 36px;
+      }
+
+      .global-nav ul {
+        display: none;
+        align-items: center;
+        gap: 24px;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      .global-nav a {
+        position: relative;
+        transition: color 0.2s;
+      }
+
+      .global-nav a:hover,
+      .global-nav a[aria-current="page"] {
+        color: var(--accent);
+      }
+
+      .global-nav a[aria-current="page"]::after {
+        position: absolute;
+        right: 0;
+        bottom: -8px;
+        left: 0;
+        height: 1px;
+        background: var(--accent);
+        content: "";
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .header-tel {
+        display: none;
+        font-size: 16px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .header-cta {
+        display: inline-flex;
+        height: 40px;
+        align-items: center;
+        padding: 0 16px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-size: 15px;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 0.2s;
+      }
+
+      .header-cta:hover {
+        background: var(--accent-hover);
+      }
+
+      .menu-button {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        cursor: pointer;
+      }
+
+      .menu-button span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: var(--fg);
+        box-shadow:
+          0 -5px 0 var(--fg),
+          0 5px 0 var(--fg);
+      }
+
+      .mobile-nav {
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      .mobile-nav[hidden] {
+        display: none;
+      }
+
+      .mobile-nav ul {
+        display: grid;
+        gap: 2px;
+        padding-block: 14px 18px;
+      }
+
+      .mobile-nav a {
+        display: block;
+        padding: 9px 12px;
+        font-size: 15px;
+      }
+
+      .mobile-nav a[aria-current="page"] {
+        background: var(--tint);
+        color: var(--accent);
+      }
+
+      .mobile-nav .mobile-contact {
+        margin-top: 8px;
+        background: var(--accent);
+        color: white;
+        text-align: center;
+      }
+
+      @media (min-width: 1024px) {
+        .header-tel {
+          display: inline-flex;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .global-nav ul {
+          display: flex;
+        }
+
+        .menu-button,
+        .mobile-nav {
+          display: none;
+        }
+      }
+
+      /* Page introduction */
+      .page-hero {
+        position: relative;
+        min-height: 360px;
+        overflow: hidden;
+        background: var(--scrim);
+        color: white;
+      }
+
+      .page-hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 58%;
+        filter: brightness(1.08) saturate(0.96);
+      }
+
+      .page-hero::after {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(11, 26, 36, 0.44),
+            rgba(11, 26, 36, 0.05)
+          ),
+          linear-gradient(0deg, rgba(11, 26, 36, 0.14), transparent 55%);
+        content: "";
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 360px;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 44px;
+        padding-bottom: 44px;
+      }
+
+      .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 26px;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+      }
+
+      .breadcrumbs a {
+        opacity: 0.82;
+      }
+
+      .breadcrumbs a:hover {
+        opacity: 1;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .breadcrumbs .separator {
+        width: 18px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.56;
+      }
+
+      .page-label {
+        margin-bottom: 6px;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+      }
+
+      .page-hero h1 {
+        font-size: clamp(36px, 5vw, 58px);
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        line-height: 1.35;
+        text-shadow: 0 2px 16px rgba(11, 26, 36, 0.36);
+      }
+
+      .page-hero .lead {
+        max-width: 34em;
+        margin-top: 16px;
+        font-size: 18px;
+        line-height: 1.9;
+        text-shadow: 0 1px 10px rgba(11, 26, 36, 0.5);
+      }
+
+      /* News archive */
+      .news-archive {
+        padding: 88px 0 104px;
+      }
+
+      .menu-button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .news-years {
+        display: grid;
+        gap: 80px;
+      }
+
+      .year-group {
+        display: grid;
+        grid-template-columns: 144px minmax(0, 1fr);
+        gap: 48px;
+      }
+
+      .year-heading {
+        position: sticky;
+        top: 104px;
+        align-self: start;
+        color: var(--accent);
+        font-size: 30px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
+        line-height: 1.3;
+      }
+
+      .year-heading::after {
+        display: block;
+        width: 48px;
+        height: 1px;
+        margin-top: 16px;
+        background: var(--accent);
+        content: "";
+      }
+
+      .news-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .news-item {
+        border-top: 1px solid var(--line);
+      }
+
+      .news-item a {
+        display: grid;
+        min-height: 164px;
+        grid-template-columns: minmax(0, 1fr) 20px;
+        gap: 20px;
+        align-items: start;
+        padding: 26px 4px 28px 0;
+        transition:
+          color 0.2s,
+          background-color 0.2s,
+          padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .news-item a:hover {
+        padding-right: 14px;
+        padding-left: 14px;
+        background: rgba(238, 245, 249, 0.7);
+        color: var(--accent);
+      }
+
+      .news-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 14px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .news-meta time {
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.08em;
+      }
+
+      .news-item h3 {
+        margin-top: 13px;
+        font-size: 19px;
+        line-height: 1.75;
+        letter-spacing: 0.04em;
+      }
+
+      .news-item .arrow {
+        align-self: center;
+        color: var(--accent);
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 72px;
+      }
+
+      .pagination a,
+      .pagination span {
+        display: inline-flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        font-size: 14px;
+        font-variant-numeric: tabular-nums;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          background-color 0.2s;
+      }
+
+      .pagination a:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .pagination [aria-current="page"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+
+      .pagination .next {
+        width: auto;
+        padding-inline: 18px;
+      }
+
+      /* Contact and footer */
+      .contact-cta {
+        position: relative;
+        padding: 80px 0;
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+
+      .waves {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 72px;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .waves svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 200%;
+        height: 100%;
+        fill: var(--plaster);
+      }
+
+      .waves.top {
+        top: -1px;
+        transform: scaleY(-1);
+      }
+
+      .contact-grid {
+        display: grid;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .contact-cta h2 {
+        max-width: 560px;
+        font-size: clamp(26px, 2.6vw, 34px);
+        line-height: 1.5;
+        letter-spacing: 0.06em;
+      }
+
+      .contact-tel {
+        font-size: 30px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+
+      .contact-hours {
+        margin: 8px 0 16px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      .btn-white {
+        background: white;
+        color: var(--fg);
+      }
+
+      .site-footer {
+        padding: 48px 0 32px;
+        border-top: 1px solid var(--line);
+        background: url("nurikabe.png") center/cover no-repeat var(--plaster);
+        font-size: 14px;
+      }
+
+      .footer-grid {
+        display: grid;
+        gap: 40px;
+      }
+
+      .footer-logo {
+        width: auto;
+        height: 32px;
+      }
+
+      .site-footer address {
+        margin-top: 20px;
+        color: var(--muted);
+        font-style: normal;
+        line-height: 2;
+      }
+
+      .site-footer nav ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 24px;
+      }
+
+      .site-footer nav a:hover {
+        color: var(--accent);
+      }
+
+      .copyright {
+        margin-top: 40px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (min-width: 640px) {
+        .site-footer nav ul {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 768px) {
+        .contact-grid {
+          grid-template-columns: fit-content(560px) auto;
+          justify-content: center;
+          column-gap: 96px;
+        }
+
+        .footer-grid {
+          grid-template-columns: 5fr 7fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        :root {
+          --pad: 20px;
+        }
+
+        .header-row {
+          height: 64px;
+          gap: 12px;
+        }
+
+        .brand img {
+          height: 28px;
+        }
+
+        .header-cta {
+          display: none;
+        }
+
+        .page-hero,
+        .hero-copy {
+          min-height: 300px;
+        }
+
+        .page-hero img {
+          object-position: 60% center;
+        }
+
+        .page-hero::after {
+          background: linear-gradient(
+            0deg,
+            rgba(11, 26, 36, 0.4),
+            rgba(11, 26, 36, 0.08) 78%
+          );
+        }
+
+        .hero-copy {
+          justify-content: flex-end;
+          padding-bottom: 42px;
+        }
+
+        .breadcrumbs {
+          margin-bottom: 20px;
+        }
+
+        .page-hero h1 {
+          font-size: 36px;
+        }
+
+        .page-hero .lead {
+          font-size: 16px;
+        }
+
+        .news-archive {
+          padding: 64px 0 80px;
+        }
+
+        .news-years {
+          gap: 58px;
+        }
+
+        .year-group {
+          grid-template-columns: 1fr;
+          gap: 26px;
+        }
+
+        .year-heading {
+          position: static;
+          font-size: 27px;
+        }
+
+        .news-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .news-item a {
+          min-height: 0;
+          padding-block: 22px 24px;
+        }
+
+        .pagination {
+          margin-top: 56px;
+        }
+
+        .pagination a:nth-of-type(4),
+        .pagination a:nth-of-type(5) {
+          display: none;
+        }
+
+        .contact-cta {
+          padding: 72px 0;
+        }
+
+        .waves {
+          height: 40px;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .header-cta {
+          display: none;
+        }
+
+        .page-hero h1 {
+          font-size: 32px;
+        }
+
+        .pagination a,
+        .pagination span {
+          width: 40px;
+          height: 40px;
+        }
+
+        .pagination .next {
+          padding-inline: 13px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="mock-hero.css" />
+    <link rel="stylesheet" href="mock-header.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+
+    <header class="site-header">
+      <div class="wrap header-row">
+        <a
+          class="brand"
+          href="top.html"
+          aria-label="株式会社コミュニティ湘南 トップページ"
+        >
+          <img
+            src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+            alt="株式会社コミュニティ湘南"
+            width="310"
+            height="52"
+          />
+        </a>
+
+        <nav class="global-nav" aria-label="メイン">
+          <ul>
+            <li><a href="news.html" aria-current="page">お知らせ</a></li>
+            <li><a href="concept.html">コンセプト</a></li>
+            <li><a href="sale.html">売買物件</a></li>
+            <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="voices.html">お客様の声</a></li>
+            <li><a href="company.html">会社案内</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a class="header-tel" href="tel:0467899811">0467-89-9811</a>
+          <a class="header-cta" href="#contact-cta">お問い合わせ</a>
+          <button
+            class="menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="メニューを開く"
+          >
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav
+        class="mobile-nav"
+        id="mobile-nav"
+        aria-label="モバイルメニュー"
+        hidden
+      >
+        <ul class="wrap">
+          <li><a href="news.html" aria-current="page">お知らせ</a></li>
+          <li><a href="concept.html">コンセプト</a></li>
+          <li><a href="sale.html">売買物件</a></li>
+          <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+          <li><a href="works.html">施工事例</a></li>
+          <li><a href="voices.html">お客様の声</a></li>
+          <li><a href="company.html">会社案内</a></li>
+          <li>
+            <a class="mobile-contact" href="#contact-cta">お問い合わせ</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="page-hero" aria-labelledby="page-title">
+        <img
+          src="https://www.c-shonan.co.jp/global-image/units/img/1530-13-20191030165417_b5db941a982a97.jpg"
+          alt="茅ヶ崎の砂浜と青い空"
+          width="1530"
+          height="1020"
+        />
+        <div class="wrap hero-copy">
+          <nav class="breadcrumbs" aria-label="パンくずリスト">
+            <a href="top.html">トップ</a>
+            <span class="separator" aria-hidden="true"></span>
+            <span aria-current="page">お知らせ</span>
+          </nav>
+          <p class="page-label">News</p>
+          <h1 id="page-title">お知らせ</h1>
+          <p class="lead">
+            休業日をはじめ、売買物件、賃貸物件、月極駐車場などの更新情報を掲載しています。
+          </p>
+        </div>
+      </section>
+
+      <section class="news-archive" aria-label="お知らせ一覧">
+        <div class="wrap">
+          <div class="news-years">
+            <section class="year-group" aria-labelledby="year-2026">
+              <h2 class="year-heading" id="year-2026">2026</h2>
+              <div class="news-grid">
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-07-25">2026.07.25</time>
+                      </div>
+                      <h3>夏季休暇について</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-06-26">2026.06.26</time>
+                      </div>
+                      <h3>石川矢畑NO6 お蔭様でご成約となりました</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-04-10">2026.04.10</time>
+                      </div>
+                      <h3>岡田貸家 お申込みを頂きました</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-03-29">2026.03.29</time>
+                      </div>
+                      <h3>月極駐車場空き状況について</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-03-21">2026.03.21</time>
+                      </div>
+                      <h3>岡田貸家 募集中です</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2026-01-26">2026.01.26</time>
+                      </div>
+                      <h3>茅ヶ崎市矢畑売地 小島矢畑B区画</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+              </div>
+            </section>
+
+            <section class="year-group" aria-labelledby="year-2025">
+              <h2 class="year-heading" id="year-2025">2025</h2>
+              <div class="news-grid">
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2025-12-21">2025.12.21</time>
+                      </div>
+                      <h3>冬期休暇のお知らせ</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2025-07-18">2025.07.18</time>
+                      </div>
+                      <h3>夏季休暇について</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2025-07-03">2025.07.03</time>
+                      </div>
+                      <h3>加藤貸家6号棟 終了致しました</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2025-06-23">2025.06.23</time>
+                      </div>
+                      <h3>臨時休業について</h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+
+                <article class="news-item">
+                  <a href="#">
+                    <div>
+                      <div class="news-meta">
+                        <time datetime="2025-06-21">2025.06.21</time>
+                      </div>
+                      <h3>
+                        売地香川B区画、新築戸建て松林B号棟は販売終了致しました
+                      </h3>
+                    </div>
+                    <span class="arrow" aria-hidden="true"></span>
+                  </a>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <nav class="pagination" aria-label="お知らせ一覧のページ">
+            <span aria-current="page">1</span>
+            <a href="#" aria-label="2ページ目">2</a>
+            <a href="#" aria-label="3ページ目">3</a>
+            <a href="#" aria-label="4ページ目">4</a>
+            <a href="#" aria-label="5ページ目">5</a>
+            <a class="next" href="#" aria-label="次のページ">次へ</a>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <section
+        class="contact-cta"
+        id="contact-cta"
+        aria-labelledby="contact-title"
+      >
+        <div class="waves top" aria-hidden="true">
+          <svg viewBox="0 0 2880 80" preserveAspectRatio="none">
+            <path
+              d="M0,40 C360,88 1080,-8 1440,40 C1800,88 2520,-8 2880,40 V80 H0 Z"
+            ></path>
+          </svg>
+        </div>
+        <div class="wrap contact-grid">
+          <h2 id="contact-title">
+            家づくりや土地のこと、まずはお気軽にご相談ください。
+          </h2>
+          <div>
+            <a class="contact-tel" href="tel:0467899811">0467-89-9811</a>
+            <p class="contact-hours">
+              10:00〜16:00（定休日 毎週火曜日・水曜日）
+            </p>
+            <a class="btn btn-white" href="#">
+              お問い合わせ
+              <span class="arrow" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="site-footer">
+        <div class="wrap footer-grid">
+          <div>
+            <a
+              href="top.html"
+              aria-label="株式会社コミュニティ湘南 トップページ"
+            >
+              <img
+                class="footer-logo"
+                src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+                alt="株式会社コミュニティ湘南"
+                width="310"
+                height="52"
+              />
+            </a>
+            <address>
+              〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br />
+              TEL 0467-89-9811 / FAX 0467-89-9810<br />
+              営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）
+            </address>
+          </div>
+
+          <nav aria-label="フッター">
+            <ul>
+              <li><a href="news.html" aria-current="page">お知らせ</a></li>
+              <li><a href="concept.html">コンセプト</a></li>
+              <li><a href="sale.html">売買物件</a></li>
+              <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+              <li><a href="works.html">施工事例</a></li>
+              <li><a href="voices.html">お客様の声</a></li>
+              <li><a href="company.html">会社案内</a></li>
+              <li><a href="#contact-cta">お問い合わせ</a></li>
+              <li><a href="#">プライバシーポリシー</a></li>
+              <li><a href="#">サイトマップ</a></li>
+            </ul>
+          </nav>
+        </div>
+        <p class="wrap copyright">
+          © Community Shonan inc. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var button = document.querySelector(".menu-button");
+        var menu = document.getElementById("mobile-nav");
+
+        button.addEventListener("click", function () {
+          var isOpen = button.getAttribute("aria-expanded") === "true";
+          button.setAttribute("aria-expanded", String(!isOpen));
+          button.setAttribute(
+            "aria-label",
+            isOpen ? "メニューを開く" : "メニューを閉じる",
+          );
+          menu.hidden = isOpen;
+        });
+      })();
+
+    </script>
+  </body>
+</html>

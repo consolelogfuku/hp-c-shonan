@@ -1,0 +1,1708 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>モック: コンセプト | 株式会社コミュニティ湘南</title>
+    <meta
+      name="description"
+      content="株式会社コミュニティ湘南の家づくり。建築家と考えるプランニング、安心の構造、住まい手とのつながりをご紹介します。"
+    />
+    <link
+      rel="icon"
+      href="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&amp;family=Shippori+Mincho+B1:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --plaster: #fbfbfb;
+        --surface: #ffffff;
+        --fg: #1b262e;
+        --muted: #5f6d76;
+        --line: #e1e7eb;
+        --tint: #f4f7f9;
+        --accent: #1c5b7e;
+        --accent-hover: #164b68;
+        --on-accent: #ffffff;
+        --scrim: #0b1a24;
+        --w: 1280px;
+        --pad: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-feature-settings: "palt" 1;
+      }
+
+      body {
+        margin: 0;
+        background: url("nurikabe.png") center/cover no-repeat fixed
+          var(--plaster);
+        color: var(--fg);
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        line-height: 2;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: 500;
+        text-wrap: balance;
+        word-break: auto-phrase;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .wrap {
+        width: min(100%, var(--w));
+        margin: 0 auto;
+        padding-inline: var(--pad);
+      }
+
+      .arrow {
+        width: 14px;
+        height: 14px;
+        border-top: 1.5px solid currentColor;
+        border-right: 1.5px solid currentColor;
+        transform: rotate(45deg) scale(0.72);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn {
+        display: inline-flex;
+        height: 52px;
+        align-items: center;
+        gap: 10px;
+        padding: 0 28px;
+        border: 1px solid transparent;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s,
+          transform 0.1s;
+      }
+
+      .btn:hover .arrow {
+        transform: rotate(45deg) scale(0.72) translate(2px, -2px);
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .skip-link {
+        position: fixed;
+        left: 16px;
+        top: 12px;
+        z-index: 100;
+        padding: 8px 14px;
+        background: var(--accent);
+        color: white;
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus {
+        transform: none;
+      }
+
+      /* Header */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.68);
+        box-shadow: 0 1px 0 rgba(28, 91, 126, 0.06);
+        backdrop-filter: blur(14px) saturate(1.1);
+        -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      }
+
+      .header-row {
+        display: flex;
+        height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand img {
+        width: auto;
+        height: 36px;
+      }
+
+      .global-nav ul {
+        display: none;
+        align-items: center;
+        gap: 24px;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      .global-nav a {
+        position: relative;
+        transition: color 0.2s;
+      }
+
+      .global-nav a:hover,
+      .global-nav a[aria-current="page"] {
+        color: var(--accent);
+      }
+
+      .global-nav a[aria-current="page"]::after {
+        position: absolute;
+        right: 0;
+        bottom: -8px;
+        left: 0;
+        height: 1px;
+        background: var(--accent);
+        content: "";
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .header-tel {
+        display: none;
+        font-size: 16px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .header-cta {
+        display: inline-flex;
+        height: 40px;
+        align-items: center;
+        padding: 0 16px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-size: 15px;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 0.2s;
+      }
+
+      .header-cta:hover {
+        background: var(--accent-hover);
+      }
+
+      .menu-button {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        cursor: pointer;
+      }
+
+      .menu-button span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: var(--fg);
+        box-shadow:
+          0 -5px 0 var(--fg),
+          0 5px 0 var(--fg);
+      }
+
+      .mobile-nav {
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      .mobile-nav[hidden] {
+        display: none;
+      }
+
+      .mobile-nav ul {
+        display: grid;
+        gap: 2px;
+        padding-block: 14px 18px;
+      }
+
+      .mobile-nav a {
+        display: block;
+        padding: 9px 12px;
+        font-size: 15px;
+      }
+
+      .mobile-nav a[aria-current="page"] {
+        background: var(--tint);
+        color: var(--accent);
+      }
+
+      .mobile-nav .mobile-contact {
+        margin-top: 8px;
+        background: var(--accent);
+        color: white;
+        text-align: center;
+      }
+
+      @media (min-width: 1024px) {
+        .header-tel {
+          display: inline-flex;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .global-nav ul {
+          display: flex;
+        }
+
+        .menu-button,
+        .mobile-nav {
+          display: none;
+        }
+      }
+
+      /* Page introduction */
+      .page-hero {
+        position: relative;
+        min-height: 360px;
+        overflow: hidden;
+        background: var(--scrim);
+        color: white;
+      }
+
+      .page-hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 54%;
+        filter: brightness(1.09) saturate(0.88);
+      }
+
+      .page-hero::after {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(11, 26, 36, 0.56),
+            rgba(11, 26, 36, 0.05) 72%
+          ),
+          linear-gradient(0deg, rgba(11, 26, 36, 0.26), transparent 60%);
+        content: "";
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 360px;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 55px;
+        padding-bottom: 20px;
+      }
+
+      .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 26px;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+      }
+
+      .breadcrumbs a {
+        opacity: 0.82;
+      }
+
+      .breadcrumbs a:hover {
+        opacity: 1;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .breadcrumbs .separator {
+        width: 18px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.56;
+      }
+
+      .page-label {
+        margin-bottom: 6px;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+      }
+
+      .page-hero h1 {
+        font-size: clamp(40px, 5.2vw, 68px);
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        line-height: 1.35;
+        text-shadow: 0 2px 16px rgba(11, 26, 36, 0.36);
+      }
+
+      .page-hero .lead {
+        max-width: 21em;
+        margin-top: 22px;
+        font-size: 18px;
+        line-height: 1.75;
+        text-shadow: 0 1px 10px rgba(11, 26, 36, 0.5);
+      }
+
+      .menu-button:focus-visible,
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .section-nav {
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 251, 251, 0.92);
+      }
+
+      .section-nav ul {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .section-nav a {
+        display: flex;
+        min-height: 76px;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+        transition:
+          color 0.2s,
+          background-color 0.2s;
+      }
+
+      .section-nav li:last-child a {
+        border-right: 1px solid var(--line);
+      }
+
+      .section-nav a:hover {
+        background: white;
+        color: var(--accent);
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .section-title {
+        margin-top: 14px;
+        font-size: clamp(30px, 3.8vw, 48px);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        line-height: 1.55;
+      }
+
+      .section-copy {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 2.15;
+      }
+
+      /* Philosophy */
+      .philosophy {
+        padding: 120px 0 128px;
+      }
+
+      .philosophy-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(340px, 4fr);
+        gap: clamp(52px, 8vw, 120px);
+        align-items: end;
+      }
+
+      .philosophy-intro .section-copy {
+        padding-bottom: 12px;
+      }
+
+      .philosophy-images {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.75fr);
+        gap: 24px;
+        align-items: end;
+        margin-top: 78px;
+      }
+
+      .philosophy-images figure {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .philosophy-images figure:first-child {
+        height: clamp(420px, 48vw, 660px);
+      }
+
+      .philosophy-images figure:last-child {
+        height: clamp(270px, 31vw, 420px);
+        margin-bottom: -64px;
+      }
+
+      .philosophy-images img,
+      .architect-photo img,
+      .gratitude-photos img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Principles */
+      .principles {
+        padding: 148px 0 120px;
+        background: rgba(244, 247, 249, 0.78);
+      }
+
+      .principle-list {
+        margin-top: 68px;
+        border-top: 1px solid #cfdbe2;
+      }
+
+      .principle-item {
+        display: grid;
+        grid-template-columns: 90px minmax(260px, 0.75fr) minmax(320px, 1fr);
+        gap: 38px;
+        align-items: baseline;
+        padding: 38px 0 40px;
+        border-bottom: 1px solid #cfdbe2;
+      }
+
+      .principle-number {
+        color: var(--accent);
+        font-size: 14px;
+        letter-spacing: 0.12em;
+      }
+
+      .principle-item h3 {
+        font-size: clamp(20px, 2vw, 27px);
+        line-height: 1.65;
+      }
+
+      .principle-item p {
+        color: var(--muted);
+        line-height: 2.05;
+      }
+
+      .principle-copy {
+        display: grid;
+        gap: 15px;
+        color: var(--muted);
+        line-height: 2.05;
+      }
+
+      .principle-copy p {
+        color: inherit;
+      }
+
+      .principle-copy strong {
+        color: var(--fg);
+        font-weight: 700;
+      }
+
+      .principle-copy ul {
+        display: grid;
+        gap: 9px;
+      }
+
+      .principle-copy li {
+        position: relative;
+        padding-left: 1.2em;
+      }
+
+      .principle-copy li::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: var(--accent);
+        content: "・";
+      }
+
+      /* Architect */
+      .architect {
+        padding: 128px 0;
+      }
+
+      .architect-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
+        gap: clamp(56px, 8vw, 112px);
+        align-items: center;
+      }
+
+      .architect-photo {
+        height: clamp(480px, 51vw, 680px);
+        overflow: hidden;
+      }
+
+      .architect-quote {
+        margin: 32px 0 34px;
+        color: var(--accent);
+        font-family: "Klee One", cursive;
+        font-size: clamp(21px, calc(15px + 1vw), 30px);
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        line-height: 1.9;
+        white-space: nowrap;
+      }
+
+      .architect-body {
+        display: grid;
+        gap: 17px;
+      }
+
+      .architect-body p {
+        margin: 0;
+      }
+
+      .architect-signature {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 14px;
+        margin-top: 30px;
+      }
+
+      .architect-signature span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .architect-signature img {
+        width: 142px;
+        height: auto;
+      }
+
+      /* Gratitude */
+      .gratitude {
+        padding: 128px 0;
+        background: rgba(244, 247, 249, 0.78);
+      }
+
+      .gratitude-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.75fr);
+        gap: clamp(58px, 9vw, 126px);
+        align-items: center;
+      }
+
+      .gratitude-photos {
+        display: grid;
+        grid-template-columns: 1.35fr 0.8fr;
+        gap: 18px;
+        align-items: end;
+      }
+
+      .gratitude-photos figure {
+        height: 480px;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .gratitude-photos figure:last-child {
+        height: 310px;
+        margin-bottom: -54px;
+      }
+
+      .gratitude-copy .section-copy {
+        margin-top: 30px;
+      }
+
+      /* FAQ */
+      .faq {
+        padding: 128px 0 148px;
+      }
+
+      .faq-head {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr);
+        gap: 64px;
+        align-items: end;
+        margin-bottom: 56px;
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--line);
+      }
+
+      .faq-list details {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .faq-list summary {
+        position: relative;
+        padding: 26px 66px 26px 54px;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1.75;
+        list-style: none;
+      }
+
+      .faq-list summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-list summary::before {
+        position: absolute;
+        top: 26px;
+        left: 2px;
+        color: var(--accent);
+        content: "Q";
+        font-size: 16px;
+      }
+
+      .faq-list summary::after {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 14px;
+        height: 14px;
+        border-right: 1px solid var(--accent);
+        border-bottom: 1px solid var(--accent);
+        content: "";
+        transform: translateY(-70%) rotate(45deg);
+        transition: transform 0.2s;
+      }
+
+      .faq-list details[open] summary::after {
+        transform: translateY(-25%) rotate(225deg);
+      }
+
+      .faq-answer {
+        display: grid;
+        gap: 15px;
+        padding: 0 66px 28px 54px;
+        color: var(--muted);
+        line-height: 2.05;
+      }
+
+      .faq-answer p {
+        margin: 0;
+      }
+
+      .faq-note {
+        font-size: 14px;
+      }
+
+      .earthquake-levels {
+        width: min(100%, 872px);
+        margin-top: 8px;
+        padding: 8px 20px;
+        overflow: hidden;
+      }
+
+      .earthquake-level {
+        display: grid;
+        grid-template-columns: 207px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+        min-height: 194px;
+        padding: 10px 0;
+      }
+
+      .earthquake-level > img {
+        display: block;
+        width: 207px;
+        height: 170px;
+        object-fit: contain;
+      }
+
+      .earthquake-level h3 {
+        color: #0099dc;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .earthquake-level div {
+        display: grid;
+        gap: 6px;
+      }
+
+      .earthquake-level p {
+        color: var(--fg);
+        font-size: 14px;
+        line-height: 1.85;
+      }
+
+      /* Contact and footer */
+      .contact-cta {
+        position: relative;
+        padding: 80px 0;
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+
+      .waves {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 72px;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .waves svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 200%;
+        height: 100%;
+        fill: var(--plaster);
+      }
+
+      .waves.top {
+        top: -1px;
+        transform: scaleY(-1);
+      }
+
+      .contact-grid {
+        display: grid;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .contact-cta h2 {
+        max-width: 560px;
+        font-size: clamp(26px, 2.6vw, 34px);
+        line-height: 1.5;
+        letter-spacing: 0.06em;
+      }
+
+      .contact-tel {
+        font-size: 30px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+
+      .contact-hours {
+        margin: 8px 0 16px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      .btn-white {
+        background: white;
+        color: var(--fg);
+      }
+
+      .site-footer {
+        padding: 48px 0 32px;
+        border-top: 1px solid var(--line);
+        background: url("nurikabe.png") center/cover no-repeat var(--plaster);
+        font-size: 14px;
+      }
+
+      .footer-grid {
+        display: grid;
+        gap: 40px;
+      }
+
+      .footer-logo {
+        width: auto;
+        height: 32px;
+      }
+
+      .site-footer address {
+        margin-top: 20px;
+        color: var(--muted);
+        font-style: normal;
+        line-height: 2;
+      }
+
+      .site-footer nav ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 24px;
+      }
+
+      .site-footer nav a:hover {
+        color: var(--accent);
+      }
+
+      .copyright {
+        margin-top: 40px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (min-width: 640px) {
+        .site-footer nav ul {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 768px) {
+        .contact-grid {
+          grid-template-columns: fit-content(560px) auto;
+          justify-content: center;
+          column-gap: 96px;
+        }
+
+        .footer-grid {
+          grid-template-columns: 5fr 7fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        :root {
+          --pad: 20px;
+        }
+
+        .header-row {
+          height: 64px;
+          gap: 12px;
+        }
+
+        .brand img {
+          height: 28px;
+        }
+
+        .header-cta {
+          display: none;
+        }
+
+        .page-hero,
+        .hero-copy {
+          min-height: 300px;
+        }
+
+        .page-hero img {
+          object-position: 58% center;
+        }
+
+        .page-hero::after {
+          background: linear-gradient(
+            0deg,
+            rgba(11, 26, 36, 0.4),
+            rgba(11, 26, 36, 0.08) 78%
+          );
+        }
+
+        .hero-copy {
+          justify-content: flex-end;
+          padding-top: 24px;
+          padding-bottom: 28px;
+        }
+
+        .breadcrumbs {
+          margin-bottom: 20px;
+        }
+
+        .page-hero h1 {
+          font-size: 36px;
+        }
+
+        .page-hero .lead {
+          max-width: 19em;
+          font-size: 16px;
+        }
+
+        .section-nav {
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .section-nav::-webkit-scrollbar {
+          display: none;
+        }
+
+        .section-nav ul {
+          width: max-content;
+          min-width: 100%;
+        }
+
+        .section-nav a {
+          min-width: 152px;
+          min-height: 62px;
+          padding-inline: 16px;
+        }
+
+        .philosophy,
+        .architect,
+        .gratitude,
+        .faq {
+          padding: 80px 0;
+        }
+
+        .philosophy-intro,
+        .architect-grid,
+        .gratitude-grid,
+        .faq-head {
+          grid-template-columns: 1fr;
+          gap: 38px;
+        }
+
+        .philosophy-images {
+          grid-template-columns: minmax(0, 1fr) 34%;
+          gap: 12px;
+          margin-top: 48px;
+        }
+
+        .philosophy-images figure:first-child {
+          height: 410px;
+        }
+
+        .philosophy-images figure:last-child {
+          height: 250px;
+          margin-bottom: -36px;
+        }
+
+        .principles {
+          padding: 104px 0 80px;
+        }
+
+        .principle-list {
+          margin-top: 42px;
+        }
+
+        .principle-item {
+          grid-template-columns: 42px 1fr;
+          gap: 10px 16px;
+          padding: 28px 0;
+        }
+
+        .principle-copy {
+          grid-column: 2;
+        }
+
+        .architect-photo {
+          height: 460px;
+        }
+
+        .architect-quote {
+          margin-block: 25px 28px;
+        }
+
+        .gratitude-photos {
+          grid-template-columns: 1.25fr 0.75fr;
+          gap: 12px;
+        }
+
+        .gratitude-photos figure {
+          height: 360px;
+        }
+
+        .gratitude-photos figure:last-child {
+          height: 230px;
+          margin-bottom: -28px;
+        }
+
+        .faq-head {
+          margin-bottom: 36px;
+        }
+
+        .faq-list summary {
+          padding: 22px 48px 22px 38px;
+          font-size: 16px;
+        }
+
+        .faq-list summary::before {
+          top: 22px;
+        }
+
+        .faq-answer {
+          padding: 0 38px 24px;
+        }
+
+        .earthquake-level {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          justify-items: start;
+          min-height: 0;
+          padding: 24px 0;
+        }
+
+        .earthquake-level > img {
+          width: min(58%, 180px);
+          height: auto;
+        }
+
+        .earthquake-levels {
+          padding-inline: 16px;
+        }
+
+        .contact-cta {
+          padding: 72px 0;
+        }
+
+        .waves {
+          height: 40px;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .header-cta {
+          display: none;
+        }
+
+        .page-hero h1 {
+          font-size: 32px;
+        }
+
+        .page-hero .lead {
+          font-size: 16px;
+        }
+
+        .section-title {
+          font-size: 29px;
+        }
+
+        .philosophy-images figure:first-child {
+          height: 330px;
+        }
+
+        .philosophy-images figure:last-child {
+          height: 205px;
+        }
+
+        .architect-photo {
+          height: 380px;
+        }
+
+        .architect-quote {
+          font-size: clamp(18px, 5.4vw, 21px);
+        }
+
+        .gratitude-photos figure {
+          height: 300px;
+        }
+
+        .gratitude-photos figure:last-child {
+          height: 190px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="mock-header.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+
+    <header class="site-header">
+      <div class="wrap header-row">
+        <a
+          class="brand"
+          href="top.html"
+          aria-label="株式会社コミュニティ湘南 トップページ"
+        >
+          <img
+            src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+            alt="株式会社コミュニティ湘南"
+            width="310"
+            height="52"
+          />
+        </a>
+
+        <nav class="global-nav" aria-label="メイン">
+          <ul>
+            <li><a href="news.html">お知らせ</a></li>
+            <li><a href="concept.html" aria-current="page">コンセプト</a></li>
+            <li><a href="sale.html">売買物件</a></li>
+            <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+            <li><a href="works.html">施工事例</a></li>
+            <li><a href="voices.html">お客様の声</a></li>
+            <li><a href="company.html">会社案内</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a class="header-tel" href="tel:0467899811">0467-89-9811</a>
+          <a class="header-cta" href="#contact-cta">お問い合わせ</a>
+          <button
+            class="menu-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="メニューを開く"
+          >
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav
+        class="mobile-nav"
+        id="mobile-nav"
+        aria-label="モバイルメニュー"
+        hidden
+      >
+        <ul class="wrap">
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="concept.html" aria-current="page">コンセプト</a></li>
+          <li><a href="sale.html">売買物件</a></li>
+          <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+          <li><a href="works.html">施工事例</a></li>
+          <li><a href="voices.html">お客様の声</a></li>
+          <li><a href="company.html">会社案内</a></li>
+          <li>
+            <a class="mobile-contact" href="#contact-cta">お問い合わせ</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="page-hero" aria-labelledby="page-title">
+        <img
+          src="https://www.c-shonan.co.jp/global-image/units/img/7942-5-20200207101750_b5e3cbabe744a4.jpg"
+          alt="光が差し込むコミュニティ湘南の住まい"
+          width="1600"
+          height="1067"
+        />
+        <div class="wrap hero-copy">
+          <nav class="breadcrumbs" aria-label="パンくずリスト">
+            <a href="top.html">トップ</a>
+            <span class="separator" aria-hidden="true"></span>
+            <span aria-current="page">コンセプト</span>
+          </nav>
+          <p class="page-label">Concept</p>
+          <h1 id="page-title">コンセプト</h1>
+          <p class="lead">
+            一棟ずつ、向き合う。<br />
+            私たちが大切にしていること。
+          </p>
+        </div>
+      </section>
+
+      <nav class="section-nav" aria-label="コンセプトページ内">
+        <ul class="wrap">
+          <li><a href="#philosophy">私たちの家づくり</a></li>
+          <li><a href="#architect">建築家の家</a></li>
+          <li><a href="#gratitude">感謝会</a></li>
+          <li><a href="#faq">家づくりのQ&amp;A</a></li>
+        </ul>
+      </nav>
+
+      <section
+        class="philosophy"
+        id="philosophy"
+        aria-labelledby="philosophy-title"
+      >
+        <div class="wrap">
+          <div class="philosophy-intro">
+            <div>
+              <p class="eyebrow">Our philosophy</p>
+              <h2 class="section-title" id="philosophy-title">
+                住み心地を決めるのは、<br />
+                予算より良いプランニング。
+              </h2>
+            </div>
+            <p class="section-copy">
+              大切なのは、予算をかけることよりも、家族の暮らしを丁寧に考えること。
+              光や風、家事の動線、これから変わっていく家族の時間まで見つめ、
+              限られた条件の中から、そのご家族にとって心地よい答えを探します。
+            </p>
+          </div>
+
+          <div class="philosophy-images">
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg"
+                alt="家族が集う明るいリビング"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+            </figure>
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg"
+                alt="木の素材を生かした住まいの空間"
+                width="800"
+                height="1000"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="principles" aria-labelledby="principles-title">
+        <div class="wrap">
+          <p class="eyebrow">Our commitments</p>
+          <h2 class="section-title" id="principles-title">
+            一棟ずつ、向き合う。<br />
+            私たちが大切にしていること。
+          </h2>
+
+          <div class="principle-list">
+            <article class="principle-item">
+              <p class="principle-number">01</p>
+              <h3>建築家と創る、<br />こだわりの憩いの家</h3>
+              <div class="principle-copy">
+                <p>
+                  心地よく暮らすための工夫と、細部まで建築主の思いが行き届いた憩いの家を目指しています。
+                  そのために大切なことは、センス、実力、人柄を備えた建築家との出会いです。
+                </p>
+                <p>
+                  建築家へ設計を依頼する場合の設計料の目安は、建物価格の約1割であり、「負担が増えてしまう」とお考えの方も多いと思います。
+                </p>
+                <p>
+                  <strong>
+                    コミュニティ湘南では、建築家へ直接依頼した場合とほぼ同じ設計のプロセスを、
+                    お客様の負担を大きく抑えた形でご提供しています。
+                  </strong>
+                </p>
+                <p>
+                  デザイナーズハウスやカリフォルニアスタイルの住宅、
+                  無垢材と珪藻土を取り入れた自然素材の住宅など、工夫を凝らした住まいを数多く施工しています。
+                </p>
+              </div>
+            </article>
+            <article class="principle-item">
+              <p class="principle-number">02</p>
+              <h3>設計から完成まで、建築士が一貫サポート</h3>
+              <div class="principle-copy">
+                <p>
+                  建築士が設計の段階から完成、引き渡しまで一貫してお客様を支えます。
+                </p>
+                <p>
+                  工事担当者に任せきりにせず、設計どおりに施工されているかを建築士が確認し、
+                  必要に応じて工事担当者へ指示します。
+                </p>
+                <p>
+                  センスと実力を持つ建築家と、豊富な経験と高い技術力を持つ建築会社。
+                  それぞれの力を生かせるようチームワークを整え、一棟ずつ丹念に形にしていきます。
+                </p>
+                <p>
+                  <strong
+                    >当社で住まいを建てられたお客様から高い満足をいただいていることを、私たちの誇りとしています。</strong
+                  >
+                </p>
+              </div>
+            </article>
+            <article class="principle-item">
+              <p class="principle-number">03</p>
+              <h3>地震・火災に強い構造</h3>
+              <div class="principle-copy">
+                <p>
+                  地震や火災などの災害に備えた家づくりにも力を入れています。
+                  お客様のご希望に合わせて、次の仕様に対応しています。
+                </p>
+                <ul>
+                  <li>
+                    <strong
+                      >地震に対して最高レベルとなる、耐震等級3の構造基準を取得した住宅</strong
+                    >
+                  </li>
+                  <li><strong>火災に強い、省令準耐火構造の住宅</strong></li>
+                  <li><strong>20年間の地盤保証</strong></li>
+                </ul>
+                <p>
+                  耐震等級3と省令準耐火構造の住宅は、地震保険や火災保険の大幅な割引対象になります。
+                  耐震等級の詳しい内容は、ページ下部の「家づくりのQ&amp;A」でご案内しています。
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="architect"
+        id="architect"
+        aria-labelledby="architect-title"
+      >
+        <div class="wrap architect-grid">
+          <div class="architect-photo">
+            <img
+              src="https://www.c-shonan.co.jp/global-image/units/img/5279-17-20191219162420_b5dfb25a47b79d.jpg"
+              alt="建築家とつくる開放的な住空間"
+              width="1000"
+              height="1200"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <p class="eyebrow">Architect's words</p>
+            <h2 class="section-title" id="architect-title">建築家の家</h2>
+            <blockquote class="architect-quote">
+              建築は丈夫でなければならない。<br />
+              機能的でなければならない。<br />
+              美しくなければならない。
+            </blockquote>
+            <div class="section-copy architect-body">
+              <p>
+                「美しいものだけが機能的である」と語った建築家もいます。
+                言葉そのものを見ても、その奥にある意味を考えても、建築という空間はとても奥深いものです。
+              </p>
+              <p>
+                数学だけでも文学だけでも答えにはたどり着けません。
+                さまざまな知恵と創造を重ねることで、初めて一つの形になっていきます。
+              </p>
+              <p>
+                建物の敷地は、世界に一つしかない場所です。
+                その場所が持つ可能性を丁寧に捉え、住まう人の考えと重ね合わせます。
+              </p>
+              <p>
+                敷地を読み、環境を読み、居心地を考えることを、いつも心がけています。
+                コミュニティ湘南との協働で手がけた住まいは、すでに200棟を超えています。
+              </p>
+            </div>
+            <div class="architect-signature">
+              <span>一級建築士</span>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/7947-5-20220509115412_b627882545cd4e.png"
+                alt="建築家署名"
+                width="284"
+                height="92"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="gratitude"
+        id="gratitude"
+        aria-labelledby="gratitude-title"
+      >
+        <div class="wrap gratitude-grid">
+          <div class="gratitude-photos">
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/5026-5-20191218114007_b5df991871aa14.jpg"
+                alt="住まい手の皆さまが集う感謝会"
+                width="1000"
+                height="750"
+                loading="lazy"
+              />
+            </figure>
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/5026-6-20191218114007_b5df991871b8c7.jpg"
+                alt="感謝会で交流するご家族"
+                width="800"
+                height="1000"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+          <div class="gratitude-copy">
+            <p class="eyebrow">Gratitude gathering</p>
+            <h2 class="section-title" id="gratitude-title">
+              家が完成してからも、<br />
+              続いていくお付き合い。
+            </h2>
+            <p class="section-copy">
+              お引き渡しは、関係の終わりではありません。
+              住まい手の皆さまをお招きして感謝会を開き、
+              家づくりの思い出や新しい暮らしを語り合ってきました。
+              困ったときにいつでも顔を思い出していただける、地域の身近な存在でありたいと考えています。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="wrap">
+          <div class="faq-head">
+            <div>
+              <p class="eyebrow">Questions and answers</p>
+              <h2 class="section-title" id="faq-title">家づくりのQ&amp;A</h2>
+            </div>
+            <p class="section-copy">
+              初めての家づくりで気になることをまとめました。
+              ここにない疑問も、どうぞ気兼ねなくご相談ください。
+            </p>
+          </div>
+
+          <div class="faq-list">
+            <details>
+              <summary>建築費用はどのくらいかかりますか？</summary>
+              <div class="faq-answer">
+                <p>
+                  コミュニティ湘南には、独自に定めた住宅の標準仕様があります。
+                  社長がお客様の状況に合う住宅ローンの見積もりと資金計画を検討しますので、気軽にご相談ください。
+                </p>
+                <p class="faq-note">
+                  標準仕様に含まれない設備や素材をご希望の場合も、満足いただける形を目指して丁寧に対応します。
+                </p>
+              </div>
+            </details>
+            <details>
+              <summary>建築相談には費用がかかりますか？</summary>
+              <div class="faq-answer">
+                <p>建築のご相談に費用はかかりません。</p>
+                <p>
+                  参考プランを作成するため、建てられる建物のおおよその規模や間取りを確認したうえで、
+                  計画を進めるかどうかをご判断いただけます。
+                </p>
+              </div>
+            </details>
+            <details>
+              <summary>建築期間はどのくらいですか？</summary>
+              <div class="faq-answer">
+                <p>
+                  基本プランとなる間取りが決まった後に地盤調査を行い、結果に応じて地盤改良工事を実施します。
+                  その後、建築確認の手続きを経て着工します。
+                </p>
+                <p>
+                  基本プランの決定から着工までは、おおむね1か月が目安です。
+                  耐震等級3を取得する場合は、さらに約1か月を見込みます。
+                  着工後の工期は4〜5か月程度です。
+                </p>
+              </div>
+            </details>
+            <details>
+              <summary>
+                コミュニティ湘南が施工した新築住宅を訪問できますか？
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  これまで多くのお客様が、当社で先に住まいを建てられた施主様のお宅を訪問しています。
+                  実際の住み心地や家づくりの感想を施主様から直接聞くことは、これから間取りを考えるうえで大変参考になります。
+                </p>
+                <p class="faq-note">
+                  元サイトでは、感染症対策期間中は施主様宅への訪問を控え、モデルハウスをご案内している旨も掲載しています。
+                </p>
+              </div>
+            </details>
+            <details>
+              <summary>
+                完成後もメンテナンスやリフォームを依頼できますか？
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  完成時にはお客様ご自身による施主検査を行っていただいたうえで、住まいをお引き渡しします。
+                  実際に暮らし始めてから気づく点もあるため、完成後も責任を持って対応します。
+                </p>
+              </div>
+            </details>
+            <details>
+              <summary>耐震性能はどのようになっていますか？</summary>
+              <div class="faq-answer">
+                <p>
+                  耐震等級は建築基準法に基づく住宅性能表示制度の指標です。
+                  建物が地震にどの程度耐えられるかを、壁の量や配置などから評価し、3段階で示します。
+                </p>
+
+                <div class="earthquake-levels" aria-label="耐震等級の違い">
+                  <section class="earthquake-level">
+                    <img
+                      src="https://www.c-shonan.co.jp/global-image/units/img/5670-5-20191222124033_b5dfee5b103c52.png"
+                      alt="耐震等級1"
+                      width="715"
+                      height="588"
+                      loading="lazy"
+                    />
+                    <div>
+                      <h3>建築基準法（2000年基準）</h3>
+                      <p>
+                        数百年に一度発生する震度6強から震度7程度の地震で、倒壊や崩壊を防ぐことを想定した基準です。
+                      </p>
+                      <p>
+                        数十年に一度発生する震度5強程度の地震では、損傷を防ぐ効果があるとされ、一般住宅の耐震性に相当します。
+                      </p>
+                    </div>
+                  </section>
+                  <section class="earthquake-level">
+                    <img
+                      src="https://www.c-shonan.co.jp/global-image/units/img/5671-5-20191222124049_b5dfee5c12ce20.png"
+                      alt="耐震等級2"
+                      width="715"
+                      height="588"
+                      loading="lazy"
+                    />
+                    <div>
+                      <h3>長期優良住宅認定基準</h3>
+                      <p>
+                        耐震等級1で想定する地震の1.25倍の強さに耐えられる基準です。
+                      </p>
+                      <p>
+                        避難所として使われる病院や学校などと同程度の耐震性に相当します。
+                      </p>
+                    </div>
+                  </section>
+                  <section class="earthquake-level">
+                    <img
+                      src="https://www.c-shonan.co.jp/global-image/units/img/5672-5-20191222124104_b5dfee5d03245f.png"
+                      alt="耐震等級3"
+                      width="715"
+                      height="588"
+                      loading="lazy"
+                    />
+                    <div>
+                      <h3>最高レベル</h3>
+                      <p>
+                        耐震等級1で想定する地震の1.5倍の強さに耐えられる基準です。
+                      </p>
+                      <p>
+                        消防署や警察署など、防災拠点となる建物と同程度の耐震性に相当し、地震保険の割引対象になります。
+                      </p>
+                    </div>
+                  </section>
+                </div>
+
+                <p>
+                  最高レベルの耐震等級3を希望されるお客様は増えています。
+                  当社でも耐震等級3を取得した住まいを多数施工し、お客様から好評をいただいています。
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <section
+        class="contact-cta"
+        id="contact-cta"
+        aria-labelledby="contact-title"
+      >
+        <div class="waves top" aria-hidden="true">
+          <svg viewBox="0 0 2880 80" preserveAspectRatio="none">
+            <path
+              d="M0,40 C360,88 1080,-8 1440,40 C1800,88 2520,-8 2880,40 V80 H0 Z"
+            ></path>
+          </svg>
+        </div>
+        <div class="wrap contact-grid">
+          <h2 id="contact-title">
+            家づくりや土地のこと、まずはお気軽にご相談ください。
+          </h2>
+          <div>
+            <a class="contact-tel" href="tel:0467899811">0467-89-9811</a>
+            <p class="contact-hours">
+              10:00〜16:00（定休日 毎週火曜日・水曜日）
+            </p>
+            <a class="btn btn-white" href="#">
+              お問い合わせ
+              <span class="arrow" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="site-footer">
+        <div class="wrap footer-grid">
+          <div>
+            <a
+              href="top.html"
+              aria-label="株式会社コミュニティ湘南 トップページ"
+            >
+              <img
+                class="footer-logo"
+                src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+                alt="株式会社コミュニティ湘南"
+                width="310"
+                height="52"
+              />
+            </a>
+            <address>
+              〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br />
+              TEL 0467-89-9811 / FAX 0467-89-9810<br />
+              営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）
+            </address>
+          </div>
+
+          <nav aria-label="フッター">
+            <ul>
+              <li><a href="news.html">お知らせ</a></li>
+              <li><a href="concept.html" aria-current="page">コンセプト</a></li>
+              <li><a href="sale.html">売買物件</a></li>
+              <li><a href="rent.html">賃貸物件・貸駐車場</a></li>
+              <li><a href="works.html">施工事例</a></li>
+              <li><a href="voices.html">お客様の声</a></li>
+              <li><a href="company.html">会社案内</a></li>
+              <li><a href="#contact-cta">お問い合わせ</a></li>
+              <li><a href="#">プライバシーポリシー</a></li>
+              <li><a href="#">サイトマップ</a></li>
+            </ul>
+          </nav>
+        </div>
+        <p class="wrap copyright">
+          © Community Shonan inc. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var button = document.querySelector(".menu-button");
+        var menu = document.getElementById("mobile-nav");
+
+        button.addEventListener("click", function () {
+          var isOpen = button.getAttribute("aria-expanded") === "true";
+          button.setAttribute("aria-expanded", String(!isOpen));
+          button.setAttribute(
+            "aria-label",
+            isOpen ? "メニューを開く" : "メニューを閉じる",
+          );
+          menu.hidden = isOpen;
+        });
+      })();
+    </script>
+  </body>
+</html>
