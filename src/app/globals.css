@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/*
+  モック docs/mock/top.html と同じトークン。
+  白ベース（塗り壁写真）+ アクセントはロゴの海の青 1 色。角丸なし。ライトテーマのみ。
+*/
+:root {
+  color-scheme: light;
+  --bg: #fbfbfb;
+  --surface: #ffffff;
+  --fg: #1b262e;
+  --muted: #5f6d76;
+  --line: #e1e7eb;
+  --tint: #f4f7f9;
+  --band-a: #eef5f9;
+  --band-b: #f7fafc;
+  --accent: #1c5b7e;
+  --accent-hover: #164b68;
+  --on-accent: #ffffff;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-tint: var(--tint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --font-mincho: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-hand: "Klee One", "Noto Sans JP", sans-serif;
+  --radius-none: 0px;
+}
+
+html {
+  font-feature-settings: "palt" 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: url("/nurikabe.png") center / cover no-repeat fixed var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mincho);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 2;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-wrap: balance;
+  word-break: auto-phrase;
+}
+
+/* 淡い青の帯（上→下で白へ）と、その逆（会社案内: 下端を青にして問い合わせ帯の曲線と揃える） */
+.band {
+  background: linear-gradient(180deg, var(--band-a) 0%, var(--band-b) 100%);
+}
+.band-to-blue {
+  background: linear-gradient(180deg, var(--band-b) 0%, var(--band-a) 100%);
+}
+
+/* PC だけ効く改行 */
+.br-pc {
+  display: none;
+}
+@media (min-width: 900px) {
+  .br-pc {
+    display: inline;
+  }
+}
+
+/* ヒーロー写真の zoom。切替(6.5s)+フェード(1.6s)より長く走らせ、退場中も続けてリセットを見せない */
+@keyframes kenburns {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.hero-slide img {
+  transform: scale(1);
+}
+.hero-slide.is-active img,
+.hero-slide.is-leaving img {
+  animation: kenburns 8.4s ease-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide img {
+    animation: none !important;
+  }
+}
+
+.snap-row {
+  scrollbar-width: none;
+}
+.snap-row::-webkit-scrollbar {
+  display: none;
+}

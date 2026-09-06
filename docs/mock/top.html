@@ -1,0 +1,2449 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>モック: トップページ | 株式会社コミュニティ湘南</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---- トークン: 白ベース、アクセントはロゴの海の青 1 色、角丸なし ---- */
+      :root {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --fg: #1b262e;
+        --muted: #5f6d76;
+        --line: #e1e7eb;
+        --tint: #f4f7f9;
+        --accent: #1c5b7e;
+        --accent-hover: #164b68;
+        --on-accent: #ffffff;
+        --scrim: #0b1a24;
+        --w: 1280px;
+        --pad: 24px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        font-feature-settings: "palt" 1;
+      }
+      /* 白背景は生成した塗り壁テクスチャ（plaster.svg）。画面に固定して、壁の前を内容が流れる見え方にする */
+      /* 塗り壁: docs/mock/nurikabe.png（ユーザー提供の写真） */
+      body {
+        margin: 0;
+        background: url("nurikabe.png") center/cover no-repeat fixed #fbfbfb;
+        color: var(--fg);
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-weight: 400;
+        font-size: 16px;
+        letter-spacing: 0.06em;
+        line-height: 2;
+        -webkit-font-smoothing: antialiased;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-wrap: balance;
+        word-break: auto-phrase;
+      }
+      p {
+        margin: 0;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .wrap {
+        max-width: var(--w);
+        margin: 0 auto;
+        padding: 0 var(--pad);
+      }
+      br.pc {
+        display: none;
+      }
+      @media (min-width: 900px) {
+        br.pc {
+          display: inline;
+        }
+        .hero p,
+        #concept .lead {
+          max-width: none;
+        }
+      }
+      .center {
+        text-align: center;
+      }
+      .lead {
+        margin: 16px auto 0;
+        max-width: 44em;
+        color: var(--muted);
+        font-size: 18px;
+      }
+      .h2 {
+        font-size: clamp(24px, 2.6vw, 32px);
+        line-height: 1.5;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        height: 52px;
+        padding: 0 28px;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        border: 1px solid transparent;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s,
+          transform 0.1s;
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+      .btn-ghost {
+        background: var(--surface);
+        border-color: var(--line);
+        color: var(--fg);
+      }
+      .btn-ghost:hover {
+        border-color: var(--accent);
+      }
+      .link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-size: 15px;
+        font-weight: 500;
+        text-underline-offset: 5px;
+      }
+      .link:hover {
+        text-decoration: underline;
+      }
+      .arrow {
+        width: 14px;
+        height: 14px;
+        border-right: 1.5px solid currentColor;
+        border-top: 1.5px solid currentColor;
+        transform: rotate(45deg) scale(0.7);
+      }
+      section {
+        padding: 96px 0;
+      }
+      @media (max-width: 767px) {
+        section {
+          padding: 64px 0;
+        }
+        :root {
+          --pad: 20px;
+        }
+      }
+
+      /* ---- ヘッダー（フォントは既存のまま: 游ゴシック系） ---- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.68);
+        backdrop-filter: blur(14px) saturate(1.1);
+        -webkit-backdrop-filter: blur(14px) saturate(1.1);
+        box-shadow: 0 1px 0 rgba(28, 91, 126, 0.06);
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        letter-spacing: 0.04em;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        height: 72px;
+      }
+      .nav ul {
+        display: none;
+        gap: 24px;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .nav .tel {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+      .nav .cta {
+        display: inline-flex;
+        align-items: center;
+        height: 40px;
+        padding: 0 16px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-size: 15px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .nav .menu {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .nav .menu span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: var(--fg);
+        box-shadow:
+          0 -5px 0 var(--fg),
+          0 5px 0 var(--fg);
+      }
+      @media (min-width: 1024px) {
+        .nav .tel {
+          display: inline-flex;
+        }
+      }
+      @media (min-width: 1280px) {
+        .nav ul {
+          display: flex;
+        }
+        .nav .menu {
+          display: none;
+        }
+      }
+
+      /* ---- ヒーロー: 画面幅いっぱいの写真 + 中央コピー ---- */
+      .hero {
+        position: relative;
+        height: min(84dvh, 880px);
+        min-height: 560px;
+        overflow: hidden;
+        background: var(--scrim);
+        padding: 0;
+      }
+      .hero .slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 1.6s ease-in-out;
+      }
+      .hero .slide.is-active {
+        opacity: 1;
+      }
+      .hero .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero .copy {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+        padding-bottom: 96px;
+        color: #fff;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 4.2vw, 56px);
+        line-height: 1.4;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-shadow: 0 2px 16px rgba(11, 26, 36, 0.45);
+      }
+      .hero p {
+        margin-top: 20px;
+        max-width: 40em;
+        font-size: 19px;
+        text-shadow: 0 1px 10px rgba(11, 26, 36, 0.55);
+      }
+      .hero .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      .hero .btn-white {
+        background: #fff;
+        color: var(--fg);
+      }
+      .hero .btn-outline {
+        border-color: rgba(255, 255, 255, 0.7);
+        color: #fff;
+        background: rgba(11, 26, 36, 0.2);
+        backdrop-filter: blur(4px);
+      }
+      .hero .dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 40px;
+      }
+      .hero .dots button {
+        height: 3px;
+        width: 12px;
+        border: 0;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition:
+          width 0.3s,
+          background-color 0.3s;
+      }
+      .hero .dots button.is-active {
+        width: 32px;
+        background: #fff;
+      }
+      @media (max-width: 767px) {
+        .hero .copy {
+          padding-bottom: 72px;
+        }
+        .hero h1 {
+          font-size: 30px;
+          letter-spacing: 0.05em;
+          text-wrap: initial;
+        }
+      }
+
+      /* ---- コンセプト ---- */
+      .full {
+        position: relative;
+        height: min(64dvh, 680px);
+        min-height: 320px;
+        width: 100%;
+        margin-top: 56px;
+      }
+      .full img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .rows {
+        margin-top: 40px;
+      }
+      .row {
+        display: grid;
+        gap: 12px;
+        padding: 36px 0;
+        border-top: 1px solid var(--line);
+      }
+      .row h3 {
+        font-size: 21px;
+        line-height: 1.6;
+        font-weight: 700;
+      }
+      .row p {
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 44em;
+      }
+      @media (min-width: 768px) {
+        .row {
+          grid-template-columns: 4fr 8fr;
+          gap: 32px;
+        }
+      }
+      .rows .end {
+        border-top: 1px solid var(--line);
+        padding-top: 28px;
+        text-align: center;
+      }
+
+      /* ---- 販売中の物件 ---- */
+      .band {
+        background: var(--tint);
+      }
+      .card {
+        margin-top: 40px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        display: grid;
+      }
+      .card .photo {
+        aspect-ratio: 4/3;
+      }
+      .card .photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .card .body {
+        padding: 32px;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .tag {
+        padding: 4px 10px;
+        border: 1px solid var(--line);
+        color: var(--muted);
+      }
+      .tag.on {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+      }
+      .card h3 {
+        margin-top: 20px;
+        font-size: clamp(22px, 2vw, 27px);
+        line-height: 1.5;
+      }
+      .price {
+        margin-top: 8px;
+        font-size: clamp(28px, 2.4vw, 32px);
+        font-weight: 500;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+      .card .desc {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 40em;
+      }
+      .specs {
+        margin: 24px 0 0;
+        display: grid;
+        gap: 12px 32px;
+        font-size: 15px;
+      }
+      .specs div {
+        display: flex;
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+      }
+      .specs dt {
+        width: 80px;
+        flex: none;
+        color: var(--muted);
+      }
+      .specs dd {
+        margin: 0;
+        font-weight: 500;
+      }
+      @media (min-width: 640px) {
+        .specs {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 1024px) {
+        .card {
+          grid-template-columns: 5fr 7fr;
+        }
+        .card .photo {
+          aspect-ratio: auto;
+          min-height: 440px;
+        }
+        .card .body {
+          padding: 40px;
+        }
+      }
+
+      /* ---- 施工事例: 横スクロール ---- */
+      .works {
+        padding-bottom: 0;
+      }
+      .rail {
+        gap: 24px;
+        padding: 0 var(--pad) 16px;
+        scroll-padding-left: var(--pad);
+      }
+      @media (min-width: 1280px) {
+        .rail {
+          padding-left: max(
+            var(--pad),
+            calc((100vw - var(--w)) / 2 + var(--pad))
+          );
+          scroll-padding-left: max(
+            var(--pad),
+            calc((100vw - var(--w)) / 2 + var(--pad))
+          );
+        }
+      }
+      .rail li {
+        width: 82vw;
+      }
+      @media (min-width: 640px) {
+        .rail li {
+          width: 560px;
+        }
+        .rail li:nth-child(3n + 2) {
+          margin-top: 40px;
+        }
+      }
+      .rail .photo {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        background: var(--tint);
+      }
+      .rail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .rail a:hover img {
+        transform: scale(1.03);
+      }
+      .rail h3 {
+        margin-top: 16px;
+        font-size: 19px;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+      .rail p {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      /* ---- お客様の声 ---- */
+      .voices {
+        display: grid;
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .voice {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 28px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .voice blockquote {
+        margin: 0;
+        font-size: 15px;
+        line-height: 2;
+      }
+      .voice footer {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 24px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .voice footer img {
+        width: 52px;
+        height: 52px;
+        object-fit: cover;
+        flex: none;
+      }
+      .voice footer b {
+        font-weight: 500;
+      }
+      .voice footer small {
+        display: block;
+        opacity: 0.8;
+      }
+      @media (min-width: 1024px) {
+        .voices {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* ---- 賃貸・駐車場 ---- */
+      .two {
+        display: grid;
+        gap: 40px;
+        margin-top: 40px;
+        align-items: start;
+      }
+      @media (min-width: 1024px) {
+        .two {
+          grid-template-columns: 7fr 5fr;
+        }
+      }
+      .list {
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .list li + li {
+        border-top: 1px solid var(--line);
+      }
+      .list a {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 24px;
+      }
+      .list a:hover {
+        background: var(--tint);
+      }
+      .list small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .list h3 {
+        font-size: 17px;
+        line-height: 1.6;
+      }
+      .list p {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .lots {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 16px;
+        align-content: start;
+      }
+      .lot {
+        padding: 16px;
+        background: var(--accent);
+        color: var(--on-accent);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .lot.is-full {
+        background: var(--surface);
+        color: var(--fg);
+        border: 1px solid var(--line);
+      }
+      .lot.wide {
+        grid-column: 1/-1;
+      }
+      .lot b {
+        display: block;
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .lot small {
+        display: block;
+        font-size: 12px;
+        opacity: 0.85;
+      }
+      .lot .st {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-variant-numeric: tabular-nums;
+      }
+      .note {
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .sub {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 17px;
+        font-weight: 500;
+      }
+
+      /* ---- 新着情報 ---- */
+      .news {
+        display: grid;
+        gap: 32px;
+      }
+      @media (min-width: 1024px) {
+        .news {
+          grid-template-columns: 4fr 8fr;
+        }
+      }
+      .news li {
+        border-top: 1px solid var(--line);
+      }
+      .news li:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .news ul a {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 18px 0;
+        font-size: 16px;
+      }
+      .news ul a:hover .t {
+        color: var(--accent);
+      }
+      .news time,
+      .news .k {
+        font-size: 14px;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      @media (min-width: 640px) {
+        .news ul a {
+          flex-direction: row;
+          align-items: baseline;
+          gap: 24px;
+        }
+        .news .k {
+          width: 64px;
+          flex: none;
+          font-size: 12px;
+        }
+      }
+
+      /* ---- 会社案内 ---- */
+      .access {
+        display: grid;
+        gap: 40px;
+        margin-top: 40px;
+        align-items: start;
+      }
+      @media (min-width: 1024px) {
+        .access {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .map {
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .map iframe {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4/3;
+        border: 0;
+      }
+      @media (min-width: 1024px) {
+        .map {
+          height: 100%;
+        }
+        .map iframe {
+          height: 100%;
+          aspect-ratio: auto;
+          min-height: 520px;
+        }
+      }
+      .shop {
+        aspect-ratio: 16/9;
+        background: var(--tint);
+      }
+      .shop img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .info {
+        margin: 24px 0 0;
+        font-size: 15px;
+      }
+      .info div {
+        display: flex;
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        padding: 12px 0;
+      }
+      .info dt {
+        width: 80px;
+        flex: none;
+        color: var(--muted);
+      }
+      .info dd {
+        margin: 0;
+        line-height: 1.8;
+      }
+
+      /* ---- CTA + フッター ---- */
+      .cta {
+        background: var(--accent);
+        color: var(--on-accent);
+        padding: 80px 0;
+      }
+      .cta .g {
+        display: grid;
+        gap: 32px;
+        align-items: center;
+      }
+      @media (min-width: 768px) {
+        .cta .g {
+          grid-template-columns: fit-content(560px) auto;
+          justify-content: center;
+          column-gap: 96px;
+        }
+        .cta .r {
+          text-align: left;
+        }
+      }
+      .cta h2 {
+        font-size: clamp(26px, 2.6vw, 34px);
+        line-height: 1.5;
+      }
+      .cta p {
+        margin-top: 16px;
+        font-size: 17px;
+        opacity: 0.88;
+        max-width: 36em;
+      }
+      .cta .telno {
+        font-size: 30px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        font-variant-numeric: tabular-nums;
+      }
+      .cta .hours {
+        font-size: 14px;
+        opacity: 0.85;
+        margin: 8px 0 16px;
+      }
+      .cta .btn-white {
+        background: #fff;
+        color: var(--fg);
+      }
+      footer.site {
+        border-top: 1px solid var(--line);
+        padding: 48px 0 32px;
+        font-size: 14px;
+      }
+      footer .g {
+        display: grid;
+        gap: 40px;
+      }
+      @media (min-width: 768px) {
+        footer .g {
+          grid-template-columns: 5fr 7fr;
+        }
+      }
+      footer address {
+        font-style: normal;
+        color: var(--muted);
+        margin-top: 20px;
+        line-height: 2;
+      }
+      footer nav ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 24px;
+      }
+      @media (min-width: 640px) {
+        footer nav ul {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+      footer nav a:hover {
+        color: var(--accent);
+      }
+      footer .copy {
+        margin-top: 40px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero .slide {
+          transition: none;
+        }
+      }
+
+      /* ==== 書体の役割分け: 話し言葉=Klee One / それ以外=しっぽり明朝 B1（ヘッダーは既存の游ゴシック系のまま） ==== */
+      .mincho,
+      .h2,
+      .cta h2,
+      .card h3,
+      .rail h3,
+      .list h3,
+      .facts b {
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+      }
+      .h2 {
+        font-size: clamp(28px, 3vw, 38px);
+      }
+      .card h3,
+      .rail h3,
+      .list h3 {
+        letter-spacing: 0.06em;
+      }
+      .hero h1 {
+        font-family:
+          "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+      }
+      .facts b {
+        letter-spacing: 0.02em;
+      }
+      .party h2.hand,
+      .architect blockquote.hand,
+      .life h2.hand {
+        font-family: "Klee One", "Noto Sans JP", sans-serif;
+      }
+
+      /* ==== 人間味: 手書き風の言葉、傾いた写真、人の顔 ==== */
+      .hand {
+        font-family: "Klee One", "Noto Sans JP", sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+      .hero .phrase {
+        font-family: "Klee One", "Noto Sans JP", sans-serif;
+        font-weight: 600;
+        font-size: clamp(18px, 1.8vw, 23px);
+        letter-spacing: 0.2em;
+        margin-bottom: 18px;
+        text-shadow: 0 1px 10px rgba(11, 26, 36, 0.55);
+        min-height: 1.6em;
+      }
+      .hero .phrase span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .hero .phrase span.is-active {
+        opacity: 1;
+        transform: none;
+      }
+      .life h2.hand {
+        font-weight: 600;
+        letter-spacing: 0.16em;
+      }
+
+      /* 建築家の言葉 */
+      .architect {
+        padding: 96px 0;
+      }
+      .architect .g {
+        display: grid;
+        gap: 40px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .architect .g {
+          grid-template-columns: 5fr 7fr;
+          gap: 64px;
+        }
+      }
+      .architect .portrait {
+        position: relative;
+        max-width: 520px;
+      }
+      .architect .portrait::before {
+        content: "";
+        position: absolute;
+        inset: 24px -24px -24px 24px;
+        background: #fff;
+        z-index: -1;
+      }
+      .architect .portrait img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        display: block;
+      }
+      .architect .portrait figcaption {
+        margin-top: 14px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .architect blockquote {
+        margin: 0;
+        font-size: clamp(24px, 2.6vw, 34px);
+        line-height: 1.8;
+        color: var(--fg);
+      }
+      .architect blockquote span {
+        display: block;
+      }
+      .architect .body {
+        margin-top: 28px;
+        font-size: 17px;
+        color: var(--muted);
+        max-width: 36em;
+      }
+      .architect .sign {
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .architect .sign img {
+        height: 52px;
+        width: auto;
+        display: block;
+      }
+      .architect .sign span {
+        font-size: 12px;
+        color: var(--muted);
+        padding-bottom: 4px;
+      }
+      @media (max-width: 640px) {
+        .architect blockquote {
+          font-size: 21px;
+        }
+      }
+
+      /* 感謝会 */
+      .party {
+        padding: 96px 0;
+        background: linear-gradient(180deg, #f7fafc, #eef5f9);
+      }
+      .party .g {
+        display: grid;
+        gap: 48px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .party .g {
+          grid-template-columns: 6fr 6fr;
+          gap: 64px;
+        }
+      }
+      .party h2 {
+        font-size: clamp(26px, 2.8vw, 36px);
+        line-height: 1.7;
+      }
+      .party p {
+        margin-top: 20px;
+        font-size: 14px;
+        color: var(--muted);
+        max-width: 34em;
+      }
+      .party .photos {
+        position: relative;
+        height: 420px;
+      }
+      .party .photos figure {
+        position: absolute;
+        margin: 0;
+        background: #fff;
+        padding: 10px 10px 36px;
+        box-shadow: 0 18px 40px rgba(28, 91, 126, 0.12);
+      }
+      .party .photos img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+      }
+      .party .photos figcaption {
+        position: absolute;
+        left: 12px;
+        bottom: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        font-family: "Klee One", sans-serif;
+      }
+      .party .photos .p1 {
+        left: 0;
+        top: 0;
+        width: 62%;
+        transform: rotate(-2deg);
+      }
+      .party .photos .p2 {
+        right: 0;
+        bottom: 0;
+        width: 56%;
+        transform: rotate(2.5deg);
+      }
+      .party .note {
+        font-size: 12px;
+        margin-top: 24px;
+      }
+      @media (max-width: 767px) {
+        .party .photos {
+          height: auto;
+        }
+        .party .photos figure {
+          position: static;
+          display: block;
+        }
+        .party .photos .p1 {
+          width: 88%;
+        }
+        .party .photos .p2 {
+          width: 80%;
+          margin: -24px 0 0 auto;
+        }
+      }
+
+      /* お客様の声を手紙のように */
+      .voice blockquote {
+        font-size: 17px;
+        line-height: 2.1;
+      }
+      .voice footer img {
+        width: 64px;
+        height: 64px;
+      }
+      .voice footer b {
+        font-family: "Klee One", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+      }
+
+      /* 建てた街の地名が流れる帯 */
+      .towns {
+        padding: 0 0 96px;
+        overflow: hidden;
+      }
+      .towns p {
+        text-align: center;
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+      .towns .strip {
+        display: flex;
+        width: max-content;
+        animation: towns 46s linear infinite;
+      }
+      .towns ul {
+        display: flex;
+        gap: 0;
+        padding: 0 24px;
+      }
+      .towns li {
+        font-family: "Klee One", sans-serif;
+        font-weight: 600;
+        font-size: clamp(24px, 3vw, 40px);
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        padding: 0 28px;
+        white-space: nowrap;
+        opacity: 0.85;
+      }
+      .towns li::after {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: var(--line);
+        margin-left: 56px;
+        vertical-align: middle;
+      }
+      @keyframes towns {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .towns .strip {
+          animation: none;
+        }
+        .hero .phrase span {
+          transition: none;
+        }
+      }
+
+      /* ==== カスタム: 湘南の開放感と、ゆるやかな波の流れ ==== */
+      .band {
+        background: linear-gradient(180deg, #eef5f9 0%, #f7fafc 100%);
+      }
+      .band-to-blue {
+        background: linear-gradient(180deg, #f7fafc 0%, #eef5f9 100%);
+      }
+
+      /* 波の境目（2 層の白い波が異なる速さで流れる） */
+      .waves {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 72px;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .waves svg {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 200%;
+        height: 100%;
+        fill: #fff;
+        display: block;
+      }
+      /* 波の境目は静止。曲線のみ残す（アニメーションはユーザー指示で撤去） */
+      .waves .w1 {
+        animation: none;
+      }
+      .waves .w2 {
+        display: none;
+      }
+      .waves.bottom {
+        bottom: -1px;
+      }
+      .waves.top {
+        top: -1px;
+        transform: scaleY(-1);
+      }
+      .waves.top svg {
+        fill: #eef5f9;
+      }
+      .waves.top .w2 {
+        display: none;
+      }
+      @keyframes drift {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (max-width: 767px) {
+        .waves {
+          height: 40px;
+        }
+      }
+
+      /* ヒーロー写真をゆっくり寄せる（1 枚ごとに再生） */
+      /* zoom は切替(6.5s)+フェード(1.6s) より長く走らせ、退場中(is-leaving)も同じアニメーションを継続してリセットを見せない */
+      .hero .slide img {
+        transform: scale(1);
+      }
+      .hero .slide.is-active img,
+      .hero .slide.is-leaving img {
+        animation: kenburns 8.4s ease-out forwards;
+      }
+      @keyframes kenburns {
+        from {
+          transform: scale(1.1);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      /* 湘南で暮らす: 全幅の海の写真に短い言葉、スクロールで写真がゆっくり動く */
+      .life {
+        position: relative;
+        height: min(78dvh, 760px);
+        min-height: 480px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        padding: 0;
+        background: var(--scrim);
+      }
+      .life img {
+        position: absolute;
+        left: 0;
+        top: -12%;
+        width: 100%;
+        height: 124%;
+        object-fit: cover;
+      }
+      @supports (animation-timeline: view()) {
+        .life img {
+          animation: parallax linear both;
+          animation-timeline: view();
+          animation-range: entry 0% exit 100%;
+        }
+      }
+      @keyframes parallax {
+        from {
+          transform: translateY(-6%);
+        }
+        to {
+          transform: translateY(6%);
+        }
+      }
+      .life .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(11, 26, 36, 0.15),
+          rgba(11, 26, 36, 0.45)
+        );
+      }
+      .life .copy {
+        position: relative;
+        z-index: 1;
+        padding: 0 var(--pad);
+      }
+      .life h2 {
+        font-size: clamp(26px, 3.2vw, 40px);
+        line-height: 1.6;
+        font-weight: 400;
+        letter-spacing: 0.14em;
+        text-shadow: 0 2px 18px rgba(11, 26, 36, 0.5);
+      }
+      .life p {
+        margin: 24px auto 0;
+        max-width: 30em;
+        font-size: 14px;
+        line-height: 2.2;
+        text-shadow: 0 1px 10px rgba(11, 26, 36, 0.6);
+      }
+      .life .lines > span {
+        display: block;
+        overflow: hidden;
+      }
+      .life .lines > span > span {
+        display: block;
+        transform: translateY(110%);
+        transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i) * 0.14s);
+      }
+      .life .lines.is-in > span > span {
+        transform: none;
+      }
+
+      /* 実績の数字（表示時にカウントアップ） */
+      .facts {
+        padding: 72px 0 96px;
+      }
+      .facts ul {
+        display: grid;
+        gap: 32px;
+        text-align: center;
+      }
+      @media (min-width: 768px) {
+        .facts ul {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0;
+        }
+        .facts li + li {
+          border-left: 1px solid var(--line);
+        }
+      }
+      .facts b {
+        display: block;
+        font-size: clamp(44px, 5vw, 64px);
+        font-weight: 300;
+        line-height: 1.1;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+      }
+      .facts b small {
+        font-size: 0.42em;
+        font-weight: 400;
+        margin-left: 4px;
+        letter-spacing: 0.06em;
+      }
+      .facts li > span {
+        font-size: 15px;
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+      }
+      .facts b span {
+        display: inline;
+        font: inherit;
+        color: inherit;
+        margin: 0;
+      }
+
+      /* ボタンの矢印が少し前に出る */
+      .btn .arrow,
+      .link .arrow {
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn:hover .arrow {
+        transform: rotate(45deg) scale(0.7) translate(2px, -2px);
+      }
+      .link:hover .arrow {
+        transform: rotate(45deg) scale(0.7) translate(2px, -2px);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .waves svg,
+        .hero .slide img,
+        .life img {
+          animation: none !important;
+        }
+        .hero .slide img {
+          transform: none;
+        }
+        .life .lines > span > span {
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ---- スクロールで下からふわっと上がる ---- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: var(--d, 0s);
+      }
+      .reveal.is-in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ---- カルーセル（矢印ボタン付き） ---- */
+      .carousel {
+        position: relative;
+      }
+      .carousel .track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+      }
+      .carousel .track::-webkit-scrollbar {
+        display: none;
+      }
+      .carousel .track > * {
+        flex: none;
+        scroll-snap-align: start;
+      }
+      .carousel .nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 56px;
+        height: 56px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--fg);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s;
+        z-index: 2;
+      }
+      .carousel .nav:hover {
+        background: #fff;
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .carousel .nav.prev {
+        left: var(--pad);
+      }
+      .carousel .nav.next {
+        right: var(--pad);
+      }
+      .carousel .nav .arrow {
+        transform: rotate(45deg) scale(0.9);
+      }
+      .carousel .nav.prev .arrow {
+        transform: rotate(-135deg) scale(0.9);
+      }
+      .carousel .nav:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      @media (max-width: 767px) {
+        .carousel .nav {
+          width: 44px;
+          height: 44px;
+        }
+      }
+
+      /* コンセプトの全幅カルーセル */
+      .concept-carousel {
+        margin-top: 56px;
+      }
+      .concept-carousel .track > figure {
+        width: 100%;
+        margin: 0;
+        position: relative;
+        height: min(64dvh, 680px);
+        min-height: 320px;
+      }
+      .concept-carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .concept-carousel figcaption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 20px var(--pad);
+        background: linear-gradient(
+          to top,
+          rgba(11, 26, 36, 0.55),
+          transparent
+        );
+        color: #fff;
+        font-size: 13px;
+      }
+      .concept-carousel figcaption span {
+        display: block;
+        max-width: var(--w);
+        margin: 0 auto;
+      }
+      .concept-carousel .count {
+        position: absolute;
+        right: var(--pad);
+        top: 20px;
+        padding: 4px 12px;
+        background: rgba(11, 26, 36, 0.55);
+        color: #fff;
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.1em;
+        z-index: 2;
+      }
+
+      /* 施工事例カルーセル */
+      .works .carousel {
+        margin-top: 48px;
+      }
+      #works .lead {
+        max-width: none;
+      }
+      @media (min-width: 900px) {
+        #works .lead {
+          white-space: nowrap;
+        }
+      }
+      .works .carousel .nav {
+        top: calc(50% - 40px);
+      }
+
+      /* ---- 賃貸のタブ ---- */
+      .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 0;
+        margin-top: 40px;
+        border-bottom: 1px solid var(--line);
+      }
+      .tabs button {
+        appearance: none;
+        background: none;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        padding: 14px 28px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .tabs button:hover {
+        color: var(--fg);
+      }
+      .tabs button:focus {
+        outline: none;
+      }
+      .tabs button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+      }
+      .tabs button[aria-selected="true"] {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .panel[hidden] {
+        display: none;
+      }
+      .panel {
+        margin-top: 32px;
+      }
+      .lots {
+        grid-template-columns: 1fr 1fr;
+        margin-top: 0;
+      }
+      @media (min-width: 768px) {
+        .lots {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .lot.wide {
+          grid-column: auto;
+        }
+      }
+      .panel .more {
+        margin-top: 24px;
+        text-align: center;
+      }
+      @media (max-width: 640px) {
+        .tabs button {
+          padding: 12px 14px;
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a href="#" aria-label="株式会社コミュニティ湘南"
+          ><img
+            src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+            alt="株式会社コミュニティ湘南"
+            width="310"
+            height="52"
+            style="height: 36px; width: auto"
+        /></a>
+        <nav aria-label="メイン">
+          <ul>
+            <li><a href="#news">お知らせ</a></li>
+            <li><a href="#concept">家創りのコンセプト</a></li>
+            <li><a href="#sale">売買物件</a></li>
+            <li><a href="#rent">賃貸物件</a></li>
+            <li><a href="#works">施工事例</a></li>
+            <li><a href="#voices">お客様の声</a></li>
+            <li><a href="#company">会社案内</a></li>
+          </ul>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <a class="tel" href="tel:0467899811">0467-89-9811</a>
+          <a class="cta" href="#contact-cta">お問い合わせ</a>
+          <button class="menu" type="button" aria-label="メニューを開く">
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="slide is-active">
+          <img
+            src="https://www.c-shonan.co.jp/global-image/units/img/1530-13-20191030165417_b5db941a982a97.jpg"
+            alt="茅ヶ崎の砂浜と青い空。遠くに江の島が見える"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://www.c-shonan.co.jp/global-image/units/img/1639-11-20191108171915_b5dc525030d08c.jpg"
+            alt="茅ヶ崎の海岸から望む江の島とサーファーたち"
+            loading="lazy"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://www.c-shonan.co.jp/global-image/units/img/1530-14-20191030165417_b5db941a983016.jpg"
+            alt="茅ヶ崎の海に浮かぶ烏帽子岩"
+            loading="lazy"
+          />
+        </div>
+        <div class="wrap copy">
+          <p class="phrase" aria-live="polite">
+            豊かな自然の中で 大切な家族と紡ぐ かけがえのない時の流れ
+          </p>
+          <h1>建築家とともに創る、<br />湘南の憩いのわが家。</h1>
+          <p>
+            茅ヶ崎で26年。土地探しから設計、完成後のメンテナンスまで、<br
+              class="pc"
+            />地元の不動産会社が一貫してお手伝いします。
+          </p>
+          <div class="actions">
+            <a class="btn btn-outline" href="#works">施工事例を見る<span class="arrow"></span
+              ></a></a>
+          </div>
+          <div class="dots" role="tablist" aria-label="写真の切り替え">
+            <button
+              class="is-active"
+              role="tab"
+              aria-selected="true"
+              aria-label="1枚目の写真"
+            ></button>
+            <button
+              role="tab"
+              aria-selected="false"
+              aria-label="2枚目の写真"
+            ></button>
+            <button
+              role="tab"
+              aria-selected="false"
+              aria-label="3枚目の写真"
+            ></button>
+          </div>
+        </div>
+      </section>
+
+      <section id="concept">
+        <div class="wrap center reveal">
+          <h2 class="h2">住み心地を決めるのは、予算より良いプランニング。</h2>
+          <p class="lead">
+            建築家との家づくりを、設計料の負担を抑えて。<br
+              class="pc"
+            />コミュニティ湘南は一級建築士とともに、茅ヶ崎で200棟以上の住まいを手がけてきました。
+          </p>
+        </div>
+        <div
+          class="carousel concept-carousel reveal"
+          data-carousel
+          data-step="page"
+        >
+          <span class="count" aria-live="polite"
+            ><span data-current>1</span> / <span data-total>4</span></span
+          >
+          <div class="track" tabindex="0" aria-label="施工事例の写真">
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg"
+                alt="茅ヶ崎市下寺尾 U様邸のLDK"
+                loading="lazy"
+              />
+              <figcaption>
+                <span
+                  >茅ヶ崎市下寺尾
+                  U様邸。1階LDKの吹き抜けを、2階の回廊が囲む</span
+                >
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/4638-16-20191206023713_b5de940499cf62.jpg"
+                alt="茅ヶ崎市中海岸 N様邸のリビングダイニング"
+                loading="lazy"
+              />
+              <figcaption>
+                <span
+                  >茅ヶ崎市中海岸
+                  N様邸。ロフトを含めた、ゆったりとした大空間</span
+                >
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/5279-17-20191219162420_b5dfb25a47b79d.jpg"
+                alt="茅ヶ崎市下寺尾 U様邸のLDKを別角度から"
+                loading="lazy"
+              />
+              <figcaption>
+                <span
+                  >茅ヶ崎市下寺尾 U様邸。無垢材の床と、光の入る大きな窓</span
+                >
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg"
+                alt="茅ケ崎市東海岸 N様邸の外観"
+                loading="lazy"
+              />
+              <figcaption>
+                <span
+                  >茅ケ崎市東海岸
+                  N様邸。湘南の青空に映えるアメリカンスタイル</span
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <button class="nav prev" type="button" aria-label="前の写真">
+            <span class="arrow"></span>
+          </button>
+          <button class="nav next" type="button" aria-label="次の写真">
+            <span class="arrow"></span>
+          </button>
+        </div>
+        <div class="wrap rows reveal">
+          <div class="row">
+            <h3>建築家と創る、こだわりの家</h3>
+            <p>
+              センスと実力を備えた建築家と、納得いくまで間取りを相談できます。設計料の目安は建物価格の約1割ですが、その負担を大幅に軽減してご提供しています。
+            </p>
+          </div>
+          <div class="row">
+            <h3>設計から完成まで、建築士が一貫サポート</h3>
+            <p>
+              工事担当者に任せきりにせず、建築士が設計どおりに施工されているかを確認し、必要に応じて現場へ指示します。完成後の不具合にも責任をもって対応します。
+            </p>
+          </div>
+          <div class="row">
+            <h3>地震・火災に強い構造</h3>
+            <p>
+              耐震等級3、省令準耐火構造の住宅を多数施工しています。地震保険・火災保険の割引対象となり、地盤保証は20年です。
+            </p>
+          </div>
+          <div class="end">
+            <a class="link" href="#"
+              >家創りのコンセプトを読む <span class="arrow"></span
+            ></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="architect band" id="architect">
+        <div class="wrap g">
+          <figure class="portrait reveal">
+            <img
+              src="https://www.c-shonan.co.jp/global-image/units/img/7942-5-20200207101750_b5e3cbabe744a4.jpg"
+              alt="建築家と創った住まいの外観"
+              loading="lazy"
+            />
+            <figcaption>建築家との協業で建てた住まい。</figcaption>
+          </figure>
+          <div class="reveal" style="--d: 0.1s">
+            <blockquote class="hand">
+              <span>建築は丈夫でなければならない。</span
+              ><span>機能的でなければならない。</span
+              ><span>美しくなければならない。</span>
+            </blockquote>
+            <div class="body">
+              <p>
+                建物の敷地は、世界で唯一その場所だけです。その場所のポテンシャルをしっかり把握して、住まう人の考えと融合させる。敷地を読む、環境を読む、居心地を考える。いつも心がけています。
+              </p>
+              <div class="sign">
+                <img
+                  src="https://www.c-shonan.co.jp/global-image/units/img/7947-5-20220509115412_b627882545cd4e.png"
+                  alt="吉田靖の署名"
+                  loading="lazy"
+                /><span>一級建築士</span>
+              </div>
+            </div>
+            <p style="margin-top: 28px">
+              <a class="link" href="#"
+                >建築家の家について読む <span class="arrow"></span
+              ></a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="facts">
+        <div class="wrap">
+          <ul class="reveal">
+            <li>
+              <b><span data-count="26">0</span><small>年</small></b
+              ><span>2000年の創業から、茅ヶ崎で</span>
+            </li>
+            <li>
+              <b><span data-count="200">0</span><small>棟以上</small></b
+              ><span>一級建築士とともに手がけた住まい</span>
+            </li>
+            <li>
+              <b>等級<span data-count="3">0</span></b
+              ><span>最高ランクの耐震等級を多数施工</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="works" class="works band">
+        <div class="wrap center reveal">
+          <h2 class="h2">施工事例</h2>
+          <p class="lead">
+            建築主の思い、建築家の設計、施工者の技術が集まった住まいをご紹介します。
+          </p>
+        </div>
+        <div class="carousel reveal" data-carousel data-step="item">
+          <ul class="rail track" aria-label="施工事例の一覧" tabindex="0">
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg"
+                    alt="茅ケ崎市東海岸 N様邸"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ケ崎市東海岸 N様邸</h3>
+                <p>湘南の青空に映える、アメリカンスタイルの住まい</p></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/units/img/5279-10-20191217202541_b5df8bb35ead4f.jpg"
+                    alt="茅ヶ崎市下寺尾 U様邸"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ヶ崎市下寺尾 U様邸</h3>
+                <p>1階LDKの大きな吹き抜けを、2階の回廊が囲む</p></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/units/img/4638-16-20191206023713_b5de940499cf62.jpg"
+                    alt="茅ヶ崎市中海岸 N様邸"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ヶ崎市中海岸 N様邸</h3>
+                <p>ロフトを含めた、ゆったりとした大空間</p></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/units/img/9167-10-20200829120339_b5f49c58b2d65f.jpg"
+                    alt="茅ケ崎市矢畑A号棟 Y様邸"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ケ崎市矢畑A号棟 Y様邸</h3>
+                <p>2棟同時に計画し、通風・採光・眺望を両立</p></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/units/img/12847-11-20251025121137_b68fc3fe9c270b.JPG"
+                    alt="茅ヶ崎市矢畑 H様邸"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ヶ崎市矢畑 H様邸</h3>
+                <p>インナーガレージのある都市型住宅</p></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><div class="photo">
+                  <img
+                    src="https://www.c-shonan.co.jp/global-image/page/424-20201101144725.jpg"
+                    alt="茅ケ崎市西久保 新築戸建て"
+                    loading="lazy"
+                  />
+                </div>
+                <h3>茅ケ崎市西久保 新築戸建て</h3>
+                <p>高い天井と、リビングと一体のフルフラットバルコニー</p></a
+              >
+            </li>
+          </ul>
+          <button class="nav prev" type="button" aria-label="前の事例">
+            <span class="arrow"></span>
+          </button>
+          <button class="nav next" type="button" aria-label="次の事例">
+            <span class="arrow"></span>
+          </button>
+        </div>
+        <div
+          class="center reveal"
+          style="margin-top: 24px; padding-bottom: 96px"
+        >
+          <a class="btn btn-ghost" href="#"
+            >施工事例を見る <span class="arrow"></span
+          ></a>
+        </div>
+      </section>
+
+      <section id="sale">
+        <div class="wrap">
+          <div class="center reveal">
+            <h2 class="h2">販売中の物件</h2>
+            <p class="lead">
+              売主物件のため仲介手数料は不要です。参考プランもご用意しています。
+            </p>
+          </div>
+          <article class="card reveal" style="--d: 0.1s">
+            <div class="photo">
+              <img
+                src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png"
+                alt="茅ヶ崎市矢畑 小島矢畑B区画の現地"
+                loading="lazy"
+              />
+            </div>
+            <div class="body">
+              <div class="tags">
+                <span class="tag on">販売中</span
+                ><span class="tag">売主物件</span
+                ><span class="tag">仲介手数料不要</span>
+              </div>
+              <h3><a href="#">茅ヶ崎市矢畑売地 小島矢畑B区画</a></h3>
+              <p class="price">2,780万円</p>
+              <p class="desc">
+                整形地で日当たり良好。スーパーやコンビニが徒歩圏にあり、子育て世代にも便利な生活環境です。
+              </p>
+              <dl class="specs">
+                <div>
+                  <dt>土地面積</dt>
+                  <dd>135.17㎡（40.88坪）</dd>
+                </div>
+                <div>
+                  <dt>交通</dt>
+                  <dd>JR東海道線 茅ヶ崎駅 徒歩22分</dd>
+                </div>
+                <div>
+                  <dt>用途地域</dt>
+                  <dd>第1種中高層住居専用地域</dd>
+                </div>
+                <div>
+                  <dt>種別</dt>
+                  <dd>建築条件付売地</dd>
+                </div>
+              </dl>
+              <p style="margin-top: 32px">
+                <a class="btn btn-primary" href="#"
+                  >売買物件を見る <span class="arrow"></span
+                ></a>
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="voices" class="band">
+        <div class="wrap">
+          <div class="center reveal">
+            <h2 class="h2">お客様の声</h2>
+            <p class="lead">
+              コミュニティ湘南でご自宅を新築されたお客様から寄せられた声です。
+            </p>
+          </div>
+          <div class="voices reveal" style="--d: 0.1s">
+            <article class="voice">
+              <blockquote>
+                「きっかけは、希望の土地の条件を満たしていたことでしたが、来店時に須川社長が何通りか間取りを準備してくださって…」
+              </blockquote>
+              <footer>
+                <img
+                  src="https://www.c-shonan.co.jp/global-image/page/535-20220513161430.jpg"
+                  alt=""
+                  loading="lazy"
+                />
+                <div>
+                  <b>ミオ さま</b><small class="muted">2022年5月 ご新築</small>
+                </div>
+              </footer>
+            </article>
+            <article class="voice">
+              <blockquote>
+                「希望の立地であった、注文住宅並みに希望を聞いて頂けた、担当、建築士さん、工務店の方、みなさん人柄が良かった。」
+              </blockquote>
+              <footer>
+                <img
+                  src="https://www.c-shonan.co.jp/global-image/page/403-20200628125959.jpg"
+                  alt=""
+                  loading="lazy"
+                />
+                <div>
+                  <b>あつもり さま</b
+                  ><small class="muted">2020年5月 ご新築</small>
+                </div>
+              </footer>
+            </article>
+            <article class="voice">
+              <blockquote>
+                「社長の人柄に後押しされて決めました。リビングを広くして家族が自然と集まれるようにしたかったです。とても満足…」
+              </blockquote>
+              <footer>
+                <img
+                  src="https://www.c-shonan.co.jp/global-image/page/406-20200628133011.png"
+                  alt=""
+                  loading="lazy"
+                />
+                <div>
+                  <b>しおしゃけ さま</b
+                  ><small class="muted">2020年5月 ご新築</small>
+                </div>
+              </footer>
+            </article>
+          </div>
+          <div class="center reveal" style="margin-top: 32px">
+            <a class="link" href="#"
+              >お客様の声を読む <span class="arrow"></span
+            ></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="news">
+        <div class="wrap news reveal">
+          <div>
+            <h2 class="h2">お知らせ</h2>
+            <p style="margin-top: 16px">
+              <a class="link" href="#"
+                >お知らせ一覧 <span class="arrow"></span
+              ></a>
+            </p>
+          </div>
+          <ul>
+            <li>
+              <a href="#"
+                ><time>2026.07.25</time><span class="k">お知らせ</span
+                ><span class="t">夏季休暇について</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><time>2026.06.26</time><span class="k">売買</span
+                ><span class="t"
+                  >石川矢畑NO6 お蔭様でご成約となりました</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><time>2026.04.10</time><span class="k">賃貸</span
+                ><span class="t">岡田貸家 お申込みを頂きました</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><time>2026.03.29</time><span class="k">駐車場</span
+                ><span class="t">月極駐車場空き状況について</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><time>2026.03.21</time><span class="k">賃貸</span
+                ><span class="t">岡田貸家 募集中です</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="company" class="band band-to-blue">
+        <div class="wrap">
+          <h2 class="h2 reveal">会社案内・アクセス</h2>
+          <div class="access reveal" style="--d: 0.1s">
+            <div>
+              <div class="shop">
+                <img
+                  src="https://www.c-shonan.co.jp/global-image/units/img/4173-5-20230112113403_b63bf719bb50af.JPG"
+                  alt="店舗外観"
+                  loading="lazy"
+                />
+              </div>
+              <dl class="info">
+                <div>
+                  <dt>所在地</dt>
+                  <dd>〒253-0085 神奈川県茅ヶ崎市矢畑254-1</dd>
+                </div>
+                <div>
+                  <dt>アクセス</dt>
+                  <dd>JR東海道本線 茅ヶ崎駅 徒歩20分</dd>
+                </div>
+                <div>
+                  <dt>営業時間</dt>
+                  <dd>10:00〜16:00（定休日 毎週火曜日・水曜日）</dd>
+                </div>
+                <div>
+                  <dt>駐車場</dt>
+                  <dd>計6台（店舗前2台、旧店舗向かい4台）</dd>
+                </div>
+                <div>
+                  <dt>免許</dt>
+                  <dd>
+                    宅地建物取引業 神奈川県知事（3）第29447号 / 一般建設業
+                    神奈川県知事（般-2）第69917号
+                  </dd>
+                </div>
+              </dl>
+              <p style="margin-top: 20px">
+                <a class="link" href="#"
+                  >会社案内を見る <span class="arrow"></span
+                ></a>
+              </p>
+            </div>
+            <div class="map">
+              <iframe
+                title="株式会社コミュニティ湘南の地図"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3254.7870927295667!2d139.3957083176778!3d35.33610814533931!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xad295704938765c7!2z77yI5qCq77yJ44Kz44Of44Ol44OL44OG44Kj5rmY5Y2X!5e0!3m2!1sja!2sjp!4v1673492156885!5m2!1sja!2sjp"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <section class="cta" id="contact-cta" style="position: relative">
+        <div class="waves top" aria-hidden="true">
+          <svg viewBox="0 0 2880 80" preserveAspectRatio="none" class="w1">
+            <path
+              d="M0,40 C360,88 1080,-8 1440,40 C1800,88 2520,-8 2880,40 V80 H0 Z"
+            />
+          </svg>
+        </div>
+        <div class="wrap g reveal">
+          <div>
+            <h2>家づくりや土地のこと、まずはお気軽にご相談ください。</h2>
+          </div>
+          <div class="r">
+            <a class="telno" href="tel:0467899811">0467-89-9811</a>
+            <p class="hours">10:00〜16:00（定休日 毎週火曜日・水曜日）</p>
+            <a class="btn btn-white" href="#"
+              >お問い合わせ <span class="arrow"></span
+            ></a>
+          </div>
+        </div>
+      </section>
+      <div
+        class="site"
+        style="
+          border-top: 1px solid var(--line);
+          padding: 48px 0 32px;
+          font-size: 14px;
+        "
+      >
+        <div class="wrap g">
+          <div>
+            <img
+              src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+              alt="株式会社コミュニティ湘南"
+              width="310"
+              height="52"
+              style="height: 32px; width: auto"
+            />
+            <address>
+              〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br />TEL 0467-89-9811 / FAX
+              0467-89-9810<br />営業時間 10:00〜16:00（定休日
+              毎週火曜日・水曜日）
+            </address>
+          </div>
+          <nav aria-label="フッター">
+            <ul>
+              <li><a href="#news">お知らせ</a></li>
+              <li><a href="#concept">家創りのコンセプト</a></li>
+              <li><a href="#sale">売買物件</a></li>
+              <li><a href="#rent">賃貸物件</a></li>
+              <li><a href="#works">施工事例</a></li>
+              <li><a href="#voices">お客様の声</a></li>
+              <li><a href="#company">会社案内</a></li>
+              <li><a href="#contact-cta">お問い合わせ</a></li>
+              <li><a href="#">プライバシーポリシー</a></li>
+              <li><a href="#">サイトマップ</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="wrap copy">
+          © Community Shonan inc. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ヒーローの写真をゆっくり切り替える（reduced motion では固定）
+      (function () {
+        var slides = document.querySelectorAll(".hero .slide"),
+          dots = document.querySelectorAll(".hero .dots button"),
+          i = 0,
+          timer;
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var phrases = document.querySelectorAll(".hero .phrase span");
+        function show(n) {
+          var prev = i;
+          i = n;
+          slides.forEach(function (s, k) {
+            s.classList.toggle("is-active", k === n);
+            if (k === prev && prev !== n) {
+              s.classList.add("is-leaving");
+              setTimeout(function () {
+                s.classList.remove("is-leaving");
+              }, 1800);
+            }
+          });
+          phrases.forEach(function (p, k) {
+            p.classList.toggle("is-active", k === n);
+            if (k !== n) p.style.position = "absolute";
+            else p.style.position = "static";
+          });
+          dots.forEach(function (d, k) {
+            d.classList.toggle("is-active", k === n);
+            d.setAttribute("aria-selected", k === n);
+          });
+        }
+        function start() {
+          if (reduce) return;
+          clearInterval(timer);
+          timer = setInterval(function () {
+            show((i + 1) % slides.length);
+          }, 6500);
+        }
+        dots.forEach(function (d, k) {
+          d.addEventListener("click", function () {
+            show(k);
+            start();
+          });
+        });
+        start();
+      })();
+
+      // 各セクションを、視界に入ったときに下からふわっと表示する
+      (function () {
+        var els = document.querySelectorAll(".reveal");
+        if (!("IntersectionObserver" in window)) {
+          els.forEach(function (e) {
+            e.classList.add("is-in");
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) {
+                en.target.classList.add("is-in");
+                io.unobserve(en.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -5% 0px" },
+        );
+        els.forEach(function (e) {
+          io.observe(e);
+        });
+      })();
+
+      // 矢印ボタン付きカルーセル（横スクロール + スナップ）
+      document.querySelectorAll("[data-carousel]").forEach(function (c) {
+        var track = c.querySelector(".track"),
+          prev = c.querySelector(".nav.prev"),
+          next = c.querySelector(".nav.next");
+        var cur = c.querySelector("[data-current]"),
+          total = c.querySelector("[data-total]");
+        var items = track.children;
+        if (total) total.textContent = items.length;
+        function step() {
+          return c.dataset.step === "page"
+            ? track.clientWidth
+            : items[0].getBoundingClientRect().width +
+                parseFloat(getComputedStyle(track).gap || 0);
+        }
+        function maxLeft() {
+          return track.scrollWidth - track.clientWidth;
+        }
+        function update() {
+          if (cur) {
+            cur.textContent =
+              Math.round(track.scrollLeft / track.clientWidth) + 1;
+          }
+        }
+        // 端まで来たら反対側へ戻り、同じボタンを押し続けてループできる
+        prev.addEventListener("click", function () {
+          if (track.scrollLeft <= 2) {
+            track.scrollTo({ left: maxLeft(), behavior: "smooth" });
+          } else {
+            track.scrollBy({ left: -step(), behavior: "smooth" });
+          }
+        });
+        next.addEventListener("click", function () {
+          if (track.scrollLeft >= maxLeft() - 2) {
+            track.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            track.scrollBy({ left: step(), behavior: "smooth" });
+          }
+        });
+        track.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      });
+
+      // カスタム: 言葉を 1 行ずつせり上げる / 実績の数字をカウントアップ
+      (function () {
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var lines = document.querySelectorAll(".reveal-lines"),
+          nums = document.querySelectorAll("[data-count]");
+        if (!("IntersectionObserver" in window) || reduce) {
+          lines.forEach(function (e) {
+            e.classList.add("is-in");
+          });
+          nums.forEach(function (n) {
+            n.textContent = n.dataset.count;
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (es) {
+            es.forEach(function (en) {
+              if (!en.isIntersecting) return;
+              io.unobserve(en.target);
+              if (en.target.hasAttribute("data-count")) {
+                var to = +en.target.dataset.count,
+                  t0 = performance.now(),
+                  dur = 1400;
+                (function tick(t) {
+                  var k = Math.min(1, (t - t0) / dur);
+                  k = 1 - Math.pow(1 - k, 3);
+                  en.target.textContent = Math.round(to * k);
+                  if (k < 1) requestAnimationFrame(tick);
+                })(t0);
+              } else en.target.classList.add("is-in");
+            });
+          },
+          { threshold: 0.3 },
+        );
+        lines.forEach(function (e) {
+          io.observe(e);
+        });
+        nums.forEach(function (n) {
+          io.observe(n);
+        });
+      })();
+
+      // 賃貸のタブ切り替え（矢印キー対応）
+      document
+        .querySelectorAll('[role="tablist"].tabs')
+        .forEach(function (list) {
+          var tabs = Array.prototype.slice.call(
+            list.querySelectorAll('[role="tab"]'),
+          );
+          function select(tab) {
+            tabs.forEach(function (t) {
+              var on = t === tab;
+              t.setAttribute("aria-selected", on);
+              t.tabIndex = on ? 0 : -1;
+              document.getElementById(t.getAttribute("aria-controls")).hidden =
+                !on;
+            });
+            tab.focus();
+          }
+          tabs.forEach(function (t, i) {
+            t.addEventListener("click", function () {
+              select(t);
+            });
+            t.addEventListener("keydown", function (e) {
+              if (e.key === "ArrowRight") select(tabs[(i + 1) % tabs.length]);
+              if (e.key === "ArrowLeft")
+                select(tabs[(i - 1 + tabs.length) % tabs.length]);
+            });
+          });
+        });
+    </script>
+  </body>
+</html>
