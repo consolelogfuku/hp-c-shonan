@@ -1,22 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { PageHero } from "@/components/PageHero";
+import { PageHero, type PageHeroProps } from "@/components/PageHero";
 
 export const IMG = "https://www.c-shonan.co.jp/global-image";
 
-type Hero = {
-  title: string;
-  label: string;
-  lead: React.ReactNode;
-  image: string;
-  imageAlt: string;
-  imagePosition?: string;
-};
-
-export function SubpageFrame({ hero, children }: { hero: Hero; children: React.ReactNode }) {
+export function SubpageFrame({ hero, children }: { hero: PageHeroProps; children: React.ReactNode }) {
   return (
     <>
       <Header />

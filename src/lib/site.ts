@@ -258,36 +258,3 @@ export const parkingLots = [
     vacancy: 0,
   },
 ];
-
-export const news = [
-  {
-    date: "2026.07.25",
-    title: "夏季休暇について",
-    href: "/news/2026svc.html",
-    tag: "お知らせ",
-  },
-  {
-    date: "2026.06.26",
-    title: "石川矢畑NO6 お蔭様でご成約となりました",
-    href: "/news/yabata2652.html",
-    tag: "売買",
-  },
-  {
-    date: "2026.04.10",
-    title: "岡田貸家 お申込みを頂きました",
-    href: "/news/samoka3581renta.html",
-    tag: "賃貸",
-  },
-  {
-    date: "2026.03.29",
-    title: "月極駐車場空き状況について",
-    href: "/news/2512parking-copy-copy.html",
-    tag: "駐車場",
-  },
-  {
-    date: "2026.03.21",
-    title: "岡田貸家 募集中です",
-    href: "/news/samoka3581rent.html",
-    tag: "賃貸",
-  },
-];

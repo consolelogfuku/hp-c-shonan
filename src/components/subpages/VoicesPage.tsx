@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from "@/components/AppImage";
 import { voices } from "@/lib/site";
-import { IMG, SectionHead, SubpageFrame } from "./Shared";
+import { SectionHead, SubpageFrame } from "./Shared";
 
 export function VoicesPage() {
   const [featuredVoice, ...rest] = voices;
   return (
-    <SubpageFrame hero={{ title: "お客様の声", label: "Voices", lead: "家づくりを終えたご家族の、率直な言葉をご紹介します。", image: `${IMG}/units/img/4638-16-20191206023713_b5de940499cf62.jpg`, imageAlt: "家族が集まる開放的なリビング", imagePosition: "center 56%" }}>
+    <SubpageFrame hero={{ title: "お客様の声" }}>
       <section className="px-5 py-20 md:px-6 md:py-28">
         <div className="mx-auto max-w-[1280px]">
           <SectionHead title="住まい手から届いた言葉" body="家づくりを決めた理由や、完成した住まいで感じていることを伺いました。" />

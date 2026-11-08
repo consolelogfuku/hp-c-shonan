@@ -1,9 +1,9 @@
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { news } from "@/lib/site";
+import { formatNewsDate, newsArticleHref, type NewsArticle } from "@/lib/news";
 import { Reveal } from "./Reveal";
 
-export function News() {
+export function News({ articles }: { articles: readonly NewsArticle[] }) {
   return (
     <section id="news" className="py-16 md:py-24">
       <Reveal className="mx-auto grid max-w-[1280px] gap-8 px-5 md:px-6 lg:grid-cols-12">
@@ -15,11 +15,10 @@ export function News() {
           </Link>
         </div>
         <ul className="lg:col-span-8">
-          {news.map((n) => (
-            <li key={n.href} className="border-t border-line last:border-b">
-              <Link href={n.href} className="group flex flex-col gap-1 py-[18px] text-[16px] sm:flex-row sm:items-baseline sm:gap-6">
-                <time className="shrink-0 text-[14px] tabular-nums text-muted">{n.date}</time>
-                <span className="w-16 shrink-0 text-[13px] text-muted">{n.tag}</span>
+          {articles.slice(0, 5).map((n) => (
+            <li key={n.slug} className="border-t border-line last:border-b">
+              <Link href={newsArticleHref(n.slug)} className="group flex flex-col gap-1 py-[18px] text-[16px] sm:flex-row sm:items-baseline sm:gap-6">
+                <time dateTime={n.date} className="shrink-0 text-[14px] tabular-nums text-muted">{formatNewsDate(n.date)}</time>
                 <span className="leading-[1.6] group-hover:text-accent">{n.title}</span>
               </Link>
             </li>

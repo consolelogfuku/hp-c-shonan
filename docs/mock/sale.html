@@ -48,13 +48,11 @@
           <li><a href="works.html">施工事例</a></li>
           <li><a href="voices.html">お客様の声</a></li>
           <li><a href="company.html">会社案内</a></li>
-          <li><a class="mobile-contact" href="#contact-cta">お問い合わせ</a></li>
         </ul>
       </nav>
     </header>
     <main id="main">
-      <section class="page-hero" aria-labelledby="page-title" style="--hero-position: center 58%">
-        <img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="茅ヶ崎市矢畑の販売中の土地" width="1600" height="1067" />
+      <section class="page-hero" aria-labelledby="page-title">
         <div class="wrap hero-copy">
           <nav class="breadcrumbs" aria-label="パンくずリスト"><a href="top.html">トップ</a><span class="separator" aria-hidden="true"></span><span aria-current="page">売買物件</span></nav>
           <p class="page-label">Sale</p>
@@ -62,37 +60,55 @@
           <p class="lead">茅ヶ崎で、土地と住まいの可能性を一緒に考えます。</p>
         </div>
       </section>
-      <section class="section" aria-labelledby="featured-title">
+      <section class="section property-list-section" aria-label="売買物件一覧">
         <div class="wrap">
-          <article class="feature-property">
-            <figure><img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="茅ヶ崎市矢畑 小島矢畑B区画の現地" width="1200" height="800" loading="lazy" /></figure>
-            <div class="feature-copy">
-              <div class="meta-row"><span class="status">販売中</span><span>売主物件</span></div>
-              <h2 id="featured-title">茅ヶ崎市矢畑売地<br />小島矢畑B区画</h2>
-              <p>整形地で日当たり良好。スーパーやコンビニが徒歩圏にあり、子育て世代にも便利な生活環境です。</p>
-              <p class="price">2,780万円</p>
-              <dl class="specs">
-                <div><dt>土地面積</dt><dd>135.17㎡（40.88坪）</dd></div>
-                <div><dt>交通</dt><dd>茅ヶ崎駅 徒歩22分</dd></div>
-                <div><dt>用途地域</dt><dd>第1種中高層住居専用地域</dd></div>
-                <div><dt>種別</dt><dd>建築条件付売地</dd></div>
-              </dl>
-              <a class="btn" href="#">物件の詳細を見る<span class="arrow" aria-hidden="true"></span></a>
-            </div>
-          </article>
-        </div>
-      </section>
-      <section class="section section-tint" aria-labelledby="past-sale-title">
-        <div class="wrap">
-          <div class="section-head">
-            <h2 id="past-sale-title">これまでの取扱物件</h2>
-            <p>土地の特徴を読み、ご家族の暮らしまで見据えた住まいをご提案してきました。</p>
+          <div class="property-filter" data-property-filter>
+            <label class="filter-field">
+              <span>販売状況</span>
+              <span class="select-wrap">
+                <select data-filter-group="status" aria-label="販売状況で絞り込む">
+                  <option value="all">すべて</option>
+                  <option value="active">販売中</option>
+                  <option value="closed">成約済み</option>
+                </select>
+              </span>
+            </label>
+            <label class="filter-field">
+              <span>取引態様</span>
+              <span class="select-wrap">
+                <select data-filter-group="type" aria-label="取引態様で絞り込む">
+                  <option value="all">すべて</option>
+                  <option value="owner">売主物件</option>
+                  <option value="broker">仲介物件</option>
+                </select>
+              </span>
+            </label>
           </div>
-          <div class="listing-grid">
-            <article class="listing-card"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/12847-11-20251025121137_b68fc3fe9c270b.JPG" alt="茅ヶ崎市矢畑の新築戸建て" width="900" height="600" loading="lazy" /></figure><div class="meta-row"><span class="status muted">ご成約済み</span><span>売主</span></div><h3>茅ヶ崎市矢畑 新築戸建</h3><p class="description">高い勾配天井と大きな窓を備えた、開放感のある住まい。</p><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
-            <article class="listing-card"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/9167-10-20200829120339_b5f49c58b2d65f.jpg" alt="茅ヶ崎市矢畑A号棟の外観" width="900" height="600" loading="lazy" /></figure><div class="meta-row"><span class="status muted">ご成約済み</span><span>売主</span></div><h3>茅ヶ崎市矢畑 A号棟</h3><p class="description">通風・採光・眺望を生かして計画した新築戸建て。</p><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
-            <article class="listing-card"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="茅ヶ崎市東海岸北の住宅外観" width="900" height="600" loading="lazy" /></figure><div class="meta-row"><span class="status muted">ご成約済み</span><span>売主</span></div><h3>茅ヶ崎市東海岸北2丁目</h3><p class="description">駅や海へ歩ける、暮らしやすい住宅地の物件。</p><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
-            <article class="listing-card"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/page/424-20201101144725.jpg" alt="茅ヶ崎市西久保の新築戸建て" width="900" height="600" loading="lazy" /></figure><div class="meta-row"><span class="status muted">ご成約済み</span><span>売主</span></div><h3>茅ヶ崎市西久保 新築戸建て</h3><p class="description">高い天井とフルフラットバルコニーのある住まい。</p><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+
+          <div class="listing-results-heading">
+            <p id="property-result-summary" aria-live="polite"><strong>8</strong>件の物件</p>
+          </div>
+
+          <div class="listing-grid sale-listing-grid" id="property-list">
+            <article class="listing-card property-card" data-status="active" data-type="owner"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="茅ヶ崎市矢畑 小島矢畑B区画の現地" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--active">販売中</span><span class="property-label property-label--type">売主物件</span></div><h3>茅ヶ崎市矢畑売地 小島矢畑B区画</h3><p class="card-price">2,780万円</p><dl class="card-specs"><div><dt>土地面積</dt><dd>135.17㎡</dd></div><div><dt>交通</dt><dd>茅ヶ崎駅 徒歩22分</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="active" data-type="owner"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/9167-10-20200829120339_b5f49c58b2d65f.jpg" alt="茅ヶ崎市矢畑A区画の現地イメージ" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--active">販売中</span><span class="property-label property-label--type">売主物件</span></div><h3>茅ヶ崎市矢畑売地 A区画</h3><p class="card-price">2,980万円</p><dl class="card-specs"><div><dt>土地面積</dt><dd>124.10㎡</dd></div><div><dt>交通</dt><dd>茅ヶ崎駅 バス8分</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="active" data-type="broker"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="茅ヶ崎市浜之郷の売地イメージ" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--active">販売中</span><span class="property-label property-label--type">仲介物件</span></div><h3>茅ヶ崎市浜之郷 売地</h3><p class="card-price">3,280万円</p><dl class="card-specs"><div><dt>土地面積</dt><dd>118.42㎡</dd></div><div><dt>交通</dt><dd>北茅ヶ崎駅 徒歩18分</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="active" data-type="owner"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/page/424-20201101144725.jpg" alt="茅ヶ崎市松林の新築戸建てイメージ" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--active">販売中</span><span class="property-label property-label--type">売主物件</span></div><h3>茅ヶ崎市松林 新築戸建て</h3><p class="card-price">5,680万円</p><dl class="card-specs"><div><dt>間取り</dt><dd>3LDK＋WIC</dd></div><div><dt>交通</dt><dd>辻堂駅 徒歩24分</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="closed" data-type="owner"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/12847-11-20251025121137_b68fc3fe9c270b.JPG" alt="茅ヶ崎市矢畑の新築戸建て" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--closed">成約済み</span><span class="property-label property-label--type">売主物件</span></div><h3>茅ヶ崎市矢畑 新築戸建</h3><p class="description">高い勾配天井と大きな窓を備えた、開放感のある住まい。</p><dl class="card-specs"><div><dt>種別</dt><dd>新築戸建て</dd></div><div><dt>所在地</dt><dd>茅ヶ崎市矢畑</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="closed" data-type="broker"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/9167-10-20200829120339_b5f49c58b2d65f.jpg" alt="茅ヶ崎市矢畑A号棟の外観" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--closed">成約済み</span><span class="property-label property-label--type">仲介物件</span></div><h3>茅ヶ崎市矢畑 A号棟</h3><p class="description">通風・採光・眺望を生かして計画した新築戸建て。</p><dl class="card-specs"><div><dt>種別</dt><dd>新築戸建て</dd></div><div><dt>所在地</dt><dd>茅ヶ崎市矢畑</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="closed" data-type="broker"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="茅ヶ崎市東海岸北の住宅外観" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--closed">成約済み</span><span class="property-label property-label--type">仲介物件</span></div><h3>茅ヶ崎市東海岸北2丁目</h3><p class="description">駅や海へ歩ける、暮らしやすい住宅地の物件。</p><dl class="card-specs"><div><dt>種別</dt><dd>売地</dd></div><div><dt>所在地</dt><dd>茅ヶ崎市東海岸北</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+            <article class="listing-card property-card" data-status="closed" data-type="owner"><a href="#"><figure><img src="https://www.c-shonan.co.jp/global-image/page/424-20201101144725.jpg" alt="茅ヶ崎市西久保の新築戸建て" width="900" height="600" loading="lazy" /></figure><div class="property-labels" aria-label="物件の状態と種別"><span class="property-label property-label--closed">成約済み</span><span class="property-label property-label--type">売主物件</span></div><h3>茅ヶ崎市西久保 新築戸建て</h3><p class="description">高い天井とフルフラットバルコニーのある住まい。</p><dl class="card-specs"><div><dt>種別</dt><dd>新築戸建て</dd></div><div><dt>所在地</dt><dd>茅ヶ崎市西久保</dd></div></dl><span class="card-link">詳細を見る<span class="arrow" aria-hidden="true"></span></span></a></article>
+          </div>
+
+          <nav class="property-pagination" aria-label="売買物件のページ" data-property-pagination>
+            <button type="button" data-page-action="previous">前へ</button>
+            <div class="page-numbers" data-page-numbers></div>
+            <button type="button" data-page-action="next">次へ</button>
+          </nav>
+
+          <div class="property-empty" id="property-empty" hidden>
+            <p>選択した条件に一致する物件はありません。</p>
+            <button type="button" data-reset-property-filter>すべての物件を表示</button>
           </div>
         </div>
       </section>

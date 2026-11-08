@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>コミュニティ湘南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&amp;family=Noto+Sans+JP:wght@300;400&amp;family=Shippori+Mincho+B1:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#1A1A1A}a:hover{color:#555555}
+.ph{overflow:hidden;display:block;background:#EEEEEE}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+/* ヘッダーを上に固定する。ページ内リンクの移動先はヘッダーの高さ分ずらす */
+.site-h{position:sticky;top:0;z-index:40}
+[id]{scroll-margin-top:90px}
+/* ハンバーガーメニュー: 左に板が出る（動きなし）。右側を押しても閉じる */
+.gmenu{position:fixed;inset:0;z-index:50;font-family:'Noto Sans JP',sans-serif;font-weight:300;color:#1A1A1A;visibility:hidden;pointer-events:none;transition:visibility 0s .35s}
+.gmenu.is-open{visibility:visible;pointer-events:auto;transition:visibility 0s}
+.gmenu *{box-sizing:border-box}
+.gm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .35s ease}
+.gmenu.is-open .gm-backdrop{opacity:1}
+.gm-panel{position:absolute;left:0;top:0;bottom:0;width:min(400px,86vw);display:flex;flex-direction:column;overflow-y:auto;background:#FFFFFF;transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.75,.15,1)}
+.gmenu.is-open .gm-panel{transform:none}
+@media (prefers-reduced-motion: reduce){.gmenu,.gm-backdrop,.gm-panel{transition:none}}
+.gm-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 32px 22px clamp(20px,4vw,56px)}
+.menu-close{display:inline-flex;align-items:center;gap:12px;min-height:44px;padding:0;background:transparent;border:0;color:#1A1A1A;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.24em}
+.gm-x{position:relative;width:26px;height:14px;flex:none}
+.gm-x::before,.gm-x::after{content:"";position:absolute;left:3px;top:50%;width:20px;height:1px;background:#1A1A1A}
+.gm-x::before{transform:rotate(45deg)}
+.gm-x::after{transform:rotate(-45deg)}
+.gm-body{display:flex;flex-direction:column;gap:36px;padding:24px 32px 32px clamp(20px,4vw,56px)}
+.gm-col{display:flex;flex-direction:column}
+.gm-h{margin:0 0 10px;padding-bottom:10px;border-bottom:1px solid #1A1A1A;font-size:12px;letter-spacing:.14em;color:#767676}
+.gm-col a{padding:10px 0;font-size:17px;letter-spacing:.08em;text-decoration:none}
+.gm-foot{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:auto;padding:28px 32px 36px clamp(20px,4vw,56px);border-top:1px solid #E2E2E2}
+.gm-tel{font-size:20px;letter-spacing:.08em;text-decoration:none}
+.gm-btn{display:inline-flex;align-items:center;min-height:46px;padding:0 26px;background:#1A1A1A;color:#fff !important;font-size:13px;letter-spacing:.12em;text-decoration:none}
+.gm-foot p{margin:0;font-size:12px;color:#767676}
+/* 2つの柱: 大きな細い見出しと黒い小さなボタン */
+.pillar{display:grid;grid-template-columns:58fr 42fr;gap:clamp(32px,5vw,80px);align-items:center}
+.pillar.flip{grid-template-columns:42fr 58fr}
+.pillar.flip .ph{order:2}
+.pillar.flip .pt{justify-self:end}
+.pt h2{margin:0;font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:clamp(30px,3.2vw,44px);letter-spacing:.06em;line-height:1.5}
+.pt p{margin:28px 0 0;font-size:14px;line-height:2.2;letter-spacing:.06em}
+.pt p{word-break:auto-phrase}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.btns a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 22px 0 34px;background:#1A1A1A;color:#fff;font-size:13px;letter-spacing:.08em;text-decoration:none}
+.btns a:hover{background:#444;color:#fff}
+.btns a::before{content:"";position:absolute;left:16px;top:50%;width:6px;height:6px;border-top:1px solid #fff;border-right:1px solid #fff;transform:translateY(-50%) rotate(45deg)}
+/* 設計コンセプト: 文章と写真を左右に、縦書きの小さな英字ラベル */
+.cx{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:clamp(40px,6vw,96px);align-items:center}
+.cx-t{position:relative;padding-left:52px}
+.cx-v{position:absolute;left:0;top:120px;writing-mode:vertical-rl;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.4em;color:#767676}
+.cx-l{display:inline-block;padding-bottom:6px;border-bottom:1px solid #1A1A1A;font-size:14px;letter-spacing:.12em}
+.cx h2{margin:28px 0 0;font-family:'Noto Sans JP',sans-serif;font-weight:300;font-size:clamp(28px,2.8vw,40px);letter-spacing:.06em;line-height:1.6}
+.cx p{margin:28px 0 0;font-size:14px;line-height:2.2;letter-spacing:.06em}
+.cx .cx-n{margin-top:18px;color:#767676;font-size:13px}
+/* 最初の画面: 白い余白で額縁のように見せる */
+:root{--frame:clamp(12px,2vw,28px)}
+.hero{box-sizing:border-box}
+.hero{height:calc(100svh - 90px);min-height:520px}
+.hero-s{position:absolute;inset:0}
+.hero-s img{width:100%;height:100%;object-fit:cover}
+/* 写真を4列2段で並べる（横スクロールなし） */
+.strip > .ph{aspect-ratio:4 / 3}
+@media (max-width: 860px){
+.hnav{display:none !important}
+.scene{grid-template-columns:repeat(6,minmax(0,1fr)) !important}
+.scene > *{grid-column:1 / -1 !important;margin-top:0 !important}
+.scene > .narrow{grid-column:3 / -1 !important}
+.stag > *{margin-top:0 !important}
+.strip{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important}
+.split{flex-direction:column !important}
+.split > *{flex:1 1 auto !important}
+.site-h{gap:10px !important;padding:16px 20px !important}
+.mlabel{display:none}
+.gm-top,.gm-body,.gm-foot{padding-left:20px;padding-right:20px}
+.gm-top{padding-top:16px;padding-bottom:16px}
+.gm-panel .mlabel{display:inline}
+.logo-i{width:150px !important}
+.cta-s{padding:0 14px !important;white-space:nowrap}
+.pillar,.pillar.flip{grid-template-columns:1fr}
+.pillar.flip .ph{order:0}
+.pillar.flip .pt{justify-self:stretch}
+#pillars{padding-top:120px !important}
+#pillars > div{gap:96px !important}
+.pt p br{display:none}
+[id]{scroll-margin-top:78px}
+.cx{grid-template-columns:1fr}
+.cx-t{padding-left:0}
+.cx-v{display:none}
+.cx p br{display:none}
+.cx p{word-break:auto-phrase}
+#about{padding-top:120px !important}
+.hero{height:calc(100svh - 78px)}
+.hero-t{padding:0 24px;word-break:auto-phrase}
+}
+</style>
+</head>
+<body>
+<div style="font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif; font-weight: 300; color: #1A1A1A; background: #FFFFFF; line-height: 1.9">
+
+<header class="site-h" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 22px clamp(20px, 4vw, 56px); background: #FFFFFF">
+<div style="display: flex; align-items: center; gap: 28px">
+<button type="button" class="menu-open" aria-label="メニューを開く" aria-controls="menu" aria-expanded="false" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 0; background: transparent; border: 0; color: #1A1A1A; cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.24em"><svg aria-hidden="true" width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 1h26M0 7h26M0 13h26"></path></svg><span class="mlabel">MENU</span></button>
+</div>
+<a href="#" style="display: flex"><img class="logo-i" src="../v3/images/logo.png" alt="株式会社コミュニティ湘南" style="width: 200px; height: auto; display: block"></a>
+<div style="display: flex; justify-content: flex-end; align-items: center; gap: 24px">
+<a class="cta-s" href="tel:0467899811" style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border: 1px solid #1A1A1A; text-decoration: none; font-family: 'Noto Sans JP', sans-serif; line-height: 1.25"><span style="font-size: 10px; letter-spacing: 0.14em; color: #767676">お問い合わせ</span><span style="font-size: 15px; letter-spacing: 0.08em">0467-89-9811</span></a>
+</div>
+</header>
+
+<div id="menu" class="gmenu" aria-hidden="true">
+<div class="gm-backdrop"></div>
+<div class="gm-panel" role="dialog" aria-modal="true" aria-label="メニュー">
+<div class="gm-top">
+<button type="button" class="menu-close" aria-label="メニューを閉じる"><span class="gm-x" aria-hidden="true"></span><span class="mlabel">CLOSE</span></button>
+</div>
+<nav class="gm-body" aria-label="メニュー">
+<div class="gm-col">
+<p class="gm-h">家づくり</p>
+<a href="#houses">施工事例</a>
+<a href="#about">設計コンセプト</a>
+<a href="#voices">お客様の声</a>
+<a href="#company">会社案内</a>
+<a href="#news">お知らせ</a>
+</div>
+<div class="gm-col">
+<p class="gm-h">物件を探す</p>
+<a href="#">売買物件</a>
+<a href="#">賃貸物件</a>
+<a href="#">貸駐車場</a>
+</div>
+</nav>
+<div class="gm-foot">
+<a class="gm-tel" href="tel:0467899811">0467-89-9811</a>
+<a class="gm-btn" href="#contact">お問い合わせ</a>
+<p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）</p>
+</div>
+</div>
+</div>
+
+<section class="hero" style="position: relative; padding: 0 var(--frame) var(--frame); background: #FFFFFF">
+<div class="frame" style="position: relative; height: 100%; overflow: hidden; background: #1A1A1A">
+<div style="position: absolute; inset: 0">
+<figure class="hero-s" style="margin: 0"><img src="../v3/images/works/kagawa/11.jpg" alt="吹き抜けのある明るいリビング"></figure>
+</div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(20, 18, 16, 0.18)"></div>
+<h1 class="hero-t" style="position: absolute; left: 0; right: 0; bottom: 88px; margin: 0; text-align: center; color: #fff; font-family: 'Shippori Mincho B1', serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 32px); letter-spacing: 0.28em; line-height: 1.9; text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4)">建築家とともに創る、湘南の住まい。</h1>
+</div>
+</section>
+
+<section id="works" style="padding: 160px clamp(20px, 4vw, 56px) 0">
+<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px">
+<a class="ph" href="#" style="aspect-ratio: 16 / 9"><img src="../v3/images/works/kowada/05.jpg" alt="梁と木の天井のLDK"></a>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 16px">
+<a class="ph" href="#" style="aspect-ratio: 4 / 3"><img src="../v3/images/works/shimoterao/08.jpg" alt="無垢床のLDK"></a>
+<a class="ph" href="#" style="aspect-ratio: 4 / 3"><img src="../v3/images/works/kowada/15.jpg" alt="中庭のウッドデッキ"></a>
+</div>
+</div>
+</section>
+
+<section style="padding-top: 16px">
+<a class="ph para" href="#" style="height: 820px"><img src="../v3/images/works/matsubayashi/20.jpg" alt="吹き抜けから見下ろすリビング"></a>
+</section>
+
+<section style="padding: 16px clamp(20px, 4vw, 56px) 0">
+<div style="max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px">
+<a class="ph" href="#" style="aspect-ratio: 3 / 4"><img src="../v3/images/works/shimoterao/09.jpg" alt="木のキッチン"></a>
+<a class="ph" href="#" style="aspect-ratio: 3 / 4"><img src="../v3/images/works/kagawa/12.jpg" alt="窓辺のベンチ"></a>
+<a class="ph" href="#" style="aspect-ratio: 3 / 4"><img src="../v3/images/works/higashikaigan/19.jpg" alt="造作の書斎"></a>
+</div>
+</section>
+
+<section style="padding: 16px 0 0">
+<div class="strip" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px)">
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/matsubayashi/09.jpg" alt="リビング階段"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/kowada/08.jpg" alt="アイランドキッチン"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/kagawa/21.jpg" alt="吹き抜けを見下ろす"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/shimoterao/12.jpg" alt="木の手すりの階段"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/higashikaigan/11.jpg" alt="白いキッチン"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/kagawa/15.jpg" alt="ダイニング"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/kowada/16.jpg" alt="中庭を囲む2階"></a>
+<a class="ph" href="#" style="flex: none"><img src="../v3/images/works/shimoterao/24.jpg" alt="洗面室"></a>
+</div>
+</section>
+
+
+<section id="pillars" style="padding: 200px clamp(20px, 4vw, 56px) 0">
+<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 140px">
+<div class="pillar">
+<a class="ph" href="#" style="aspect-ratio: 8 / 5"><img src="../v3/images/works/shimoterao/07.jpg" alt="無垢の床と梁のあるLDK"></a>
+<div class="pt">
+<h2>注文住宅</h2>
+<p>住み心地を決めるのは、予算より良いプランニング。<br>一級建築士と、設計から完成まで一緒に考えます。</p>
+<div class="btns"><a href="#houses">施工事例を見る</a><a href="#concept">コンセプト</a></div>
+</div>
+</div>
+<div class="pillar flip">
+<a class="ph" href="#" style="aspect-ratio: 8 / 5"><img src="../v3/images/works/kagawa/09.jpg" alt="吹き抜けのある明るいリビング"></a>
+<div class="pt">
+<h2>新築戸建て</h2>
+<p>売主として、茅ヶ崎の新築戸建てを販売しています。<br>売主物件は、仲介手数料がかかりません。</p>
+<div class="btns"><a href="#">販売中の物件</a><a href="#">これまでの物件</a></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="houses" style="padding: 200px clamp(20px, 4vw, 56px) 0">
+<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.4em; color: #767676">WORKS</span>
+<h2 style="margin: 0; font-family: 'Shippori Mincho B1', serif; font-weight: 400; font-size: 26px; letter-spacing: 0.24em">施工事例</h2>
+</div>
+<div class="stag" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 32px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 32px">
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/kagawa/14.jpg" alt="施工事例 吹き抜けのリビング"></a>
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/matsubayashi/10.jpg" alt="施工事例 グレーを基調としたリビング"></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 32px">
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/shimoterao/14.jpg" alt="施工事例 無垢の床と木の手すり"></a>
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/higashikaigan/01.jpg" alt="施工事例 グレーの外観"></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 32px">
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/kowada/04.jpg" alt="施工事例 木の天井のリビング"></a>
+<a class="ph" href="#" style="aspect-ratio: 4 / 5"><img src="../v3/images/works/ninomiya/07.jpg" alt="施工事例 梁のあるリビング"></a>
+</div>
+</div>
+<div style="display: flex; justify-content: center">
+<a href="#" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 44px; border: 1px solid #1A1A1A; text-decoration: none; font-size: 13px; letter-spacing: 0.2em">施工事例一覧</a>
+</div>
+</div>
+</section>
+
+<section id="about" style="padding: 220px clamp(20px, 4vw, 56px) 0">
+<div class="cx">
+<div class="cx-t">
+<span class="cx-v" aria-hidden="true">CONCEPT</span>
+<span class="cx-l">設計コンセプト</span>
+<h2>敷地を読む、<br>環境を読む、<br>居心地を考える。</h2>
+<p>建築は丈夫でなければならない。<br>機能的でなければならない。<br>美しくなければならない。</p>
+<p>建物の敷地は、世界で唯一その場所だけです。<br>その場所のポテンシャルをしっかり把握して、<br>住まう人の考えと融合させる。</p>
+<p class="cx-n">一級建築士 吉田 靖</p>
+<div class="btns"><a href="#">設計コンセプト</a><a href="#">耐震・性能</a></div>
+</div>
+<a class="ph" href="#" style="aspect-ratio: 4 / 3"><img src="../v3/images/works/shimoterao/01.jpg" alt="シンメトリーな外観の住まい"></a>
+</div>
+</section>
+
+<section style="padding: 200px clamp(20px, 4vw, 56px) 0">
+<div style="max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 32px">
+<a id="concept" href="#" style="display: flex; flex-direction: column; gap: 24px; text-decoration: none">
+<span class="ph" style="aspect-ratio: 3 / 4; position: relative"><img src="../v3/images/sea-beach.jpg" alt="夕暮れの湘南の浜辺"><span style="position: absolute; right: 12px; bottom: 10px; font-size: 11px; color: #fff; letter-spacing: 0.08em; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6)">写真はイメージです</span></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 14px; letter-spacing: 0.36em; color: #767676">CONCEPT</span><span style="font-family: 'Shippori Mincho B1', serif; font-size: 20px; letter-spacing: 0.2em">コンセプト</span></span>
+</a>
+<a id="voices" href="#" style="display: flex; flex-direction: column; gap: 24px; text-decoration: none">
+<span class="ph" style="aspect-ratio: 3 / 4"><img src="../v3/images/concept/thanks2.jpg" alt="お客様との食事会の様子"></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 14px; letter-spacing: 0.36em; color: #767676">VOICES</span><span style="font-family: 'Shippori Mincho B1', serif; font-size: 20px; letter-spacing: 0.2em">お客様の声</span></span>
+</a>
+<a id="company" href="#" style="display: flex; flex-direction: column; gap: 24px; text-decoration: none">
+<span class="ph" style="aspect-ratio: 3 / 4"><img src="../v3/images/works/ninomiya/01.jpg" alt="白い外観の住まい"></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'Cormorant Garamond', serif; font-size: 14px; letter-spacing: 0.36em; color: #767676">COMPANY</span><span style="font-family: 'Shippori Mincho B1', serif; font-size: 20px; letter-spacing: 0.2em">会社案内</span></span>
+</a>
+</div>
+</section>
+
+<section id="news" style="padding: 200px clamp(20px, 4vw, 56px) 200px">
+<div style="max-width: 960px; margin: 0 auto; display: flex; gap: 40px 80px; flex-wrap: wrap">
+<div style="flex: 0 0 180px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.4em; color: #767676">NEWS</span>
+<h2 style="margin: 0; font-family: 'Shippori Mincho B1', serif; font-weight: 400; font-size: 22px; letter-spacing: 0.2em">お知らせ</h2>
+</div>
+<ul style="flex: 999 1 480px; min-width: 0; list-style: none; margin: 0; padding: 0; border-top: 1px solid #E2E2E2">
+<li style="border-bottom: 1px solid #E2E2E2"><a href="#" style="display: flex; gap: 40px; flex-wrap: wrap; padding: 24px 4px; text-decoration: none; font-size: 14px; letter-spacing: 0.06em"><time style="font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: #767676; letter-spacing: 0.08em">2026.07.25</time><span>夏季休暇について</span></a></li>
+<li style="border-bottom: 1px solid #E2E2E2"><a href="#" style="display: flex; gap: 40px; flex-wrap: wrap; padding: 24px 4px; text-decoration: none; font-size: 14px; letter-spacing: 0.06em"><time style="font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: #767676; letter-spacing: 0.08em">2026.06.26</time><span>石川矢畑NO6 お蔭様でご成約となりました</span></a></li>
+<li style="border-bottom: 1px solid #E2E2E2"><a href="#" style="display: flex; gap: 40px; flex-wrap: wrap; padding: 24px 4px; text-decoration: none; font-size: 14px; letter-spacing: 0.06em"><time style="font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: #767676; letter-spacing: 0.08em">2026.04.10</time><span>岡田貸家 お申込みを頂きました</span></a></li>
+</ul>
+</div>
+</section>
+
+<section id="contact" style="position: relative; height: 720px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff">
+<img src="../v3/images/day-night.jpg" alt="夜、窓に明かりが灯る家" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(16, 14, 12, 0.45)"></div>
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 32px; padding: 0 24px">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.4em">CONTACT</span>
+<h2 style="margin: 0; font-family: 'Shippori Mincho B1', serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 32px); letter-spacing: 0.22em; line-height: 2">ご家族の一日を、聞かせてください。</h2>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center">
+<a href="tel:0467899811" style="display: inline-flex; align-items: center; justify-content: center; min-width: 220px; min-height: 52px; padding: 0 28px; border: 1px solid #fff; color: #fff; text-decoration: none; font-family: 'Noto Sans JP', sans-serif; font-size: 17px; letter-spacing: 0.08em">0467-89-9811</a>
+<a href="#" style="display: inline-flex; align-items: center; justify-content: center; min-width: 220px; min-height: 52px; padding: 0 28px; background: #fff; color: #1A1A1A; text-decoration: none; font-size: 13px; letter-spacing: 0.2em">お問い合わせ</a>
+</div>
+</div>
+<span style="position: absolute; right: 18px; bottom: 14px; font-size: 11px; letter-spacing: 0.1em">写真はイメージです</span>
+</section>
+
+<footer style="padding: 80px clamp(20px, 4vw, 56px) 40px">
+<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+<div style="display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<img src="../v3/images/logo.png" alt="株式会社コミュニティ湘南" style="width: 200px; height: auto; display: block">
+<p style="margin: 0; font-size: 13px; line-height: 2; color: #555555">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>営業時間 10:00〜16:00(定休日 毎週火曜日・水曜日)</p>
+</div>
+<div style="display: flex; gap: 56px; flex-wrap: wrap; font-size: 13px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.3em; color: #767676">HOME</span>
+<a href="#works" style="text-decoration: none">施工事例</a>
+<a href="#concept" style="text-decoration: none">コンセプト</a>
+<a href="#voices" style="text-decoration: none">お客様の声</a>
+<a href="#company" style="text-decoration: none">会社案内</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.3em; color: #767676">PROPERTY</span>
+<a href="#" style="text-decoration: none">売買物件</a>
+<a href="#" style="text-decoration: none">賃貸物件</a>
+<a href="#" style="text-decoration: none">貸駐車場</a>
+</div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid #E2E2E2; font-size: 12px; color: #767676; line-height: 1.9">
+<span>宅地建物取引業 神奈川県知事(3)第29447号 / 一般建設業 神奈川県知事(般-2)第69917号</span>
+<span style="font-family: 'Cormorant Garamond', serif; letter-spacing: 0.1em">© COMMUNITY SHONAN</span>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+// メニューを開く・閉じる（動きなし）
+(function () {
+  var menu = document.getElementById("menu");
+  var openBtn = document.querySelector(".menu-open");
+  function setOpen(open) {
+    menu.classList.toggle("is-open", open);
+    menu.setAttribute("aria-hidden", open ? "false" : "true");
+    openBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) menu.querySelector(".menu-close").focus({ preventScroll: true }); else openBtn.focus({ preventScroll: true });
+  }
+  openBtn.addEventListener("click", function () { setOpen(true); });
+  menu.querySelector(".menu-close").addEventListener("click", function () { setOpen(false); });
+  menu.querySelector(".gm-backdrop").addEventListener("click", function () { setOpen(false); });
+  menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { setOpen(false); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menu.classList.contains("is-open")) setOpen(false); });
+})();
+</script>
+</body>
+</html>

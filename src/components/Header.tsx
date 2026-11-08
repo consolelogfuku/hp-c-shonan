@@ -1,16 +1,14 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
+import { useLocation } from "@tanstack/react-router";
 import { useState } from "react";
-import { List, X } from "@phosphor-icons/react/dist/ssr";
+import { X } from "@phosphor-icons/react/dist/ssr";
 import { nav, site } from "@/lib/site";
 
 // 塗り壁の背景となじむよう、罫線ではなく半透明 + ぼかしで区切る
 export function Header() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = useLocation({ select: (location) => location.pathname });
 
   const isCurrent = (href: string) => {
     const normalizedHref = href === "/" ? href : href.replace(/\/$/, "");
@@ -56,35 +54,47 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "メニューを閉じる" : "メニューを開く"}
-            className="inline-flex h-10 w-10 items-center justify-center border border-line bg-surface xl:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-accent bg-accent text-white transition-colors hover:bg-accent-hover xl:hidden"
           >
-            {open ? <X size={20} aria-hidden /> : <List size={20} aria-hidden />}
+            {open ? (
+              <X size={20} weight="regular" aria-hidden />
+            ) : (
+              <span
+                aria-hidden
+                className="block h-[1.5px] w-4 bg-white shadow-[0_-5px_0_white,0_5px_0_white]"
+              />
+            )}
           </button>
         </div>
       </div>
 
-      <div id="mobile-nav" hidden={!open} className="border-t border-line bg-surface xl:hidden">
-        <ul className="mx-auto grid max-w-[1280px] gap-1 px-5 py-4 md:px-6">
+      <nav
+        id="mobile-nav"
+        aria-label="モバイルメニュー"
+        hidden={!open}
+        className="mobile-nav-panel absolute right-0 top-full h-[calc(100vh-64px)] w-[min(86vw,360px)] overflow-y-auto border-l border-t border-line bg-white/[0.98] shadow-[-18px_20px_42px_rgba(11,26,36,0.14)] backdrop-blur-2xl md:h-[calc(100vh-72px)] xl:hidden"
+      >
+        <ul className="grid w-full px-5 pb-8 pt-[22px]">
           {nav.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className="block px-3 py-3 text-[16px] font-medium hover:bg-tint aria-[current=page]:bg-tint aria-[current=page]:text-accent"
+                className="block border-b border-line px-[14px] py-3 text-[16px] font-medium transition-colors hover:bg-tint aria-[current=page]:bg-tint aria-[current=page]:text-accent"
               >
                 {item.label}
               </Link>
             </li>
           ))}
-          <li className="mt-2 border-t border-line pt-3">
-            <a href={site.telHref} className="flex flex-wrap items-baseline gap-x-3 px-3 py-2 text-[16px] font-medium">
+          <li className="mt-3">
+            <a href={site.telHref} className="flex flex-wrap items-baseline gap-x-3 px-[14px] py-3 text-[16px] font-medium">
               <span className="tabular-nums">{site.tel}</span>
               <span className="text-[13px] text-muted">{site.hours}（火・水定休）</span>
             </a>
           </li>
         </ul>
-      </div>
+      </nav>
     </header>
   );
 }

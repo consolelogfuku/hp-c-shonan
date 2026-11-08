@@ -1,9 +1,7 @@
-"use client";
-
 import { CaretLeft, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-// 矢印ボタン付きの横スクロールカルーセル。端まで来たら反対側へ戻り、同じボタンでループできる。
+// 矢印ボタン付きの横スクロールカルーセル。
 export function Carousel({
   children,
   step,
@@ -33,20 +31,28 @@ export function Carousel({
   }, [count]);
 
   const stepPx = () => {
-    const el = track.current!;
+    const el = track.current;
+    if (!el) return 0;
     if (step === "page") return el.clientWidth;
-    const first = el.children[0] as HTMLElement;
-    return first.getBoundingClientRect().width + parseFloat(getComputedStyle(el).gap || "0");
+    const first = el.children[0] as HTMLElement | undefined;
+    return first
+      ? first.getBoundingClientRect().width + parseFloat(getComputedStyle(el).gap || "0")
+      : 0;
   };
-  const maxLeft = () => track.current!.scrollWidth - track.current!.clientWidth;
+  const maxLeft = () => {
+    const el = track.current;
+    return el ? el.scrollWidth - el.clientWidth : 0;
+  };
 
   const prev = () => {
-    const el = track.current!;
+    const el = track.current;
+    if (!el) return;
     if (el.scrollLeft <= 2) el.scrollTo({ left: maxLeft(), behavior: "smooth" });
     else el.scrollBy({ left: -stepPx(), behavior: "smooth" });
   };
   const next = () => {
-    const el = track.current!;
+    const el = track.current;
+    if (!el) return;
     if (el.scrollLeft >= maxLeft() - 2) el.scrollTo({ left: 0, behavior: "smooth" });
     else el.scrollBy({ left: stepPx(), behavior: "smooth" });
   };
@@ -66,7 +72,7 @@ export function Carousel({
       ) : null}
       <div
         ref={track}
-        tabIndex={0}
+        role="region"
         aria-label={label}
         className={`snap-row flex snap-x snap-mandatory overflow-x-auto ${trackClassName}`}
       >

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トップページ デザイン案 | コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+body { padding-bottom: 0; }
+.top { padding: clamp(48px, 7vw, 88px) var(--gutter) 32px; }
+.top img { width: 220px; }
+.top h1 { margin-top: 28px; font-size: clamp(1.7rem, 3.6vw, 2.8rem); }
+.top p { margin-top: 10px; color: var(--muted); font-size: 18px; }
+.plans { display: grid; gap: 12px; padding: 12px; }
+@media (min-width: 900px) { .plans { grid-template-columns: repeat(3, 1fr); } .plan { min-height: 66dvh; } }
+.plan { position: relative; display: flex; align-items: flex-end; min-height: 64dvh; overflow: hidden; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgb(0 0 0 / 0.7), 0 2px 24px rgb(0 0 0 / 0.65); }
+.plan img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.plan:hover img { transform: scale(1.04); }
+.plan div { position: relative; padding: clamp(24px, 4vw, 52px); max-width: 680px; }
+.plan h2 { font-size: clamp(1.6rem, 2.3vw, 2.1rem); white-space: nowrap; }
+.plan p { margin-top: 8px; font-size: 19px; font-weight: 600; }
+.note { padding: 28px var(--gutter) 44px; color: var(--muted); font-size: 15px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52">
+  <h1>トップページ デザイン案</h1>
+  <p>3つの案があります。写真を押すと開きます。<br>写真はすべてAIで生成したイメージで、実在の家ではありません。</p>
+</header>
+<main class="plans">
+  <a class="plan" href="a.html"><img src="images/walk-door.jpg" alt=""><div><h2>A 家の中を歩く</h2><p>道から玄関、リビング、庭へ。<br>自分が家に入っていく案です。</p></div></a>
+  <a class="plan" href="b.html"><img src="images/life-deck.jpg" alt=""><div><h2>B 暮らしの写真集</h2><p>雑誌をめくるように、<br>家族の日常を見せる案です。</p></div></a>
+  <a class="plan" href="c.html"><img src="images/day-sunset.jpg" alt=""><div><h2>C 湘南の一日</h2><p>朝から夜まで、<br>同じ家の表情が変わる案です。</p></div></a>
+</main>
+<p class="note">写真はAIで生成したイメージで、実在の建物やお客様ではありません。お客様の声、実績の数字、会社情報は現行サイトのものです。</p>
+</body></html>

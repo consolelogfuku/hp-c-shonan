@@ -101,6 +101,70 @@
   }
 }
 
+@media (max-width: 1279px) {
+  .header-actions {
+    margin-left: auto;
+  }
+
+  .menu-button {
+    position: static;
+    top: auto;
+    right: auto;
+    flex: 0 0 40px;
+    display: inline-flex !important;
+    border-color: var(--accent);
+    background: var(--accent);
+    transform: none;
+  }
+
+  .menu-button span {
+    background: white;
+    box-shadow:
+      0 -5px 0 white,
+      0 5px 0 white;
+  }
+
+  .mobile-nav:not([hidden]) {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    bottom: auto;
+    display: block;
+    width: min(86vw, 360px);
+    height: calc(100dvh - 72px);
+    overflow-y: auto;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: -18px 20px 42px rgba(11, 26, 36, 0.14);
+    animation: mobile-nav-slide-in 0.24s ease-out both;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .mobile-nav ul.wrap {
+    width: 100%;
+    padding: 22px 20px 32px;
+  }
+
+  .mobile-nav a {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@keyframes mobile-nav-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 767px) {
   .header-row {
     height: 64px;
@@ -108,5 +172,9 @@
 
   .brand img {
     height: 28px;
+  }
+
+  .mobile-nav:not([hidden]) {
+    height: calc(100dvh - 64px);
   }
 }

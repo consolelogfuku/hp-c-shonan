@@ -1,5 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
+import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { IMG, SubpageFrame } from "./Shared";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -26,8 +27,22 @@ const levels = [
 
 export function ConceptPage() {
   return (
-    <SubpageFrame hero={{ title: "コンセプト", label: "Concept", lead: <><span className="block">一棟ずつ、向き合う。</span><span>私たちが大切にしていること。</span></>, image: `${IMG}/units/img/7942-5-20200207101750_b5e3cbabe744a4.jpg`, imageAlt: "光が差し込むコミュニティ湘南の住まい", imagePosition: "center 54%" }}>
-      <nav className="overflow-x-auto border-b border-line bg-white/70" aria-label="コンセプトページ内"><ul className="mx-auto flex w-max min-w-full max-w-[1280px] justify-center px-5 md:px-6">{[["#philosophy","私たちの家づくり"],["#architect","建築家の家"],["#gratitude","感謝会"],["#faq","家づくりのQ&A"]].map(([href,label]) => <li key={href}><Link href={href} className="block min-w-[152px] px-5 py-5 text-center hover:text-accent">{label}</Link></li>)}</ul></nav>
+    <SubpageFrame hero={{ title: "コンセプト" }}>
+      <nav className="overflow-x-auto border-b border-line bg-white/80" aria-label="コンセプトページ内">
+        <ul className="mx-auto flex w-max min-w-full max-w-[1280px] justify-center px-5 md:px-6">
+          {[["#philosophy", "私たちの家づくり"], ["#architect", "建築家の家"], ["#gratitude", "感謝会"], ["#faq", "家づくりのQ&A"]].map(([href, label], index, items) => (
+            <li key={href} className={`border-l border-line ${index === items.length - 1 ? "border-r" : ""}`}>
+              <Link
+                href={href}
+                className="group flex min-h-[68px] min-w-[164px] items-center justify-center gap-3 px-5 text-center text-[15px] text-muted transition-colors hover:bg-tint hover:text-accent focus-visible:bg-tint focus-visible:text-accent md:min-w-[190px] md:px-8"
+              >
+                <span>{label}</span>
+                <CaretDown size={14} weight="bold" className="text-accent transition-transform group-hover:translate-y-0.5" aria-hidden />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <section id="philosophy" className="scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
         <div className="mx-auto max-w-[1280px]">
