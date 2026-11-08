@@ -23,7 +23,7 @@
   scroll-margin-top: var(--home-header);
 }
 .subpage main {
-  font-size: clamp(18px, 1.25vw, 20px);
+  font-size: clamp(18px, 1.55vw, 20px);
 }
 .subpage .home-header {
   border-bottom: 1px solid #f0f0f0;
@@ -141,7 +141,7 @@
 }
 .subpage-property-detail p.text-muted,
 .subpage #faq details p {
-  font-size: clamp(18px, 1.25vw, 20px);
+  font-size: clamp(18px, 1.55vw, 20px);
 }
 .subpage #faq details summary {
   font-size: 19px;
