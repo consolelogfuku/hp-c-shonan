@@ -22,7 +22,7 @@ function Photo({ photo, href = "/works/", className = "", priority = false }: { 
 const gridPortrait: Photo[] = [
   { src: unit("12701-19"), alt: "吹き抜けのある明るいリビング" },
   { src: unit("12694-21"), alt: "観葉植物のある吹き抜けのリビング" },
-  { src: unit("12847-20"), alt: "木目のアイランドキッチン" },
+  { src: unit("12847-20-retouched"), alt: "木目のアイランドキッチン" },
   { src: unit("9964-34"), alt: "ウッドデッキのバルコニー" },
 ];
 
@@ -31,7 +31,7 @@ const gridFour: Photo[] = [
   { src: unit("9964-29"), alt: "対面式のキッチン" },
   { src: work("kagawa/21"), alt: "吹き抜けを見下ろす" },
   { src: work("shimoterao/12"), alt: "木の手すりの階段" },
-  { src: unit("5275-21"), alt: "木目の天井がある明るいLDK" },
+  { src: unit("5275-21-bright"), alt: "木目の天井がある明るいLDK" },
   { src: work("kagawa/15"), alt: "ダイニング" },
   { src: work("kowada/16"), alt: "中庭を囲む2階" },
   { src: work("shimoterao/24"), alt: "洗面室" },
@@ -47,8 +47,8 @@ const worksColumns: Photo[][] = [
     { src: work("higashikaigan/01"), alt: "グレーの外観" },
   ],
   [
-    { src: work("kowada/04"), alt: "木の天井のリビング" },
-    { src: work("ninomiya/07"), alt: "梁のあるリビング" },
+    { src: work("kowada/04-retouched"), alt: "木の天井のリビング" },
+    { src: work("ninomiya/07-retouched"), alt: "梁のあるリビング" },
   ],
 ];
 
@@ -91,7 +91,7 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
         </section>
         <div className="home-band">
           <div className="home-wrap">
-            <Photo photo={{ src: unit("5279-10"), alt: "白い板張りと大きな切妻屋根の外観" }} className="aspect-[3/2]" />
+            <Photo photo={{ src: unit("5279-10-lawn"), alt: "芝生の庭に面した白い板張りと大きな切妻屋根の住まい" }} className="aspect-[3/2]" />
           </div>
         </div>
         <div className="home-band">
@@ -108,7 +108,7 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
         <section className="home-pillars" id="pillars">
           <div className="home-wrap">
             <div className="home-pillar">
-              <Photo photo={{ src: work("shimoterao/07"), alt: "無垢の床と梁のあるLDK" }} className="aspect-[8/5]" />
+              <Photo photo={{ src: work("shimoterao/07-bright-lawn"), alt: "芝生の庭に面した、無垢の床と梁のある明るいLDK" }} className="aspect-[8/5]" />
               <div className="home-pillar-text">
                 <h2>注文住宅</h2>
                 <p>住み心地を決めるのは、予算より良いプランニング。<br />一級建築士と、設計から完成まで一緒に考えます。</p>
@@ -163,7 +163,7 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
                 <Link href="/concept/">耐震・性能</Link>
               </div>
             </div>
-            <Photo photo={{ src: work("shimoterao/01"), alt: "シンメトリーな外観の住まい" }} href="/concept/" className="aspect-[4/3]" />
+            <Photo photo={{ src: unit("5279-10-lawn"), alt: "芝生の庭に面した白い外観の住まい" }} href="/concept/" className="aspect-[4/3]" />
           </div>
         </section>
 
