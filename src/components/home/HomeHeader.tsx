@@ -16,7 +16,7 @@ const houseLinks = [
 const propertyLinks = [
   { label: "売買物件", href: "/sale/" },
   { label: "賃貸物件", href: "/rent/" },
-  { label: "貸駐車場", href: "/rent/" },
+  { label: "貸駐車場", href: "/parking/" },
 ] as const;
 
 /** トップページ専用のヘッダー。ナビはすべて左から出るメニューに集約する。 */

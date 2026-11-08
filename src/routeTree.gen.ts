@@ -22,6 +22,7 @@ import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as MediaNameRouteImport } from './routes/media.$name'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as ParkingIndexRouteImport } from './routes/parking.index'
 import { Route as RentIndexRouteImport } from './routes/rent.index'
 import { Route as RentSlugRouteImport } from './routes/rent.$slug'
 import { Route as SaleIndexRouteImport } from './routes/sale.index'
@@ -106,6 +107,11 @@ const NewsIndexRoute = NewsIndexRouteImport.update({
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/news/$slug',
   path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParkingIndexRoute = ParkingIndexRouteImport.update({
+  id: '/parking/',
+  path: '/parking/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RentIndexRoute = RentIndexRouteImport.update({
@@ -225,6 +231,7 @@ export interface FileRoutesByFullPath {
   '/sale/$slug': typeof SaleSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/news/': typeof NewsIndexRoute
+  '/parking/': typeof ParkingIndexRoute
   '/rent/': typeof RentIndexRoute
   '/sale/': typeof SaleIndexRoute
   '/admin/news/$slug': typeof AdminNewsSlugRoute
@@ -259,6 +266,7 @@ export interface FileRoutesByTo {
   '/sale/$slug': typeof SaleSlugRoute
   '/admin': typeof AdminIndexRoute
   '/news': typeof NewsIndexRoute
+  '/parking': typeof ParkingIndexRoute
   '/rent': typeof RentIndexRoute
   '/sale': typeof SaleIndexRoute
   '/admin/news/$slug': typeof AdminNewsSlugRoute
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/sale/$slug': typeof SaleSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/news/': typeof NewsIndexRoute
+  '/parking/': typeof ParkingIndexRoute
   '/rent/': typeof RentIndexRoute
   '/sale/': typeof SaleIndexRoute
   '/admin/news/$slug': typeof AdminNewsSlugRoute
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/sale/$slug'
     | '/admin/'
     | '/news/'
+    | '/parking/'
     | '/rent/'
     | '/sale/'
     | '/admin/news/$slug'
@@ -366,6 +376,7 @@ export interface FileRouteTypes {
     | '/sale/$slug'
     | '/admin'
     | '/news'
+    | '/parking'
     | '/rent'
     | '/sale'
     | '/admin/news/$slug'
@@ -401,6 +412,7 @@ export interface FileRouteTypes {
     | '/sale/$slug'
     | '/admin/'
     | '/news/'
+    | '/parking/'
     | '/rent/'
     | '/sale/'
     | '/admin/news/$slug'
@@ -435,6 +447,7 @@ export interface RootRouteChildren {
   RentSlugRoute: typeof RentSlugRoute
   SaleSlugRoute: typeof SaleSlugRoute
   NewsIndexRoute: typeof NewsIndexRoute
+  ParkingIndexRoute: typeof ParkingIndexRoute
   RentIndexRoute: typeof RentIndexRoute
   SaleIndexRoute: typeof SaleIndexRoute
   ApiAdminLoginRoute: typeof ApiAdminLoginRoute
@@ -537,6 +550,13 @@ declare module '@tanstack/react-router' {
       path: '/news/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parking/': {
+      id: '/parking/'
+      path: '/parking'
+      fullPath: '/parking/'
+      preLoaderRoute: typeof ParkingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rent/': {
@@ -726,6 +746,7 @@ const rootRouteChildren: RootRouteChildren = {
   RentSlugRoute: RentSlugRoute,
   SaleSlugRoute: SaleSlugRoute,
   NewsIndexRoute: NewsIndexRoute,
+  ParkingIndexRoute: ParkingIndexRoute,
   RentIndexRoute: RentIndexRoute,
   SaleIndexRoute: SaleIndexRoute,
   ApiAdminLoginRoute: ApiAdminLoginRoute,

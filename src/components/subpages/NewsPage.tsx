@@ -42,7 +42,7 @@ export function NewsPage({ articles, page, totalPages }: NewsPageProps) {
                   <article key={slug} className="border-t border-line last:border-b">
                     <Link
                       href={newsArticleHref(slug)}
-                      className="group grid grid-cols-[minmax(0,1fr)_20px] items-start gap-5 py-[22px] transition-[color,background-color,padding] duration-200 hover:bg-[rgba(238,245,249,0.7)] hover:px-[14px] hover:text-accent md:min-h-[164px] md:py-[26px_28px] md:pr-1"
+                      className="subpage-news-link group grid grid-cols-[minmax(0,1fr)_20px] items-start gap-5 py-[22px] transition-[color,background-color,padding] duration-200 hover:px-[14px] md:min-h-[164px] md:py-[26px_28px] md:pr-1"
                     >
                       <div>
                         <time dateTime={date} className="text-[15px] tracking-[0.08em] text-muted">{formatNewsDate(date)}</time>

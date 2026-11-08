@@ -1,25 +1,26 @@
-import Image from "@/components/AppImage";
-
 export type PageHeroProps = {
   title: string;
 };
 
+const labels: Record<string, string> = {
+  "施工事例": "WORKS",
+  "設計コンセプト": "CONCEPT",
+  "コンセプト": "CONCEPT",
+  "お客様の声": "VOICES",
+  "会社案内": "COMPANY",
+  "お知らせ": "NEWS",
+  "売買物件": "PROPERTY / SALE",
+  "賃貸物件": "PROPERTY / RENT",
+  "貸駐車場": "PROPERTY / PARKING",
+  "賃貸物件・貸駐車場": "PROPERTY / RENT",
+};
+
 export function PageHero({ title }: PageHeroProps) {
   return (
-    <section className="relative min-h-[210px] overflow-hidden border-b border-line bg-[#f8faf9] text-[#213d50] md:min-h-[240px]" aria-labelledby="page-title">
-      <Image
-        src="/images/common-hero-background-v2.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="pointer-events-none object-cover object-center opacity-55"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-white/45 via-white/10 to-transparent" aria-hidden />
-      <div className="relative z-10 mx-auto flex min-h-[210px] max-w-[1280px] items-center px-5 py-7 md:min-h-[240px] md:px-6 md:py-8">
-        <h1 id="page-title" className="text-[32px] font-medium leading-[1.35] tracking-[0.08em] min-[461px]:text-[35px] md:text-[clamp(36px,4vw,46px)]">
-          {title}
-        </h1>
+    <section className="subpage-hero" aria-labelledby="page-title">
+      <div className="subpage-hero-inner">
+        <span className="subpage-hero-label" aria-hidden>{labels[title] ?? "COMMUNITY SHONAN"}</span>
+        <h1 id="page-title">{title}</h1>
       </div>
     </section>
   );

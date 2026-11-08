@@ -31,9 +31,10 @@ export const site = {
 
 export const nav = [
   { label: "お知らせ", href: "/news/" },
-  { label: "コンセプト", href: "/concept/" },
+  { label: "設計コンセプト", href: "/concept/" },
   { label: "売買物件", href: "/sale/" },
-  { label: "賃貸物件・貸駐車場", href: "/rent/" },
+  { label: "賃貸物件", href: "/rent/" },
+  { label: "貸駐車場", href: "/parking/" },
   { label: "施工事例", href: "/works/" },
   { label: "お客様の声", href: "/comments/" },
   { label: "会社案内", href: "/company/" },

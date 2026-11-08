@@ -1,5 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import globalCss from "../app/globals.css?url";
+import homeCss from "../app/home.css?url";
+import subpageCss from "../app/subpages.css?url";
 import adminCss from "../app/admin/admin.css?url";
 
 export const Route = createRootRoute({
@@ -23,6 +25,8 @@ export const Route = createRootRoute({
         href: "https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;700&display=swap",
       },
       { rel: "stylesheet", href: globalCss },
+      { rel: "stylesheet", href: homeCss },
+      { rel: "stylesheet", href: subpageCss },
       { rel: "stylesheet", href: adminCss },
     ],
   }),

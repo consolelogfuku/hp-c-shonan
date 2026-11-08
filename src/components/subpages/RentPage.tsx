@@ -4,8 +4,8 @@ import type { PublicProperty } from "@/lib/cms/property-model";
 
 export function RentPage({ properties }: { properties: PublicProperty[] }) {
   return (
-    <SubpageFrame hero={{ title: "賃貸物件・貸駐車場" }}>
-      <RentPropertyList properties={properties} />
+    <SubpageFrame hero={{ title: "賃貸物件" }}>
+      <RentPropertyList properties={properties} mode="rent" />
     </SubpageFrame>
   );
 }

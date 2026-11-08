@@ -24,8 +24,8 @@ export function PropertyDetailContent({ record, preview = false }: { record: Pub
   const property = record.property;
   const details = property.details ?? emptyPropertyDetails(property.kind);
   const section = sectionForKind(property.kind);
-  const listHref = section === "sale" ? "/sale" : "/rent";
-  const sectionLabel = section === "sale" ? "売買物件" : "賃貸物件・貸駐車場";
+  const listHref = property.kind === "parking" ? "/parking/" : section === "sale" ? "/sale/" : "/rent/";
+  const sectionLabel = property.kind === "parking" ? "貸駐車場" : section === "sale" ? "売買物件" : "賃貸物件";
   const facts: PropertyDetailRow[] = property.kind === "sale"
     ? [{ label: "土地面積", value: property.landArea }, { label: "交通", value: property.access }, { label: "所在地", value: property.address }, { label: "物件種別", value: property.propertyType }, { label: "取引態様", value: property.dealType === "owner" ? "売主物件" : "仲介物件" }]
     : property.kind === "parking"
@@ -34,7 +34,7 @@ export function PropertyDetailContent({ record, preview = false }: { record: Pub
   const visibleFacts = facts.filter(({ value }) => value);
   const overviewRows = details.specifications;
 
-  return <article className={preview ? "mx-auto max-w-[1180px] px-5 py-10 md:px-6" : "mx-auto max-w-[1180px] px-5 py-14 md:px-6 md:py-20"} aria-labelledby={preview ? undefined : "property-title"}>
+  return <article className={preview ? "subpage-property-detail mx-auto max-w-[1180px] px-5 py-10 md:px-6" : "subpage-property-detail mx-auto max-w-[1180px] px-5 py-14 md:px-6 md:py-20"} aria-labelledby={preview ? undefined : "property-title"}>
     {!preview && <Link href={listHref} className="mb-8 inline-flex min-h-11 items-center gap-2 text-[15px] text-accent hover:underline hover:underline-offset-4"><ArrowLeft size={17} aria-hidden />{sectionLabel}一覧に戻る</Link>}
     <div className="grid items-start gap-9 lg:grid-cols-[minmax(0,1.16fr)_minmax(340px,.84fr)] lg:gap-14">
       <figure className="relative aspect-[3/2] overflow-hidden bg-[#e9eef1]">{property.image ? <Image src={property.image.src} alt={property.image.alt} fill priority={!preview} sizes="(max-width:1023px) 100vw, 58vw" className="object-cover" style={{ objectPosition: propertyImagePosition(property.image) }} /> : <div className="grid h-full place-items-center bg-[linear-gradient(145deg,#f7fafb,#e8f1f5)] text-accent"><span className="grid h-28 w-28 place-items-center rounded-full border border-accent/25 bg-white/70 text-[54px]" aria-hidden>{property.kind === "parking" ? "P" : "―"}</span></div>}</figure>
@@ -53,8 +53,7 @@ export function PropertyDetailContent({ record, preview = false }: { record: Pub
 
 export function PropertyDetailPage({ record }: { record: PublicProperty }) {
   const section = sectionForKind(record.property.kind);
-  const listHref = section === "sale" ? "/sale" : "/rent";
-  const sectionLabel = section === "sale" ? "売買物件" : "賃貸物件・貸駐車場";
+  const sectionLabel = record.property.kind === "parking" ? "貸駐車場" : section === "sale" ? "売買物件" : "賃貸物件";
   return <SubpageFrame hero={{ title: sectionLabel }}><PropertyDetailContent record={record} /></SubpageFrame>;
 }
 

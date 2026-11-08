@@ -27,7 +27,7 @@ const levels = [
 
 export function ConceptPage() {
   return (
-    <SubpageFrame hero={{ title: "コンセプト" }}>
+    <SubpageFrame hero={{ title: "設計コンセプト" }}>
       <nav className="overflow-x-auto border-b border-line bg-white/80" aria-label="コンセプトページ内">
         <ul className="mx-auto flex w-max min-w-full max-w-[1280px] justify-center px-5 md:px-6">
           {[["#philosophy", "私たちの家づくり"], ["#architect", "建築家の家"], ["#gratitude", "感謝会"], ["#faq", "家づくりのQ&A"]].map(([href, label], index, items) => (
