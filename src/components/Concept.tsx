@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { concept } from "@/lib/site";
 import { Carousel } from "./Carousel";
@@ -27,7 +27,7 @@ export function Concept() {
       <Reveal className="mt-14" delay={0.05}>
         <Carousel step="page" count={concept.photos.length} label="住まいの写真">
           {concept.photos.map((ph) => (
-            <figure key={ph.src} className="relative m-0 h-[min(64dvh,680px)] min-h-[320px] w-full shrink-0 snap-start">
+            <figure key={ph.src} className="relative m-0 h-[400px] w-full shrink-0 snap-start md:h-[min(64dvh,680px)] md:min-h-[320px]">
               <Image src={ph.src} alt={ph.alt} fill sizes="100vw" className="object-cover" />
               <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0b1a24]/55 to-transparent px-5 py-5 text-[13px] text-white md:px-6">
                 <span className="mx-auto block max-w-[1280px]">{ph.caption}</span>

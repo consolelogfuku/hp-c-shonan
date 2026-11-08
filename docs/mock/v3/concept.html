@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>コンセプト | コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+.chero { display: grid; grid-template-columns: 6fr 6fr; gap: clamp(28px, 4vw, 64px); align-items: center; width: min(100%, 1320px); margin-inline: auto; padding: 96px var(--gutter) 0; }
+.chero h1 { font-size: clamp(2rem, 3.6vw, 3.1rem); }
+.chero p { margin-top: 18px; max-width: 32em; }
+.chero img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
+.story.rev img { order: 2; }
+.story img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.story h2 { font-size: clamp(1.45rem, 2.6vw, 2.1rem); }
+.story p { margin-top: 14px; }
+.archi { position: relative; display: flex; align-items: center; min-height: 92dvh; padding-block: 72px; }
+.archi > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.archi .wrap { position: relative; }
+.archi .plate { max-width: 40em; padding: clamp(24px, 3.4vw, 48px); background: rgb(252 253 253 / 0.95); }
+.archi blockquote { font-family: var(--hand); font-weight: 400; font-size: clamp(1.25rem, 2.2vw, 1.75rem); line-height: 1.9; }
+.archi .txt { margin-top: 18px; font-family: var(--hand); font-weight: 400; font-size: 17px; }
+.sign { display: flex; align-items: center; gap: 14px; margin-top: 18px; color: var(--muted); font-size: 15px; }
+.sign img { width: 150px; }
+.imgnote { position: absolute; right: 12px; bottom: 8px; color: #fff; font-size: 13px; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 8px rgb(10 20 28 / 0.8); }
+.facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 24px; margin-top: 32px; }
+.facts b { display: block; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.2; color: var(--accent); }
+.facts small { font-size: 0.42em; margin-left: 4px; }
+.facts span { color: var(--muted); font-size: 16px; }
+.tint { background: var(--tint); }
+.thanks { display: grid; grid-template-columns: 7fr 5fr; gap: 10px; margin-top: 24px; }
+.thanks img { width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.qa { margin-top: 20px; }
+.qa details + details { border-top: 1px solid var(--line); }
+.qa summary { padding: 16px 28px 16px 0; font-weight: 700; cursor: pointer; }
+.qa p { padding-bottom: 18px; color: var(--muted); }
+.consult { text-align: center; }
+.consult p { margin-top: 10px; color: var(--muted); }
+.acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 22px; }
+@media (max-width: 800px) {
+  .chero, .story { grid-template-columns: 1fr; }
+  .chero { padding: 84px var(--gutter) 0; }
+  .story.rev img { order: 0; }
+  .facts { grid-template-columns: 1fr; }
+  .thanks { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="sitehead">
+  <a class="logo" href="index.html"><img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52"></a>
+  <nav aria-label="メインメニュー"><ul><li><a href="works/index.html">施工事例</a></li><li><a href="concept.html">コンセプト</a></li><li><a href="voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="index.html#news">お知らせ</a></li></ul></nav>
+  <details class="find"><summary>物件を探す</summary><ul><li><a href="sale/index.html">売買物件</a></li><li><a href="rent/index.html">賃貸物件</a></li><li><a href="rent/index.html#parking">貸駐車場</a></li></ul></details>
+  <a class="tel" href="tel:0467899811">0467-89-9811</a>
+  <details class="menu"><summary>メニュー</summary><ul><li class="group">物件を探す</li><li><a href="sale/index.html">売買物件</a></li><li><a href="rent/index.html">賃貸物件</a></li><li><a href="rent/index.html#parking">貸駐車場</a></li><li class="group">家づくり</li><li><a href="works/index.html">施工事例</a></li><li><a href="concept.html">コンセプト</a></li><li><a href="voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="index.html#news">お知らせ</a></li></ul></details>
+</header>
+<main id="top">
+<section class="chero">
+  <div>
+    <h1>建築家と創る、<br>こだわりの憩いの家</h1>
+    <p>住み心地の良い様々なアイデアと、細部に至るまで建築主の思いが溢れた憩いの家。コミュニティ湘南は、そんな家づくりを目指しています。</p>
+  </div>
+  <img src="images/works/matsubayashi/20.jpg" alt="ロフトから見下ろした吹き抜けのリビング">
+</section>
+
+<section class="section"><div class="wrap story">
+  <img class="reveal" src="images/works/kagawa/11.jpg" alt="吹き抜けのあるリビング" loading="lazy">
+  <div class="reveal">
+    <h2>住み心地を決めるのは、<br>予算より良いプランニング</h2>
+    <p>まず必要なのが、センスと実力と人柄を兼ね備えた建築家との出会いです。通常、設計料は建物価格の約1割が目安とされていますが、建築家に設計を依頼した場合とほぼ同様のプロセスを、ご負担を大幅に軽減してご提供しています。</p>
+  </div>
+</div></section>
+
+<section class="archi">
+  <img src="images/sea-beach.jpg" alt="夕暮れの湘南の浜辺" loading="lazy">
+  <div class="wrap reveal"><div class="plate">
+    <blockquote>建築は丈夫でなければならない。<br>機能的でなければならない。<br>美しくなければならない。</blockquote>
+    <p class="txt">建物の敷地は、世界で唯一その場所だけです。その場所のポテンシャルをしっかり把握して、住まう人の考えと融合させる。敷地を読む、環境を読む、居心地を考える。いつも心がけています。<br>コミュニティ湘南さんとのコラボレーションは、すでに200棟を超えています。</p>
+    <div class="sign"><span>一級建築士</span><img src="images/concept/sign.png" alt="吉田靖の署名" loading="lazy"></div>
+  </div></div>
+  <span class="imgnote">写真はイメージです</span>
+</section>
+
+<section class="section"><div class="wrap story rev">
+  <img class="reveal" src="images/works/shimoterao/13.jpg" alt="吹き抜けを囲む2階の回廊" loading="lazy">
+  <div class="reveal">
+    <h2>設計から完成まで、<br>建築士が一貫してサポート</h2>
+    <p>工事担当者に任せきりではなく、建築士が設計通りの施工がなされているか確認し、必要に応じて工事担当者に指示をいたします。建築家と建築会社のチームワークをコーディネートし、ひとつひとつの建物を丹念に創り上げていきます。</p>
+  </div>
+</div></section>
+
+<section class="section tint"><div class="wrap">
+  <h2 class="reveal">地震・火災などの災害にも強い家づくり</h2>
+  <p class="lead reveal">ご要望に応じて、最高レベルである耐震等級3の構造基準を取得した住宅や、火災にも強い省令準耐火構造の住宅を多数施工しています。地盤保証は20年です。</p>
+  <ul class="facts reveal">
+    <li><b>26<small>年</small></b><span>2000年の創業から、茅ヶ崎で</span></li>
+    <li><b>200<small>棟以上</small></b><span>一級建築士とともに手がけた住まい</span></li>
+    <li><b>等級3</b><span>耐震等級3の住宅を多数施工</span></li>
+  </ul>
+</div></section>
+
+<section class="section" id="thanks"><div class="wrap">
+  <h2 class="reveal">感謝会</h2>
+  <p class="lead reveal">お引渡しが終わり「それではさようなら」では寂しい。そんな思いから、ご自宅を新築されたお客様をお招きし、スタッフも合流して、お食事とおしゃべりを楽しむ会を開いてきました。</p>
+  <div class="thanks reveal">
+    <img src="images/concept/thanks1.jpg" alt="感謝会の様子" loading="lazy">
+    <img src="images/concept/thanks2.jpg" alt="感謝会の様子" loading="lazy">
+  </div>
+  <p class="notice" style="margin-top:10px;color:var(--muted);font-size:15px">第14回感謝会（2019年11月）</p>
+</div></section>
+
+<section class="section tint"><div class="wrap">
+  <h2 class="reveal">家づくりのQ&amp;A</h2>
+  <div class="qa"><details><summary>建築費用はどのくらいかかりますか？</summary><p>コミュニティ湘南独自の標準仕様があります。また、当社社長がお客様に合ったローンの見積もり、プランを導き出しますので、お気軽にご相談ください。標準仕様以外でも、ご希望のものはご満足頂けるよう丁寧に対応させていただきます。</p></details><details><summary>建築相談はお金がかかりますか？</summary><p>建築相談にはお金はかかりません。参考プランを作成しますので、どの程度のボリューム、プランができるかをご判断いただけると思います。</p></details><details><summary>建築期間はどのくらいですか？</summary><p>基本プランが決まってから地盤調査を行い、必要な場合は地盤改良工事を行います。その後、建築確認をとり、着工するまで概ね1か月（耐震等級3を取得する場合はさらに1か月）。その後、工期は4〜5か月程度かかります。</p></details><details><summary>完成後もメンテナンスやリフォームをしてもらえますか？</summary><p>施主検査をしていただき引き渡しをいたしますが、住まわれてからお気づきになる点もあるかと思います。完成後も、責任をもって対応させて頂きます。</p></details><details><summary>耐震はどうなっていますか？</summary><p>耐震等級3は、耐震等級1で想定する地震の1.5倍の耐震強度があり、消防署や警察署など防災の拠点となる建物の耐震性に相当すると言われています。当社でも耐震等級3を取得した建物を多数施工しています。</p></details></div>
+</div></section>
+
+<section class="section consult"><div class="wrap">
+  <h2>建築相談は無料です。</h2>
+  <p>土地探しから、<br class="sp">お気軽にご相談ください。</p>
+  <div class="acts"><a class="btn" href="tel:0467899811">0467-89-9811</a><a class="btn" href="#">お問い合わせ</a></div>
+</div></section>
+</main>
+<footer class="foot" id="company"><div class="wrap g">
+  <div>
+    <img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52" loading="lazy">
+    <p style="margin-top:16px">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>JR東海道本線 茅ヶ崎駅 徒歩20分</p>
+  </div>
+  <div>
+    <p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）<br>宅地建物取引業 神奈川県知事（3）第29447号<br>一般建設業 神奈川県知事（般-2）第69917号</p>
+  </div>
+</div></footer>
+<div class="mockbar"><span>デザイン確認用</span><a href="index.html">トップ</a><a href="works/index.html">施工事例</a><a href="../v2/index.html">前の3案</a></div>
+<script src="shared.js"></script>
+</body></html>

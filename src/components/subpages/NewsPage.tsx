@@ -1,72 +1,73 @@
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { IMG, SubpageFrame } from "./Shared";
+import { formatNewsDate, newsArticleHref, newsPageHref, type NewsArticle } from "@/lib/news";
+import { SubpageFrame } from "./Shared";
 
-const groups = [
-  {
-    year: "2026",
-    items: [
-      ["2026.07.25", "夏季休暇について"],
-      ["2026.06.26", "石川矢畑NO6 お蔭様でご成約となりました"],
-      ["2026.04.10", "岡田貸家 お申込みを頂きました"],
-      ["2026.03.29", "月極駐車場空き状況について"],
-      ["2026.03.21", "岡田貸家 募集中です"],
-      ["2026.01.26", "茅ヶ崎市矢畑売地 小島矢畑B区画"],
-    ],
-  },
-  {
-    year: "2025",
-    items: [
-      ["2025.12.21", "冬期休暇のお知らせ"],
-      ["2025.07.18", "夏季休暇について"],
-      ["2025.07.03", "加藤貸家6号棟 終了致しました"],
-      ["2025.06.23", "臨時休業について"],
-      ["2025.06.21", "売地香川B区画、新築戸建て松林B号棟は販売終了致しました"],
-    ],
-  },
-] as const;
+type NewsPageProps = {
+  articles: readonly NewsArticle[];
+  page: number;
+  totalPages: number;
+};
 
-export function NewsPage() {
+export function NewsPage({ articles, page, totalPages }: NewsPageProps) {
+  const groups: { year: string; articles: NewsArticle[] }[] = [];
+  for (const article of articles) {
+    const year = article.date.slice(0, 4);
+    let group = groups.find((item) => item.year === year);
+    if (!group) {
+      group = { year, articles: [] };
+      groups.push(group);
+    }
+    group.articles.push(article);
+  }
   return (
     <SubpageFrame
       hero={{
-        title: "お知らせ",
-        label: "News",
-        lead: "休業日をはじめ、売買物件、賃貸物件、月極駐車場などの更新情報を掲載しています。",
-        image: `${IMG}/units/img/1530-13-20191030165417_b5db941a982a97.jpg`,
-        imageAlt: "茅ヶ崎の砂浜と青い空",
+        title: "お知らせ"
       }}
     >
       <section className="px-5 py-20 md:px-6 md:py-28" aria-label="お知らせ一覧">
         <div className="mx-auto max-w-[1280px] space-y-20">
+          {articles.length === 0 && <p className="py-10 text-muted">お知らせはまだありません。</p>}
           {groups.map((group) => (
-            <section key={group.year} className="grid gap-8 md:grid-cols-[150px_1fr] md:gap-10" aria-labelledby={`year-${group.year}`}>
-              <h2 id={`year-${group.year}`} className="text-[32px] tracking-[0.08em] text-accent">
+            <section key={group.year} className="grid gap-[26px] md:grid-cols-[144px_minmax(0,1fr)] md:gap-12" aria-labelledby={`year-${group.year}`}>
+              <h2
+                id={`year-${group.year}`}
+                className="text-[27px] leading-[1.3] tracking-[0.04em] text-accent after:mt-4 after:block after:h-px after:w-12 after:bg-accent md:sticky md:top-[104px] md:self-start md:text-[30px]"
+              >
                 {group.year}
               </h2>
               <div>
-                {group.items.map(([date, title]) => (
-                  <article key={`${date}-${title}`} className="border-t border-line last:border-b">
-                    <Link href="#" className="group grid min-h-[124px] grid-cols-[1fr_auto] items-center gap-5 py-6">
+                {group.articles.map(({ slug, date, title }) => (
+                  <article key={slug} className="border-t border-line last:border-b">
+                    <Link
+                      href={newsArticleHref(slug)}
+                      className="subpage-news-link group grid grid-cols-[minmax(0,1fr)_20px] items-start gap-5 py-[22px] transition-[color,background-color,padding] duration-200 hover:px-[14px] md:min-h-[164px] md:py-[26px_28px] md:pr-1"
+                    >
                       <div>
-                        <time className="text-[14px] tracking-[0.06em] text-muted">{date}</time>
-                        <h3 className="mt-2 text-[18px] leading-[1.75] md:text-[20px]">{title}</h3>
+                        <time dateTime={date} className="text-[15px] tracking-[0.08em] text-muted">{formatNewsDate(date)}</time>
+                        <h3 className="mt-[13px] text-[19px] leading-[1.75] tracking-[0.04em]">{title}</h3>
                       </div>
-                      <ArrowRight size={18} className="text-accent transition-transform group-hover:translate-x-1" aria-hidden />
+                      <ArrowRight size={18} className="self-center text-accent transition-transform group-hover:translate-x-1" aria-hidden />
                     </Link>
                   </article>
                 ))}
               </div>
             </section>
           ))}
-          <nav className="flex justify-center gap-2" aria-label="お知らせ一覧のページ">
-            {[1, 2, 3, 4, 5].map((page) => (
-              <span key={page} className={`inline-flex h-11 w-11 items-center justify-center border ${page === 1 ? "border-accent bg-accent text-white" : "border-line bg-white"}`} aria-current={page === 1 ? "page" : undefined}>
-                {page}
-              </span>
-            ))}
-            <span className="inline-flex h-11 items-center justify-center border border-line bg-white px-4">次へ</span>
-          </nav>
+          {totalPages > 1 && (
+            <nav className="flex flex-wrap justify-center gap-2" aria-label="お知らせ一覧のページ">
+              {page > 1 && <Link href={newsPageHref(page - 1)} rel="prev" className="inline-flex h-11 items-center border border-line bg-white px-4 text-accent hover:border-accent">前へ</Link>}
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                pageNumber === page ? (
+                  <span key={pageNumber} aria-current="page" aria-label={`${pageNumber}ページ目（現在のページ）`} className="inline-flex h-11 w-11 items-center justify-center border border-accent bg-accent text-white">{pageNumber}</span>
+                ) : (
+                  <Link key={pageNumber} href={newsPageHref(pageNumber)} aria-label={`${pageNumber}ページ目`} className="inline-flex h-11 w-11 items-center justify-center border border-line bg-white hover:border-accent hover:text-accent">{pageNumber}</Link>
+                )
+              ))}
+              {page < totalPages && <Link href={newsPageHref(page + 1)} rel="next" className="inline-flex h-11 items-center border border-line bg-white px-4 text-accent hover:border-accent">次へ</Link>}
+            </nav>
+          )}
         </div>
       </section>
     </SubpageFrame>

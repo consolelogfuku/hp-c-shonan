@@ -31,9 +31,10 @@ export const site = {
 
 export const nav = [
   { label: "お知らせ", href: "/news/" },
-  { label: "コンセプト", href: "/concept/" },
+  { label: "設計コンセプト", href: "/concept/" },
   { label: "売買物件", href: "/sale/" },
-  { label: "賃貸物件・貸駐車場", href: "/rent/" },
+  { label: "賃貸物件", href: "/rent/" },
+  { label: "貸駐車場", href: "/parking/" },
   { label: "施工事例", href: "/works/" },
   { label: "お客様の声", href: "/comments/" },
   { label: "会社案内", href: "/company/" },
@@ -181,30 +182,6 @@ export const works = [
   },
 ];
 
-export const voices = [
-  {
-    name: "ミオ さま",
-    when: "2022年5月 ご新築",
-    quote:
-      "きっかけは、希望の土地の条件を満たしていたことでしたが、来店時に須川社長が何通りか間取りを準備してくださって…",
-    image: `${IMG}/page/535-20220513161430.jpg`,
-  },
-  {
-    name: "あつもり さま",
-    when: "2020年5月 ご新築",
-    quote:
-      "希望の立地であった、注文住宅並みに希望を聞いて頂けた、担当、建築士さん、工務店の方、みなさん人柄が良かった。",
-    image: `${IMG}/page/403-20200628125959.jpg`,
-  },
-  {
-    name: "しおしゃけ さま",
-    when: "2020年5月 ご新築",
-    quote:
-      "社長の人柄に後押しされて決めました。リビングを広くして家族が自然と集まれるようにしたかったです。とても満足…",
-    image: `${IMG}/page/406-20200628133011.png`,
-  },
-];
-
 export const rentals = [
   {
     title: "シャトー太田弐番館 101号室",
@@ -256,38 +233,5 @@ export const parkingLots = [
     address: "茅ヶ崎市浜之郷中谷340",
     price: "8,000円/月",
     vacancy: 0,
-  },
-];
-
-export const news = [
-  {
-    date: "2026.07.25",
-    title: "夏季休暇について",
-    href: "/news/2026svc.html",
-    tag: "お知らせ",
-  },
-  {
-    date: "2026.06.26",
-    title: "石川矢畑NO6 お蔭様でご成約となりました",
-    href: "/news/yabata2652.html",
-    tag: "売買",
-  },
-  {
-    date: "2026.04.10",
-    title: "岡田貸家 お申込みを頂きました",
-    href: "/news/samoka3581renta.html",
-    tag: "賃貸",
-  },
-  {
-    date: "2026.03.29",
-    title: "月極駐車場空き状況について",
-    href: "/news/2512parking-copy-copy.html",
-    tag: "駐車場",
-  },
-  {
-    date: "2026.03.21",
-    title: "岡田貸家 募集中です",
-    href: "/news/samoka3581rent.html",
-    tag: "賃貸",
   },
 ];

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>施工事例 | コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../shared.css">
+<style>
+.intro { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 4vw, 64px); align-items: center; min-height: calc(100dvh - 56px); padding: 84px var(--gutter) 32px; }
+.intro .cover { width: 100%; max-height: calc(100dvh - 150px); aspect-ratio: 3 / 2; object-fit: cover; }
+.intro .back { font-size: 15px; }
+.intro h1 { margin-top: 14px; font-size: clamp(1.7rem, 3.2vw, 2.7rem); }
+.intro .place { margin-top: 6px; color: var(--muted); }
+.intro .body { margin-top: 18px; max-width: 42em; }
+.intro .note { margin-top: 12px; color: var(--muted); font-size: 15px; }
+.intro .btn { margin-top: 20px; }
+.walk { position: relative; }
+.stage { position: sticky; top: 0; height: 100dvh; overflow: hidden; background: #16232c; }
+.layer { position: absolute; inset: 0; margin: 0; opacity: 0; transform: scale(1.01); transition: opacity 1s ease, transform 1.4s cubic-bezier(0.3, 0, 0.3, 1); }
+.layer img { width: 100%; height: 100%; object-fit: cover; }
+.layer.is-now { opacity: 1; transform: scale(1.05); transition: opacity 1s ease, transform 10s linear; }
+.layer.is-past { opacity: 0; transform: scale(1.22); }
+.skip { position: absolute; right: 20px; top: 84px; z-index: 3; background: var(--paper); color: var(--ink); }
+.skip:hover { background: var(--tint); }
+.steps { position: relative; z-index: 2; margin-top: -100dvh; pointer-events: none; }
+.step { min-height: 100dvh; }
+.cap { position: absolute; left: var(--gutter); bottom: 76px; z-index: 2; padding: 14px 22px; background: rgb(252 253 253 / 0.94); opacity: 0; transition: opacity 0.6s ease; }
+.cap[aria-current] { opacity: 1; }
+.cap h2 { font-size: clamp(1.25rem, 2.2vw, 1.75rem); }
+.cap p { margin-top: 2px; color: var(--muted); font-size: 16px; }
+.gallery-head { display: flex; align-items: baseline; gap: 14px; }
+.gallery-head span { color: var(--muted); }
+.gallery { columns: 3; column-gap: 10px; margin-top: 28px; }
+.gallery button { display: block; width: 100%; margin: 0 0 10px; padding: 0; border: 0; background: none; cursor: zoom-in; overflow: hidden; break-inside: avoid; }
+.gallery img { width: 100%; height: auto; transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.gallery button:hover img { transform: scale(1.03); }
+.others { background: var(--tint); }
+.others ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.others a { color: inherit; text-decoration: none; }
+.others img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.others p { margin-top: 8px; font-size: 16px; }
+.closing { text-align: center; }
+.closing p { margin-top: 10px; color: var(--muted); }
+.acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 22px; }
+dialog.viewer { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 12px; border: 0; background: rgb(22 35 44 / 0.97); }
+dialog.viewer img { width: 100%; height: 100%; object-fit: contain; }
+dialog.viewer::backdrop { background: rgb(22 35 44 / 0.97); }
+dialog.viewer button { position: absolute; z-index: 1; min-height: 46px; padding: 0 20px; border: 0; background: #fcfdfd; color: var(--ink); font: inherit; font-weight: 600; cursor: pointer; }
+dialog.viewer .close { top: 14px; right: 14px; }
+dialog.viewer .prev { left: 14px; bottom: 14px; }
+dialog.viewer .next { right: 14px; bottom: 14px; }
+@media (max-width: 767px) {
+  .gallery { columns: 2; }
+  .others ul { grid-template-columns: 1fr; }
+  .intro { display: flex; flex-direction: column; align-items: stretch; min-height: 0; gap: 16px; padding-top: 68px; padding-inline: 0; }
+  .intro .cover { order: -1; height: 34dvh; max-height: none; aspect-ratio: auto; }
+  .intro > div { padding-inline: var(--gutter); }
+  .cap { left: 12px; right: 12px; bottom: 68px; }
+  .skip { top: 80px; right: 12px; min-height: 42px; padding: 0 16px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .layer, .layer.is-now, .layer.is-past { transform: none; transition: opacity 0.2s linear; }
+}
+</style>
+</head>
+<body>
+<header class="sitehead">
+  <a class="logo" href="../index.html"><img src="../images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52"></a>
+  <nav aria-label="メインメニュー"><ul><li><a href="../works/index.html">施工事例</a></li><li><a href="../concept.html">コンセプト</a></li><li><a href="../voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="../index.html#news">お知らせ</a></li></ul></nav>
+  <details class="find"><summary>物件を探す</summary><ul><li><a href="../sale/index.html">売買物件</a></li><li><a href="../rent/index.html">賃貸物件</a></li><li><a href="../rent/index.html#parking">貸駐車場</a></li></ul></details>
+  <a class="tel" href="tel:0467899811">0467-89-9811</a>
+  <details class="menu"><summary>メニュー</summary><ul><li class="group">物件を探す</li><li><a href="../sale/index.html">売買物件</a></li><li><a href="../rent/index.html">賃貸物件</a></li><li><a href="../rent/index.html#parking">貸駐車場</a></li><li class="group">家づくり</li><li><a href="../works/index.html">施工事例</a></li><li><a href="../concept.html">コンセプト</a></li><li><a href="../voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="../index.html#news">お知らせ</a></li></ul></details>
+</header>
+<main>
+<section class="intro">
+  <div>
+    <a class="link back" href="index.html">施工事例一覧へ</a>
+    <h1>施工事例</h1>
+    <p class="body">家の中心に大きな中庭を持ち、それを囲うように各室がレイアウトされています。外からの視線をシャットアウトすることで、家の中ではリラックスできる。2階の大きなバルコニーは、リゾート地のバンガローさながらの雰囲気です。</p>
+    <a class="btn" href="#photos">写真一覧を見る</a>
+  </div>
+  <img class="cover" src="../images/works/kowada/15.jpg" alt="施工事例の写真">
+</section>
+<div class="walk">
+<div class="stage"><figure class="layer"><img src="../images/works/kowada/01.jpg" alt="外観"></figure><figure class="layer"><img src="../images/works/kowada/02.jpg" alt="玄関"></figure><figure class="layer"><img src="../images/works/kowada/04.jpg" alt="リビング"></figure><figure class="layer"><img src="../images/works/kowada/09.jpg" alt="キッチン"></figure><figure class="layer"><img src="../images/works/kowada/15.jpg" alt="2階バルコニー"></figure><div class="cap"><h2>外観</h2></div><div class="cap"><h2>玄関</h2></div><div class="cap"><h2>リビング</h2><p>天井の梁とファンが、空間を引き締めます</p></div><div class="cap"><h2>キッチン</h2><p>アイランドキッチン</p></div><div class="cap"><h2>2階バルコニー</h2><p>リゾート地のバンガローさながらの雰囲気</p></div><a class="btn skip" href="#photos">写真一覧へ</a></div>
+<div class="steps"><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+</div>
+<section class="section" id="photos"><div class="wrap">
+  <div class="gallery-head"><h2>写真一覧</h2><span>全19枚</span></div>
+  <div class="gallery"><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/01.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/02.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/04.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/09.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/15.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/03.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/05.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/06.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/07.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/08.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/10.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/11.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/12.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/13.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/14.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/16.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/17.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/18.jpg" alt="施工事例の写真" loading="lazy"></button><button type="button" data-view aria-label="写真を大きく見る"><img src="../images/works/kowada/20.jpg" alt="施工事例の写真" loading="lazy"></button></div>
+</div></section>
+<section class="section others"><div class="wrap">
+  <h2>ほかの施工事例</h2>
+  <ul><li><a href="kagawa.html"><img src="../images/works/kagawa/11.jpg" alt="施工事例の写真" loading="lazy"></a></li><li><a href="shimoterao.html"><img src="../images/works/shimoterao/07.jpg" alt="施工事例の写真" loading="lazy"></a></li><li><a href="matsubayashi.html"><img src="../images/works/matsubayashi/20.jpg" alt="施工事例の写真" loading="lazy"></a></li></ul>
+</div></section>
+<section class="section closing"><div class="wrap">
+  <h2>こんな家を、一緒に考えませんか。</h2>
+  <p>土地探しから、<br class="sp">お気軽にご相談ください。</p>
+  <div class="acts"><a class="btn" href="tel:0467899811">0467-89-9811</a><a class="btn" href="#">お問い合わせ</a></div>
+</div></section>
+</main>
+<dialog class="viewer" aria-label="写真の拡大表示"><button type="button" class="close">閉じる</button><button type="button" class="prev">前へ</button><button type="button" class="next">次へ</button><img src="" alt=""></dialog>
+<footer class="foot" id="company"><div class="wrap g">
+  <div>
+    <img src="../images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52" loading="lazy">
+    <p style="margin-top:16px">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>JR東海道本線 茅ヶ崎駅 徒歩20分</p>
+  </div>
+  <div>
+    <p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）<br>宅地建物取引業 神奈川県知事（3）第29447号<br>一般建設業 神奈川県知事（般-2）第69917号</p>
+  </div>
+</div></footer>
+<div class="mockbar"><span>デザイン確認用</span><a href="../index.html">トップ</a><a href="../works/index.html">施工事例</a><a href="../../v2/index.html">前の3案</a></div>
+<script src="../shared.js"></script>
+<script>setupStage({ steps: ".step", layers: ".layer", links: ".cap" });</script>
+</body></html>

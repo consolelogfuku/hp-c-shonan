@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B案 暮らしの写真集 | コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+figure button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; overflow: hidden; }
+figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+figure button:hover img { transform: scale(1.03); }
+figcaption { margin-top: 10px; color: var(--muted); font-size: 16px; }
+.cover { display: grid; grid-template-columns: 7fr 5fr; grid-template-rows: 1fr auto; gap: 12px; min-height: calc(100dvh - 56px); padding: 80px 12px 12px; }
+.cover .big { grid-row: 1 / 3; position: relative; overflow: hidden; }
+.cover .big img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: drift 16s ease-out both; }
+@keyframes drift { from { transform: scale(1.08); } to { transform: scale(1); } }
+.cover .title { display: flex; flex-direction: column; justify-content: center; padding: 24px clamp(16px, 3vw, 44px); }
+.cover h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); }
+.cover p { margin-top: 16px; color: var(--muted); font-size: 18px; }
+.cover .btn { align-self: flex-start; margin-top: 24px; }
+.cover .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cover .pair img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.page { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(12px, 2vw, 28px); padding-inline: var(--gutter); }
+.page + .page { margin-top: clamp(56px, 8vw, 120px); }
+.p1 { grid-column: 1 / 8; } .p1 button { aspect-ratio: 3 / 2; }
+.p2 { grid-column: 9 / 13; align-self: end; } .p2 button { aspect-ratio: 4 / 5; }
+.p3 { grid-column: 2 / 6; } .p3 button { aspect-ratio: 4 / 5; }
+.p4 { grid-column: 6 / 13; margin-top: clamp(40px, 8vw, 110px); } .p4 button { aspect-ratio: 3 / 2; }
+.wide { margin-block: clamp(56px, 8vw, 120px); }
+.wide button { height: 92dvh; }
+.wide figcaption { padding-inline: var(--gutter); }
+.chap { padding: clamp(72px, 10vw, 130px) var(--gutter) clamp(32px, 4vw, 56px); }
+.chap .hand { font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.7; }
+.story { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.story .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.story .duo button { aspect-ratio: 4 / 5; }
+.big-line { font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.7; font-weight: 700; }
+.big-line em { font-style: normal; color: var(--accent); }
+.mosaic { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; margin-top: 36px; aspect-ratio: 2 / 1; }
+.mosaic figure:first-child { grid-row: 1 / 3; }
+.mosaic button { height: 100%; }
+.mosaic figure { min-height: 0; }
+.closing { background: var(--tint); text-align: center; }
+.closing p { margin-top: 12px; color: var(--muted); font-size: 18px; }
+.acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+dialog.viewer { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 12px; border: 0; background: rgb(22 35 44 / 0.96); cursor: zoom-out; }
+dialog.viewer img { width: 100%; height: 100%; object-fit: contain; }
+dialog.viewer .close { position: absolute; top: 16px; right: 16px; min-height: 44px; padding: 0 20px; border: 0; background: #fcfdfd; color: var(--ink); font: inherit; font-weight: 600; cursor: pointer; }
+dialog.viewer::backdrop { background: rgb(22 35 44 / 0.96); }
+@media (max-width: 767px) {
+  .cover { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; min-height: 0; padding: 76px 0 0; }
+  .cover .big { grid-row: auto; height: 40dvh; }
+  .cover .pair { padding-inline: 12px; }
+  .page, .story { display: block; }
+  .page figure + figure { margin-top: 24px; }
+  .p3, .p4 { margin-top: 24px; }
+  .story .duo { margin-top: 28px; }
+  .mosaic { grid-template-columns: 1fr; grid-template-rows: auto; aspect-ratio: auto; }
+  .mosaic figure:first-child { grid-row: auto; }
+  .mosaic button { height: auto; aspect-ratio: 3 / 2; }
+  .wide button { height: 70dvh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cover .big img { animation: none; }
+  figure img { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="sitehead">
+  <a class="logo" href="#top"><img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52"></a>
+  <nav aria-label="メインメニュー"><ul>
+    <li><a href="#news">お知らせ</a></li>
+    <li><a href="#concept">コンセプト</a></li>
+    <li><a href="#sale">売買物件</a></li>
+    <li><a href="#">賃貸物件・貸駐車場</a></li>
+    <li><a href="#works">施工事例</a></li>
+    <li><a href="#voices">お客様の声</a></li>
+    <li><a href="#company">会社案内</a></li>
+  </ul></nav>
+  <a class="tel" href="tel:0467899811">0467-89-9811</a>
+  <details class="menu"><summary>メニュー</summary><ul>
+    <li><a href="#news">お知らせ</a></li>
+    <li><a href="#concept">コンセプト</a></li>
+    <li><a href="#sale">売買物件</a></li>
+    <li><a href="#">賃貸物件・貸駐車場</a></li>
+    <li><a href="#works">施工事例</a></li>
+    <li><a href="#voices">お客様の声</a></li>
+    <li><a href="#company">会社案内</a></li>
+  </ul></details>
+</header>
+<main id="top">
+<section class="cover">
+  <div class="big"><img src="images/ldk.jpg" alt="朝日が差し込むリビングダイニングと庭"></div>
+  <div class="title">
+    <h1>こんな毎日が、<br>ここにある。</h1>
+    <p>建築家とともに創る、<br class="sp">湘南の憩いのわが家。</p>
+    <a class="btn" href="#works">施工事例を見る</a>
+  </div>
+  <div class="pair">
+    <img src="images/life-window.jpg" alt="窓辺から庭を眺める子どもの後ろ姿">
+    <img src="images/life-table.jpg" alt="朝食の並ぶ木のテーブル">
+  </div>
+</section>
+
+<div class="chap"><p class="hand reveal">豊かな自然の中で 大切な家族と紡ぐ<br>かけがえのない時の流れ</p></div>
+<div class="page">
+  <figure class="p1 reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/life-shoes.jpg" alt="玄関に並ぶ子どものサンダルと大人の靴" loading="lazy"></button><figcaption class="hand">砂のついたサンダルが、今日も玄関にある。</figcaption></figure>
+  <figure class="p2 reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/life-board.jpg" alt="外壁に立てかけたサーフボードと自転車" loading="lazy"></button><figcaption class="hand">海までは、自転車で。</figcaption></figure>
+</div>
+<div class="page">
+  <figure class="p3 reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/life-stairs.jpg" alt="光の差す木の階段" loading="lazy"></button><figcaption class="hand">階段に、午後の光が落ちてくる。</figcaption></figure>
+  <figure class="p4 reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/walk-kitchen.jpg" alt="窓から緑が見えるキッチン" loading="lazy"></button><figcaption class="hand">窓の向こうの緑を見ながら、お湯を沸かす。</figcaption></figure>
+</div>
+<figure class="wide reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/life-deck.jpg" alt="デッキに並んで座る親子の後ろ姿" loading="lazy"></button><figcaption class="hand">夕方の風が気持ちいいから、もう少しだけ。</figcaption></figure>
+
+<section class="section" id="concept"><div class="wrap story">
+  <div class="reveal">
+    <blockquote class="hand" style="font-size:clamp(1.25rem,1.9vw,1.6rem);line-height:1.9">建築は丈夫でなければならない。<br>機能的でなければならない。<br>美しくなければならない。</blockquote>
+    <p style="margin-top:16px;color:var(--muted)">一級建築士 吉田 靖</p>
+    <p style="margin-top:20px">敷地を読む、環境を読む、居心地を考える。いつも心がけています。</p>
+  </div>
+  <div class="duo">
+    <figure class=" reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/craft-drawing.jpg" alt="手描きの断面図と鉛筆を持つ手" loading="lazy"></button></figure>
+    <figure class=" reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/craft-plaster.jpg" alt="鏝で壁を仕上げる職人の手" loading="lazy"></button></figure>
+  </div>
+</div></section>
+
+<section class="section" style="background:var(--tint)"><div class="wrap">
+  <p class="big-line reveal">2000年の創業から、茅ヶ崎で<em>26年</em>。<br>一級建築士とともに<em>200棟以上</em>の住まいを手がけ、<br>耐震等級3の家を多数施工してきました。</p>
+</div></section>
+
+<section class="section" id="works"><div class="wrap">
+  <h2 class="reveal">施工事例</h2>
+  <p class="lead reveal">掲載写真はイメージです。</p>
+  <div class="mosaic">
+    <figure class=" reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/work-2.jpg" alt="天窓のある吹き抜けのリビング" loading="lazy"></button></figure>
+    <figure class=" reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/work-1.jpg" alt="濃い色の板張りの外観" loading="lazy"></button></figure>
+    <figure class=" reveal"><button type="button" data-view aria-label="写真を大きく見る"><img src="images/work-3.jpg" alt="中庭を望むダイニング" loading="lazy"></button></figure>
+  </div>
+  <p style="margin-top:28px"><a class="link" href="#">施工事例一覧</a></p>
+</div></section>
+
+<section class="section" id="voices"><div class="wrap">
+  <h2 class="reveal">お客様の声</h2>
+  <div class="voices reveal">
+    <div class="main">
+      <blockquote>「社長の人柄に後押しされて決めました。リビングを広くして家族が自然と集まれるようにしたかったです。」</blockquote>
+      <cite>しおしゃけ さま（2020年5月 ご新築）</cite>
+    </div>
+    <div class="side">
+      <div>
+        <blockquote>「来店時に須川社長が何通りか間取りを準備してくださって…」</blockquote>
+        <cite>ミオ さま（2022年5月 ご新築）</cite>
+      </div>
+      <div>
+        <blockquote>「担当、建築士さん、工務店の方、みなさん人柄が良かった。」</blockquote>
+        <cite>あつもり さま（2020年5月 ご新築）</cite>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section class="section" id="sale"><div class="wrap board reveal">
+  <div>
+    <h2>販売中の物件</h2>
+    <div class="sale-item">
+      <h3>茅ヶ崎市矢畑売地 小島矢畑B区画</h3>
+      <p class="price">2,780万円</p>
+      <p>売主物件のため仲介手数料は不要です。土地面積 135.17㎡（40.88坪）。JR東海道線 茅ヶ崎駅 徒歩22分。</p>
+    </div>
+    <a class="link" href="#">売買物件を見る</a>
+  </div>
+  <div id="news">
+    <h2>お知らせ</h2>
+    <ul class="news">
+      <li><a href="#"><time>2026.07.25</time><span>夏季休暇について</span></a></li>
+      <li><a href="#"><time>2026.06.26</time><span>石川矢畑NO6 お蔭様でご成約となりました</span></a></li>
+      <li><a href="#"><time>2026.04.10</time><span>岡田貸家 お申込みを頂きました</span></a></li>
+    </ul>
+    <a class="link" href="#">お知らせ一覧</a>
+  </div>
+</div></section>
+
+<section class="section closing"><div class="wrap reveal">
+  <h2>ご家族の暮らしを、<br class="sp">聞かせてください。</h2>
+  <p>土地探しから、<br class="sp">お気軽にご相談ください。</p>
+  <div class="acts"><a class="btn" href="tel:0467899811">0467-89-9811</a><a class="btn" href="#">お問い合わせ</a></div>
+</div></section>
+</main>
+<dialog class="viewer" aria-label="写真の拡大表示"><button type="button" class="close">閉じる</button><img src="" alt=""></dialog>
+<footer class="foot" id="company"><div class="wrap g">
+  <div>
+    <img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52" loading="lazy">
+    <p style="margin-top:16px">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>JR東海道本線 茅ヶ崎駅 徒歩20分</p>
+  </div>
+  <div>
+    <p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）<br>宅地建物取引業 神奈川県知事（3）第29447号<br>一般建設業 神奈川県知事（般-2）第69917号</p>
+  </div>
+  <p class="note">この案の写真はAIで生成したイメージで、実在の建物やお客様ではありません。本番では実際の施工写真に差し替えます。</p>
+</div></footer>
+<div class="mockbar"><span>写真はAI生成のイメージ</span><a href="a.html">A</a><a href="b.html" aria-current="page">B</a><a href="c.html">C</a><a href="index.html">一覧へ</a></div>
+<script src="shared.js"></script>
+</body></html>

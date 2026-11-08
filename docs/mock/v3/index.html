@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+.herox { position: relative; height: 100dvh; min-height: 560px; overflow: hidden; background: #33383c; }
+.herox figure { position: absolute; inset: 0; margin: 0; opacity: 0; animation: heroFade 21s infinite; }
+.herox figure:first-child { opacity: 1; animation-name: heroFirst; }
+.herox figure:nth-child(2) { animation-delay: 7s; }
+.herox figure:nth-child(3) { animation-delay: 14s; }
+.herox img { width: 100%; height: 100%; object-fit: cover; animation: heroZoom 21s linear infinite; }
+.herox figure:nth-child(2) img { animation-delay: 7s; }
+.herox figure:nth-child(3) img { animation-delay: 14s; }
+@keyframes heroFirst { 0% { opacity: 1; } 33% { opacity: 1; } 42% { opacity: 0; } 91% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes heroFade { 0% { opacity: 0; } 6% { opacity: 1; } 33% { opacity: 1; } 42% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes heroZoom { from { transform: scale(1); } 45% { transform: scale(1.07); } to { transform: scale(1.07); } }
+.herox p { position: absolute; left: 0; right: 0; bottom: 84px; z-index: 1; color: #fff; font-family: var(--hand); font-size: clamp(1.2rem, 1.8vw, 1.5rem); letter-spacing: 0.2em; text-align: center; text-shadow: 0 0 2px rgb(10 20 28 / 0.8), 0 1px 12px rgb(10 20 28 / 0.75); }
+.statement { padding: clamp(72px, 10vw, 136px) var(--gutter); text-align: center; }
+.statement h1 { font-size: clamp(1.3rem, 2.3vw, 1.85rem); font-weight: 400; line-height: 2.1; letter-spacing: 0.1em; }
+.ruleh { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); padding-inline: var(--gutter); font-size: clamp(1.35rem, 2.2vw, 1.8rem); font-weight: 400; letter-spacing: 0.14em; }
+.ruleh::before, .ruleh::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.carousel { position: relative; }
+.track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.track::-webkit-scrollbar { display: none; }
+.slide { flex: none; display: block; width: 100%; scroll-snap-align: center; overflow: hidden; }
+.slide img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+a.slide:hover img { transform: scale(1.03); }
+.nav { position: absolute; right: 0; bottom: 0; display: flex; }
+.nav button { position: relative; width: 52px; height: 52px; border: 0; background: rgb(252 253 253 / 0.92); cursor: pointer; transition: background 0.2s ease; }
+.nav button + button { box-shadow: inset 1px 0 0 var(--line); }
+.nav button:hover { background: #fff; }
+.nav button::after { content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: translate(-30%, -50%) rotate(45deg); }
+.nav .prev::after { transform: translate(-70%, -50%) rotate(225deg); }
+.peek { margin-top: clamp(32px, 4vw, 52px); }
+.peek .track { gap: 10px; padding-inline: 21vw; scroll-padding-inline: 21vw; }
+.peek .slide { width: 58vw; height: clamp(300px, 39vw, 620px); }
+.peek .nav { right: 21vw; }
+.blocks { display: grid; gap: clamp(72px, 9vw, 128px); padding-block: clamp(80px, 10vw, 136px); }
+.block { display: grid; grid-template-columns: 58fr 42fr; align-items: center; }
+.block .slide { height: clamp(320px, 39vw, 620px); }
+.block .bt { padding-inline: clamp(32px, 7vw, 112px); }
+.block h2 { font-size: clamp(1.6rem, 2.5vw, 2.15rem); font-weight: 400; letter-spacing: 0.12em; }
+.block .link { margin-top: 22px; font-size: 16px; font-weight: 500; }
+.block.flip { grid-template-columns: 42fr 58fr; }
+.block.flip .carousel { order: 2; }
+.block.flip .bt { text-align: right; }
+.sunset { position: relative; display: flex; align-items: center; justify-content: center; min-height: 86dvh; color: #fff; text-align: center; text-shadow: 0 0 2px rgb(10 20 28 / 0.85), 0 1px 12px rgb(10 20 28 / 0.7), 0 2px 34px rgb(10 20 28 / 0.65); }
+.sunset > img, .night > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sunset .wrap, .night .wrap { position: relative; }
+.sunset h2 { font-size: clamp(1.45rem, 2.7vw, 2.3rem); font-weight: 400; line-height: 1.9; letter-spacing: 0.1em; }
+.sunset .link { margin-top: 22px; color: #fff; font-weight: 500; }
+.imgnote { position: absolute; right: 12px; bottom: 8px; color: #fff; font-size: 13px; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 8px rgb(10 20 28 / 0.8); }
+.newsband { padding-block: clamp(72px, 9vw, 120px); background: var(--warm); }
+.newsband .inner { width: min(100%, 820px); margin: clamp(28px, 3.4vw, 44px) auto 0; padding-inline: var(--gutter); }
+.newsband .news { margin-top: 0; }
+.newsband .news a { padding-block: 16px; }
+.newsband .more { display: block; text-align: center; margin-top: 26px; }
+.newsband .link { display: inline-block; }
+.night { position: relative; min-height: 92dvh; display: flex; align-items: center; color: #fff; text-align: center; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 10px rgb(10 20 28 / 0.75), 0 2px 34px rgb(10 20 28 / 0.75); }
+.night h2 { font-weight: 400; letter-spacing: 0.1em; }
+.night p { margin-top: 12px; font-size: 18px; }
+.acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+.night .btn { text-shadow: none; }
+@media (max-width: 860px) {
+  .peek .track { padding-inline: 8vw; scroll-padding-inline: 8vw; }
+  .peek .slide { width: 84vw; height: 62vw; }
+  .peek .nav { right: 8vw; }
+  .block, .block.flip { grid-template-columns: 1fr; gap: 20px; }
+  .block.flip .carousel { order: 0; }
+  .block.flip .bt { text-align: left; }
+  .block .slide { height: 68vw; }
+  .block .bt { padding-inline: var(--gutter); }
+  .nav button { width: 46px; height: 46px; }
+  .herox p { bottom: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .herox figure { animation: none; }
+  .herox figure:first-child { opacity: 1; }
+  .herox img { animation: none; }
+  .slide img { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="sitehead">
+  <a class="logo" href="index.html"><img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52"></a>
+  <nav aria-label="メインメニュー"><ul><li><a href="works/index.html">施工事例</a></li><li><a href="concept.html">コンセプト</a></li><li><a href="voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="index.html#news">お知らせ</a></li></ul></nav>
+  <details class="find"><summary>物件を探す</summary><ul><li><a href="sale/index.html">売買物件</a></li><li><a href="rent/index.html">賃貸物件</a></li><li><a href="rent/index.html#parking">貸駐車場</a></li></ul></details>
+  <a class="tel" href="tel:0467899811">0467-89-9811</a>
+  <details class="menu"><summary>メニュー</summary><ul><li class="group">物件を探す</li><li><a href="sale/index.html">売買物件</a></li><li><a href="rent/index.html">賃貸物件</a></li><li><a href="rent/index.html#parking">貸駐車場</a></li><li class="group">家づくり</li><li><a href="works/index.html">施工事例</a></li><li><a href="concept.html">コンセプト</a></li><li><a href="voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="index.html#news">お知らせ</a></li></ul></details>
+</header>
+<main id="top">
+<section class="herox"><figure><img src="images/works/kagawa/11.jpg" alt="施工事例の写真"></figure><figure><img src="images/works/shimoterao/07.jpg" alt="施工事例の写真"></figure><figure><img src="images/works/kowada/09.jpg" alt="施工事例の写真"></figure></section>
+
+<section class="statement"><h1>建築家とともに創る、<br class="sp">湘南の住まい。<br>茅ヶ崎で26年、<br class="sp">一棟ずつ建ててきました。</h1></section>
+
+<section id="works">
+  <h2 class="ruleh">施工事例</h2>
+  <div class="carousel peek" data-carousel><div class="track"><a class="slide" href="works/kagawa.html"><img src="images/works/kagawa/11.jpg" alt="施工事例の写真" loading="lazy"></a><a class="slide" href="works/shimoterao.html"><img src="images/works/shimoterao/07.jpg" alt="施工事例の写真" loading="lazy"></a><a class="slide" href="works/kowada.html"><img src="images/works/kowada/15.jpg" alt="施工事例の写真" loading="lazy"></a><a class="slide" href="works/matsubayashi.html"><img src="images/works/matsubayashi/20.jpg" alt="施工事例の写真" loading="lazy"></a><a class="slide" href="works/higashikaigan.html"><img src="images/works/higashikaigan/04.jpg" alt="施工事例の写真" loading="lazy"></a><a class="slide" href="works/ninomiya.html"><img src="images/works/ninomiya/07.jpg" alt="施工事例の写真" loading="lazy"></a></div><div class="nav"><button type="button" class="prev" aria-label="前の写真"></button><button type="button" class="next" aria-label="次の写真"></button></div></div>
+</section>
+
+<div class="blocks">
+<section class="block reveal"><div class="carousel " data-carousel><div class="track"><a class="slide" href="works/kowada.html"><img src="images/works/kowada/04.jpg" alt="リビングの写真" loading="lazy"></a><a class="slide" href="works/kagawa.html"><img src="images/works/kagawa/14.jpg" alt="リビングの写真" loading="lazy"></a><a class="slide" href="works/matsubayashi.html"><img src="images/works/matsubayashi/09.jpg" alt="リビングの写真" loading="lazy"></a></div><div class="nav"><button type="button" class="prev" aria-label="前の写真"></button><button type="button" class="next" aria-label="次の写真"></button></div></div><div class="bt"><h2>リビング</h2><a class="link" href="works/index.html">施工事例へ</a></div></section>
+<section class="block flip reveal"><div class="carousel " data-carousel><div class="track"><a class="slide" href="works/shimoterao.html"><img src="images/works/shimoterao/09.jpg" alt="キッチンの写真" loading="lazy"></a><a class="slide" href="works/matsubayashi.html"><img src="images/works/matsubayashi/16.jpg" alt="キッチンの写真" loading="lazy"></a><a class="slide" href="works/kowada.html"><img src="images/works/kowada/08.jpg" alt="キッチンの写真" loading="lazy"></a></div><div class="nav"><button type="button" class="prev" aria-label="前の写真"></button><button type="button" class="next" aria-label="次の写真"></button></div></div><div class="bt"><h2>キッチン</h2><a class="link" href="works/index.html">施工事例へ</a></div></section>
+<section class="block reveal"><div class="carousel " data-carousel><div class="track"><a class="slide" href="works/higashikaigan.html"><img src="images/works/higashikaigan/05.jpg" alt="玄関の写真" loading="lazy"></a><a class="slide" href="works/kowada.html"><img src="images/works/kowada/02.jpg" alt="玄関の写真" loading="lazy"></a><a class="slide" href="works/shimoterao.html"><img src="images/works/shimoterao/05.jpg" alt="玄関の写真" loading="lazy"></a></div><div class="nav"><button type="button" class="prev" aria-label="前の写真"></button><button type="button" class="next" aria-label="次の写真"></button></div></div><div class="bt"><h2>玄関</h2><a class="link" href="works/index.html">施工事例へ</a></div></section>
+</div>
+
+<section class="sunset" id="concept">
+  <img src="images/sea-beach.jpg" alt="夕暮れの湘南の浜辺" loading="lazy">
+  <div class="wrap reveal">
+    <h2>住み心地を決めるのは、<br>予算より良いプランニング</h2>
+    <a class="link" href="concept.html">コンセプトへ</a>
+  </div>
+  <span class="imgnote">写真はイメージです</span>
+</section>
+
+<section class="newsband" id="news">
+  <h2 class="ruleh">お知らせ</h2>
+  <div class="inner">
+    <ul class="news">
+      <li><a href="#"><time>2026.07.25</time><span>夏季休暇について</span></a></li>
+      <li><a href="#"><time>2026.06.26</time><span>石川矢畑NO6 お蔭様でご成約となりました</span></a></li>
+      <li><a href="#"><time>2026.04.10</time><span>岡田貸家 お申込みを頂きました</span></a></li>
+    </ul>
+    <p class="more"><a class="link" href="#">お知らせ一覧</a></p>
+  </div>
+</section>
+
+<section class="night">
+  <img src="images/day-night.jpg" alt="夜、窓に明かりが灯る家" loading="lazy">
+  <div class="wrap reveal">
+    <h2>ご家族の一日を、<br class="sp">聞かせてください。</h2>
+    <p>土地探しから、<br class="sp">お気軽にご相談ください。</p>
+    <div class="acts"><a class="btn" href="tel:0467899811">0467-89-9811</a><a class="btn" href="#">お問い合わせ</a></div>
+  </div>
+  <span class="imgnote">写真はイメージです</span>
+</section>
+</main>
+<footer class="foot" id="company"><div class="wrap g">
+  <div>
+    <img src="images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52" loading="lazy">
+    <p style="margin-top:16px">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>JR東海道本線 茅ヶ崎駅 徒歩20分</p>
+  </div>
+  <div>
+    <p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）<br>宅地建物取引業 神奈川県知事（3）第29447号<br>一般建設業 神奈川県知事（般-2）第69917号</p>
+  </div>
+</div></footer>
+<div class="mockbar"><span>デザイン確認用</span><a href="index.html">トップ</a><a href="works/index.html">施工事例</a><a href="../v2/index.html">前の3案</a></div>
+<script src="shared.js"></script>
+</body></html>

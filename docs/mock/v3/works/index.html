@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>施工事例 | コミュニティ湘南</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../shared.css">
+<style>
+.hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); gap: 8px; height: calc(100dvh - 56px); min-height: 620px; padding: 76px 8px 8px; }
+.cell { position: relative; display: block; overflow: hidden; color: #fff; text-decoration: none; }
+.cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.cell:hover img { transform: scale(1.04); }
+.cell span { position: absolute; left: 12px; bottom: 8px; font-size: 15px; font-weight: 600; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 10px rgb(10 20 28 / 0.8); }
+.c1 { grid-column: 1 / 8; grid-row: 1 / 5; }
+.c2 { grid-column: 8 / 11; grid-row: 4 / 7; }
+.c3 { grid-column: 11 / 13; grid-row: 4 / 7; }
+.c4 { grid-column: 1 / 4; grid-row: 5 / 7; }
+.c5 { grid-column: 4 / 8; grid-row: 5 / 7; }
+.lead-cell { grid-column: 8 / 13; grid-row: 1 / 4; display: flex; flex-direction: column; justify-content: center; padding: 8px clamp(16px, 2.6vw, 44px); }
+.lead-cell h1 { font-size: clamp(1.75rem, 2.9vw, 2.8rem); }
+.lead-cell p { margin-top: 10px; color: var(--muted); font-size: 18px; }
+.lead-cell .btn { align-self: flex-start; margin-top: 18px; }
+
+.cases { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; margin-top: 32px; }
+.case { grid-column: span 3; color: inherit; text-decoration: none; }
+.case.big { grid-column: span 6; }
+.case .ph { display: block; height: clamp(220px, 25vw, 340px); overflow: hidden; }
+.case img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.case:hover img { transform: scale(1.04); }
+.case h3 { margin-top: 12px; font-size: 18px; line-height: 1.6; }
+.case p { margin-top: 2px; color: var(--muted); font-size: 15px; }
+
+.rooms { display: grid; gap: clamp(56px, 8vw, 112px); padding: 0 8px clamp(72px, 9vw, 120px); }
+.room h2 { padding-inline: clamp(12px, 3vw, 44px); margin-bottom: 14px; font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 600; letter-spacing: 0.14em; }
+.room.flip h2 { text-align: right; }
+.rgrid { display: grid; grid-template-columns: 8fr 4fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 8px; height: clamp(420px, 42vw, 680px); }
+.rgrid a { display: block; min-height: 0; overflow: hidden; }
+.rgrid img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.rgrid a:hover img { transform: scale(1.03); }
+.rm0 { grid-row: 1 / 3; }
+.flip .rgrid { grid-template-columns: 4fr 8fr; }
+.flip .rm0 { grid-column: 2; grid-row: 1 / 3; }
+.flip .rm1 { grid-column: 1; grid-row: 1; }
+.flip .rm2 { grid-column: 1; grid-row: 2; }
+
+.full { position: relative; min-height: 78dvh; display: flex; align-items: center; }
+.full > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.full .wrap { position: relative; }
+.plate { max-width: 34em; padding: clamp(22px, 3vw, 40px); background: rgb(252 253 253 / 0.94); }
+.plate blockquote { font-family: var(--hand); font-weight: 400; font-size: clamp(1.2rem, 2vw, 1.65rem); line-height: 1.9; }
+.plate .by { margin-top: 12px; color: var(--muted); font-size: 16px; }
+.plate .txt { margin-top: 14px; }
+.imgnote { position: absolute; right: 12px; bottom: 8px; color: #fff; font-size: 13px; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 8px rgb(10 20 28 / 0.8); }
+
+.facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 24px; }
+.facts b { display: block; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.2; color: var(--accent); }
+.facts small { font-size: 0.42em; margin-left: 4px; }
+.facts span { color: var(--muted); font-size: 16px; }
+
+.search { background: var(--tint); }
+.doors { display: grid; grid-template-columns: 7fr 5fr; grid-template-rows: 1fr 1fr; gap: 12px; margin-top: 32px; }
+.door { display: block; padding: clamp(22px, 2.6vw, 34px); background: var(--paper); color: var(--ink); text-decoration: none; transition: transform 0.15s ease, background 0.25s ease; }
+.door:hover { background: #fff; }
+.door:active { transform: translateY(1px); }
+.door h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+.door p { margin-top: 2px; color: var(--muted); font-size: 16px; }
+.door.main { grid-row: 1 / 3; display: flex; flex-direction: column; background: var(--accent); color: #fff; }
+.door.main:hover { background: var(--accent-hover); }
+.door.main h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+.door.main p { color: #fff; font-size: 18px; }
+.door .pick { margin-top: auto; padding-top: 28px; font-size: 16px; line-height: 1.8; }
+.door .pick b { font-size: 1.5em; }
+.news-wrap { display: grid; grid-template-columns: 4fr 8fr; gap: 24px clamp(32px, 6vw, 96px); }
+.night { position: relative; min-height: 92dvh; display: flex; align-items: center; color: #fff; text-align: center; text-shadow: 0 0 2px rgb(10 20 28 / 0.9), 0 1px 10px rgb(10 20 28 / 0.75), 0 2px 34px rgb(10 20 28 / 0.75); }
+.night > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.night .wrap { position: relative; }
+.night p { margin-top: 12px; font-size: 19px; font-weight: 600; }
+.acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+.night .btn { text-shadow: none; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; height: auto; min-height: 0; padding-top: 76px; }
+  .lead-cell { grid-column: 1 / -1; grid-row: auto; order: 4; padding: 16px 12px 20px; }
+  .c1 { grid-column: 1 / -1; grid-row: auto; order: 1; height: 28dvh; }
+  .c2, .c3, .c4, .c5 { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 3; }
+  .c2 { order: 2; } .c3 { order: 3; } .c4 { order: 5; } .c5 { order: 6; }
+  .cell span { left: 8px; bottom: 5px; font-size: 13px; }
+  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .case, .case.big { grid-column: span 1; }
+  .case.big { grid-column: 1 / -1; }
+  .case .ph { height: 42vw; }
+  .case.big .ph { height: 62vw; }
+  .rgrid, .flip .rgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 58vw 34vw; height: auto; }
+  .rm0, .flip .rm0 { grid-column: 1 / -1; grid-row: 1; }
+  .rm1, .flip .rm1 { grid-column: 1; grid-row: 2; }
+  .rm2, .flip .rm2 { grid-column: 2; grid-row: 2; }
+  .room.flip h2 { text-align: left; }
+  .facts { grid-template-columns: 1fr; }
+  .doors { grid-template-columns: 1fr; grid-template-rows: none; }
+  .door.main { grid-row: auto; }
+  .news-wrap { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cell img, .case img, .rgrid img { transition: none; }
+}
+
+.page-head { padding: 112px var(--gutter) 0; }
+.page-head h1 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
+</style>
+</head>
+<body>
+<header class="sitehead">
+  <a class="logo" href="../index.html"><img src="../images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52"></a>
+  <nav aria-label="メインメニュー"><ul><li><a href="../works/index.html">施工事例</a></li><li><a href="../concept.html">コンセプト</a></li><li><a href="../voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="../index.html#news">お知らせ</a></li></ul></nav>
+  <details class="find"><summary>物件を探す</summary><ul><li><a href="../sale/index.html">売買物件</a></li><li><a href="../rent/index.html">賃貸物件</a></li><li><a href="../rent/index.html#parking">貸駐車場</a></li></ul></details>
+  <a class="tel" href="tel:0467899811">0467-89-9811</a>
+  <details class="menu"><summary>メニュー</summary><ul><li class="group">物件を探す</li><li><a href="../sale/index.html">売買物件</a></li><li><a href="../rent/index.html">賃貸物件</a></li><li><a href="../rent/index.html#parking">貸駐車場</a></li><li class="group">家づくり</li><li><a href="../works/index.html">施工事例</a></li><li><a href="../concept.html">コンセプト</a></li><li><a href="../voices.html">お客様の声</a></li><li><a href="#company">会社案内</a></li><li><a href="../index.html#news">お知らせ</a></li></ul></details>
+</header>
+<main>
+<div class="page-head"><h1>施工事例</h1></div>
+<section class="section" style="padding-top:32px"><div class="wrap"><div class="cases" style="margin-top:0"><a class="case big reveal"  href="kagawa.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/kagawa/11.jpg" alt="施工事例の写真" loading="lazy"></span></a><a class="case reveal"  href="shimoterao.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/shimoterao/07.jpg" alt="施工事例の写真" loading="lazy"></span></a><a class="case reveal"  href="kowada.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/kowada/15.jpg" alt="施工事例の写真" loading="lazy"></span></a><a class="case reveal"  href="matsubayashi.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/matsubayashi/20.jpg" alt="施工事例の写真" loading="lazy"></span></a><a class="case reveal"  href="higashikaigan.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/higashikaigan/04.jpg" alt="施工事例の写真" loading="lazy"></span></a><a class="case big reveal"  href="ninomiya.html" aria-label="施工事例を見る"><span class="ph"><img src="../images/works/ninomiya/07.jpg" alt="施工事例の写真" loading="lazy"></span></a></div>
+</div></section>
+</main>
+<footer class="foot" id="company"><div class="wrap g">
+  <div>
+    <img src="../images/logo.png" alt="株式会社コミュニティ湘南" width="310" height="52" loading="lazy">
+    <p style="margin-top:16px">〒253-0085 神奈川県茅ヶ崎市矢畑254-1<br>JR東海道本線 茅ヶ崎駅 徒歩20分</p>
+  </div>
+  <div>
+    <p>営業時間 10:00〜16:00（定休日 毎週火曜日・水曜日）<br>宅地建物取引業 神奈川県知事（3）第29447号<br>一般建設業 神奈川県知事（般-2）第69917号</p>
+  </div>
+</div></footer>
+<div class="mockbar"><span>デザイン確認用</span><a href="../index.html">トップ</a><a href="../works/index.html">施工事例</a><a href="../../v2/index.html">前の3案</a></div>
+<script src="../shared.js"></script>
+</body></html>

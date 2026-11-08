@@ -1,24 +1,44 @@
-import Image from "next/image";
-import { voices } from "@/lib/site";
-import { IMG, SectionHead, SubpageFrame } from "./Shared";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { voices, type Voice } from "@/lib/voices";
+import { SectionHead, SubpageFrame } from "./Shared";
+
+function excerpt(voice: Voice) {
+  const text = voice.body.replace(/\n/g, "");
+  return text.length > 100 ? `${text.slice(0, 100)}…` : text;
+}
 
 export function VoicesPage() {
-  const [featuredVoice, ...rest] = voices;
   return (
-    <SubpageFrame hero={{ title: "お客様の声", label: "Voices", lead: "家づくりを終えたご家族の、率直な言葉をご紹介します。", image: `${IMG}/units/img/4638-16-20191206023713_b5de940499cf62.jpg`, imageAlt: "家族が集まる開放的なリビング", imagePosition: "center 56%" }}>
+    <SubpageFrame hero={{ title: "お客様の声" }}>
       <section className="px-5 py-20 md:px-6 md:py-28">
         <div className="mx-auto max-w-[1280px]">
-          <SectionHead title="住まい手から届いた言葉" body="家づくりを決めた理由や、完成した住まいで感じていることを伺いました。" />
-          <article className="grid gap-10 md:grid-cols-[0.85fr_1.15fr] md:items-center md:gap-16">
-            <figure className="relative aspect-[4/5] overflow-hidden bg-tint"><Image src={featuredVoice.image} alt={`${featuredVoice.name}の住まい`} fill sizes="(max-width:767px) 100vw, 42vw" className="object-cover" /></figure>
-            <div><blockquote className="text-[clamp(22px,2.4vw,31px)] leading-[1.9] text-accent">「{featuredVoice.quote}」</blockquote><p className="mt-7 leading-[1.9] text-muted">{featuredVoice.name}<br />{featuredVoice.when}</p></div>
-          </article>
-          <div className="mt-16 grid gap-8 md:grid-cols-2">
-            {rest.map((voice) => <article key={voice.name} className="grid gap-6 bg-white p-6 sm:grid-cols-[140px_1fr] md:p-8"><figure className="relative aspect-square overflow-hidden"><Image src={voice.image} alt={`${voice.name}の住まい`} fill sizes="140px" className="object-cover" /></figure><div><blockquote className="leading-[2]">「{voice.quote}」</blockquote><p className="mt-4 text-[14px] text-muted">{voice.name}<br />{voice.when}</p></div></article>)}
+          <SectionHead title="住まい手から届いた言葉" body="家づくりを決めた理由や、完成した住まいで感じていることを、住まい手の言葉でご紹介します。" />
+          <p className="mb-8 text-[17px] text-muted">全 {voices.length} 件</p>
+          <div className="grid gap-x-12 gap-y-6 md:grid-cols-2">
+            {voices.map((voice) => (
+              <article key={voice.slug} className="border-t border-line py-8">
+                <Link href={`/comments/${voice.slug}.html`} className="group block h-full">
+                  <div className="flex items-center gap-5">
+                    <figure className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-tint">
+                      <Image src={voice.image} alt="" fill sizes="80px" className="object-cover" />
+                    </figure>
+                    <div>
+                      <span className="text-[15px] tracking-[0.08em] text-muted">{voice.dateLabel}</span>
+                      <h3 className="mt-1 text-[24px] font-normal leading-[1.5]">{voice.name}</h3>
+                    </div>
+                  </div>
+                  <p className="mt-6 leading-[2] text-muted">{excerpt(voice)}</p>
+                  <span className="mt-6 inline-flex items-center gap-3 border-b border-current pb-1 text-[15px] transition-[gap] group-hover:gap-5">
+                    全文を読む <ArrowRight size={16} aria-hidden />
+                  </span>
+                </Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-      <section className="bg-tint/80 px-5 py-20 md:px-6 md:py-28"><div className="mx-auto max-w-[1280px]"><SectionHead title="お聞きしていること" body="完成後の実感を、これから家づくりを始める方にも役立つ形でご紹介します。" /><dl className="grid border-t border-line md:grid-cols-[240px_1fr]">{[["決めた理由","コミュニティ湘南でご自宅を新築された理由"],["実現したこと","家づくりで大切にした希望やこだわり"],["完成後の感想","良かった点と、これから改善してほしい点"]].map(([dt,dd]) => <div key={dt} className="contents"><dt className="border-b border-line py-5 text-accent md:px-5">{dt}</dt><dd className="border-b border-line py-5 text-muted md:px-5">{dd}</dd></div>)}</dl></div></section>
     </SubpageFrame>
   );
 }

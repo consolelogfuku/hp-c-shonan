@@ -1,0 +1,932 @@
+/*
+  トップページ専用のスタイル（docs/mock/v5/index.html を移植）。
+  白と黒の配色、最初の写真に白い額縁、ハンバーガーメニューは左からスライド。
+  ほかのページに影響しないよう、すべて .home の内側に限定している。
+*/
+.home {
+  --home-ink: #1a1a1a;
+  --home-muted: #767676;
+  --home-line: #e2e2e2;
+  --home-gutter: clamp(20px, 4vw, 56px);
+  --home-frame: clamp(12px, 2vw, 28px);
+  --home-header: 90px;
+  min-height: 100vh;
+  background: #ffffff;
+  color: var(--home-ink);
+  font-family: var(--font-mincho);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.9;
+}
+.home a {
+  color: var(--home-ink);
+  text-decoration: none;
+}
+.home a:hover {
+  color: #555555;
+}
+.home [id] {
+  scroll-margin-top: var(--home-header);
+}
+.home .en {
+  font-family: inherit;
+}
+.home .mincho {
+  font-family: "Shippori Mincho B1", serif;
+  font-weight: 400;
+}
+
+/* 写真の枠 */
+.home .ph {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: #eeeeee;
+}
+.home .ph img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ヘッダー（上に固定） */
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+  height: var(--home-header);
+  padding: 0 var(--home-gutter);
+  background: #ffffff;
+}
+.home-menu-btn,
+.home-menu-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--home-ink);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 17px;
+  letter-spacing: 0.24em;
+}
+.home-menu-btn {
+  justify-self: start;
+}
+.home-logo {
+  display: flex;
+}
+.home-logo img {
+  display: block;
+  width: 240px;
+  height: auto;
+}
+/* 右上: 電話は番号、フォームは黒いボタン。押す先を分ける */
+.home-header-cta {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.home .home-tel,
+.home .home-form,
+.subpage .home-tel,
+.subpage .home-form {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  white-space: nowrap;
+}
+.home .home-tel,
+.subpage .home-tel {
+  color: var(--home-ink);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.home .home-form,
+.subpage .home-form {
+  padding: 0 22px;
+  background: var(--home-ink);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.home .home-form:hover,
+.subpage .home-form:hover {
+  background: #444444;
+  color: #ffffff;
+}
+
+/* ハンバーガーメニュー（左から板がスライドして出る。右側を押しても閉じる） */
+.home-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s 0.35s;
+}
+.home-drawer.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition: visibility 0s;
+}
+.home-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.home-drawer.is-open .home-drawer-backdrop {
+  opacity: 1;
+}
+.home-drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: min(400px, 86vw);
+  flex-direction: column;
+  overflow-y: auto;
+  background: #ffffff;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.75, 0.15, 1);
+}
+.home-drawer.is-open .home-drawer-panel {
+  transform: none;
+}
+.home-drawer-top {
+  display: flex;
+  align-items: center;
+  padding: 22px 32px 22px var(--home-gutter);
+}
+.home-x {
+  position: relative;
+  width: 26px;
+  height: 14px;
+  flex: none;
+}
+.home-x::before,
+.home-x::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 20px;
+  height: 1px;
+  background: var(--home-ink);
+}
+.home-x::before {
+  transform: rotate(45deg);
+}
+.home-x::after {
+  transform: rotate(-45deg);
+}
+.home-drawer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 24px 32px 32px var(--home-gutter);
+}
+.home-drawer-group {
+  display: flex;
+  flex-direction: column;
+}
+.home-drawer-group p {
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--home-ink);
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: var(--home-muted);
+}
+.home-drawer-group a {
+  padding: 10px 0;
+  font-size: 19px;
+  letter-spacing: 0.08em;
+}
+.home-drawer-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: auto;
+  padding: 28px 32px 36px var(--home-gutter);
+  border-top: 1px solid var(--home-line);
+}
+.home-drawer-foot .tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.home-drawer-foot p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--home-muted);
+}
+
+/* 黒い小さなボタン */
+.home-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.home .home-btns a,
+.home .home-black,
+.subpage .home-black {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 22px 0 34px;
+  background: var(--home-ink);
+  color: #ffffff;
+  font-family: var(--font-mincho);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.home .home-btns a:hover {
+  background: #444444;
+  color: #ffffff;
+}
+.home .home-btns a::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid #ffffff;
+  border-right: 1.5px solid #ffffff;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* 最初の写真（白い額縁） */
+.home-hero {
+  box-sizing: border-box;
+  height: calc(100svh - var(--home-header));
+  min-height: 520px;
+  padding: 0 var(--home-frame) var(--home-frame);
+}
+.home-hero-frame {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: var(--home-ink);
+}
+.home-hero-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 撮影時に右へ約0.8°傾いているので戻す。回した分の四隅の隙間は拡大で隠す */
+  transform: rotate(-0.8deg) scale(1.035);
+}
+.home .home-hero h1 {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(40px, 5.3vw, 80px);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1.35;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(11, 26, 36, 0.45);
+}
+.home-quick-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px var(--home-gutter) 0;
+}
+.home .home-quick-links a {
+  display: grid;
+  min-height: 52px;
+  place-items: center;
+  border: 1px solid var(--home-ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+.home .home-quick-links a:first-child {
+  background: var(--home-ink);
+  color: #ffffff;
+}
+.home .home-quick-links a:hover {
+  background: #444444;
+  color: #ffffff;
+}
+.home .home-quick-links a:focus-visible {
+  outline: 3px solid #1b76aa;
+  outline-offset: 3px;
+}
+
+/* 写真のまとまり */
+.home-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.home-lead {
+  display: flex;
+  justify-content: center;
+  padding: 120px var(--home-gutter);
+}
+/* 縦書き（右から左へ読む）。数字は正方形の枠内に中央配置する */
+.home .home-lead p {
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 2.4;
+  letter-spacing: 0.12em;
+}
+.home-lead .tcy {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  writing-mode: horizontal-tb;
+  letter-spacing: 0;
+  line-height: 1;
+}
+.home-lead .tcy > span {
+  font-size: 0.85em;
+}
+.home-gallery {
+  padding: 0 var(--home-gutter);
+}
+.home-gallery .home-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.home-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 16px;
+}
+/* 外観写真は屋根が切れないよう、少し上寄りで切り取る */
+.home .home-gallery .home-wrap > .ph img {
+  object-position: 50% 30%;
+}
+.home-band {
+  padding: 16px var(--home-gutter) 0;
+}
+.home-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+}
+.home-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.home-grid-4 .ph {
+  aspect-ratio: 4 / 3;
+}
+.home-grid-4.home-grid-portrait .ph {
+  aspect-ratio: 3 / 4;
+}
+
+/* 2つの柱（注文住宅・新築戸建て） */
+.home-pillars {
+  padding: 200px var(--home-gutter) 0;
+}
+.home-pillars .home-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 140px;
+}
+.home-pillar {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+}
+.home-pillar.flip {
+  grid-template-columns: 42fr 58fr;
+}
+.home-pillar.flip .ph {
+  order: 2;
+}
+.home-pillar.flip .home-pillar-text {
+  justify-self: end;
+}
+.home-pillar h2,
+.home-concept h2 {
+  margin: 0;
+  font-family: var(--font-mincho);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.home-pillar h2 {
+  font-size: clamp(34px, 3.6vw, 50px);
+  line-height: 1.5;
+}
+.home-pillar p,
+.home-concept p {
+  margin: 28px 0 0;
+  font-family: var(--font-mincho);
+  font-size: 19px;
+  line-height: 2.2;
+  letter-spacing: 0.06em;
+  word-break: auto-phrase;
+}
+
+/* 施工事例 */
+.home-works {
+  padding: 200px var(--home-gutter) 0;
+}
+.home-works .home-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+.home-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.home-head .en {
+  font-size: 16px;
+  letter-spacing: 0.4em;
+  color: var(--home-muted);
+}
+.home-head h2 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: 0.24em;
+}
+.home-works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  align-items: start;
+  gap: 32px;
+}
+.home-works-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.home-works-grid .ph {
+  aspect-ratio: 4 / 5;
+}
+.home-outline {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  min-height: 52px;
+  padding: 0 44px;
+  border: 1px solid var(--home-ink);
+  font-size: 15px;
+  letter-spacing: 0.2em;
+}
+
+/* 設計コンセプト */
+.home-concept {
+  padding: 220px var(--home-gutter) 0;
+}
+.home-concept .home-wrap {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+}
+.home-concept-text {
+  position: relative;
+  padding-left: 52px;
+}
+.home-concept-v {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  writing-mode: vertical-rl;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  color: var(--home-muted);
+}
+.home-concept-label {
+  display: inline-block;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--home-ink);
+  font-size: 16px;
+  letter-spacing: 0.12em;
+}
+.home-concept h2 {
+  margin-top: 28px;
+  font-size: clamp(32px, 3.2vw, 46px);
+  line-height: 1.6;
+}
+.home-concept .name {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--home-muted);
+}
+
+/* コンセプト・お客様の声・会社案内への入口 */
+.home-links {
+  padding: 200px var(--home-gutter) 0;
+}
+.home-links .home-wrap {
+  display: grid;
+  max-width: 960px;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  gap: 32px;
+}
+.home-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.home-link-card .ph {
+  aspect-ratio: 3 / 4;
+}
+.home-link-card .cap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.home-link-card .en {
+  font-size: 15px;
+  letter-spacing: 0.36em;
+  color: var(--home-muted);
+}
+.home-link-card .ja {
+  font-size: 23px;
+  letter-spacing: 0.2em;
+}
+.home-note {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 1;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* お知らせ */
+.home-news {
+  padding: 200px var(--home-gutter);
+}
+.home-news .home-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 80px;
+  max-width: 960px;
+}
+.home-news-head {
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  gap: 10px;
+}
+.home-news-head .en {
+  font-size: 16px;
+  letter-spacing: 0.4em;
+  color: var(--home-muted);
+}
+.home-news-head h2 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 0.2em;
+}
+.home-news-content {
+  flex: 999 1 480px;
+  min-width: 0;
+}
+.home-news ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--home-line);
+  list-style: none;
+}
+.home-news li {
+  border-bottom: 1px solid var(--home-line);
+}
+.home-news li a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 40px;
+  padding: 24px 4px;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+}
+.home-news time {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--home-muted);
+  font-variant-numeric: tabular-nums;
+}
+.home-news-more {
+  display: table;
+  margin: 20px 0 0 auto;
+  padding: 4px 0;
+  border-bottom: 1px solid currentColor;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+}
+.home-news-more:focus-visible {
+  outline: 3px solid #1b76aa;
+  outline-offset: 3px;
+}
+
+/* お問い合わせ */
+.home-contact {
+  position: relative;
+  display: flex;
+  height: 720px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #ffffff;
+  text-align: center;
+}
+.home-contact > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-contact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 14, 12, 0.45);
+}
+.home-contact-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 0 24px;
+}
+.home-contact-body .en {
+  font-size: 16px;
+  letter-spacing: 0.4em;
+}
+.home-contact-body h2 {
+  margin: 0;
+  font-size: clamp(26px, 2.6vw, 36px);
+  letter-spacing: 0.22em;
+  line-height: 2;
+}
+.home-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.home .home-contact-actions a,
+.subpage .home-contact-actions a {
+  display: inline-flex;
+  min-width: 220px;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+}
+.home .home-contact-actions .tel,
+.subpage .home-contact-actions .tel {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 19px;
+  letter-spacing: 0.08em;
+}
+.home .home-contact-actions .form,
+.subpage .home-contact-actions .form {
+  background: #ffffff;
+  color: var(--home-ink);
+  font-size: 16px;
+  letter-spacing: 0.2em;
+}
+.home-contact .home-note {
+  right: 18px;
+  bottom: 14px;
+}
+
+/* フッター */
+.home-footer {
+  padding: 80px var(--home-gutter) 40px;
+}
+.home-footer .home-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.home-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+.home-footer-company {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.home-footer-company img {
+  display: block;
+  width: 240px;
+  height: auto;
+}
+.home-footer-company p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 2;
+  color: #555555;
+}
+.home-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px;
+  font-size: 17px;
+}
+.home-footer-nav div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.home-footer-nav .en {
+  font-size: 16px;
+  letter-spacing: 0.3em;
+  color: var(--home-muted);
+}
+.home-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--home-line);
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--home-muted);
+}
+.home-footer-bottom .en {
+  letter-spacing: 0.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-drawer,
+  .home-drawer-backdrop,
+  .home-drawer-panel {
+    transition: none;
+  }
+}
+
+/* スマホ */
+@media (max-width: 860px) {
+  .home {
+    --home-header: 78px;
+  }
+  .home-header {
+    gap: 10px;
+    padding: 0 20px;
+  }
+  .home-menu-btn .label {
+    display: none;
+  }
+  .home-logo img {
+    width: 150px;
+  }
+  /* スマホは幅が足りないのでアイコンだけにする（文字は読み上げ用に残す） */
+  .home-header-cta {
+    gap: 6px;
+  }
+  .home .home-tel,
+  .home .home-form,
+  .subpage .home-tel,
+  .subpage .home-form {
+    width: 40px;
+    min-height: 40px;
+    padding: 0;
+  }
+  .home .home-tel,
+  .subpage .home-tel {
+    border: 1px solid var(--home-ink);
+    box-sizing: border-box;
+  }
+  .home-header-cta .text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .home-menu-btn,
+  .home-menu-close {
+    font-size: 15px;
+  }
+  .home-drawer-top,
+  .home-drawer-body,
+  .home-drawer-foot {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .home-drawer-top {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .home .home-hero h1 {
+    box-sizing: border-box;
+    padding: 16px 10px;
+    background: linear-gradient(90deg, rgba(15, 25, 30, 0.55), rgba(15, 25, 30, 0.38));
+    font-size: clamp(25px, 7vw, 30px);
+    letter-spacing: 0;
+  }
+  .home-hero {
+    height: clamp(480px, calc(100svh - var(--home-header) - 110px), 660px);
+    min-height: 480px;
+  }
+  .home-quick-links {
+    gap: 8px;
+    padding: 20px 20px 0;
+  }
+  .home .home-quick-links a {
+    min-height: 50px;
+    padding: 0 6px;
+    font-size: 13px;
+  }
+  .home-lead {
+    padding: 72px 20px;
+  }
+  .home .home-lead p {
+    font-size: 20px;
+    letter-spacing: 0.08em;
+  }
+  .home-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .home-pillars {
+    padding-top: 120px;
+  }
+  .home-pillars .home-wrap {
+    gap: 96px;
+  }
+  .home-pillar,
+  .home-pillar.flip {
+    grid-template-columns: 1fr;
+  }
+  .home-pillar.flip .ph {
+    order: 0;
+  }
+  .home-pillar.flip .home-pillar-text {
+    justify-self: stretch;
+  }
+  .home-pillar p br,
+  .home-concept p br {
+    display: none;
+  }
+  .home-concept {
+    padding-top: 120px;
+  }
+  .home-concept .home-wrap {
+    grid-template-columns: 1fr;
+  }
+  .home-concept-text {
+    padding-left: 0;
+  }
+  .home-concept-v {
+    display: none;
+  }
+}

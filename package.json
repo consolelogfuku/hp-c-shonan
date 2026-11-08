@@ -2,28 +2,54 @@
   "name": "hp-c-shonan",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "npm run db:migrate:local && vite dev --port 9999",
+    "build": "vite build && tsc --noEmit",
+    "preview": "vite preview --port 4173",
+    "deploy": "npm run build && wrangler deploy",
+    "cms:setup": "node scripts/setup-cms.mjs",
+    "cf-typegen": "wrangler types",
+    "db:migrate:local": "wrangler d1 migrations apply c-shonan --local",
+    "db:migrate:remote": "wrangler d1 migrations apply c-shonan --remote",
+    "db:import:legacy": "node scripts/import-legacy-cms.mjs",
+    "test": "node --experimental-strip-types --test tests/news.test.mjs tests/cms-model.test.mjs tests/voices.test.mjs"
   },
   "dependencies": {
     "@fontsource/klee-one": "^5.2.8",
     "@fontsource/shippori-mincho-b1": "^5.2.8",
     "@phosphor-icons/react": "^2.1.7",
+    "@tanstack/react-router": "^1.170.35",
+    "@tanstack/react-start": "^1.168.52",
+    "@tiptap/extension-image": "^3.31.3",
+    "@tiptap/extension-table": "^3.31.3",
+    "@tiptap/extension-text-align": "^3.31.3",
+    "@tiptap/extension-text-style": "^3.31.3",
+    "@tiptap/pm": "^3.31.3",
+    "@tiptap/react": "^3.31.3",
+    "@tiptap/starter-kit": "^3.31.3",
     "motion": "^12.4.0",
-    "next": "^15.3.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.54.8",
+    "@cloudflare/workers-types": "^5.20260911.1",
     "@tailwindcss/postcss": "^4.1.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
     "postcss": "^8.5.0",
     "tailwindcss": "^4.1.0",
-    "typescript": "^5.8.0"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "wrangler": "^4.131.1"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "volta": {
+    "node": "24.19.0"
   }
 }

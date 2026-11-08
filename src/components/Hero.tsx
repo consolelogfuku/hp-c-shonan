@@ -1,7 +1,5 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
+import Image from "@/components/AppImage";
+import Link from "@/components/AppLink";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { hero } from "@/lib/site";
@@ -40,7 +38,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-[min(84dvh,880px)] min-h-[560px] overflow-hidden bg-[#0b1a24]">
+    <section className="relative h-[640px] overflow-hidden bg-[#0b1a24] md:h-[min(84dvh,880px)] md:min-h-[560px]">
       {hero.slides.map((slide, i) => (
         <div
           key={slide.src}

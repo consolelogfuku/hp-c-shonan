@@ -438,28 +438,49 @@ select:focus-visible {
   color: var(--accent);
 }
 
-.meta-row {
+.meta-row,
+.property-labels {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 18px;
+  gap: 10px;
   color: var(--muted);
-  font-size: 13px;
 }
 
-.status {
+.status,
+.property-label {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding-inline: 10px;
+  min-height: 34px;
+  padding: 5px 13px;
+  border: 1px solid transparent;
   background: var(--accent);
   color: white;
-  font-size: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-.status.muted {
+.status.muted,
+.property-label--closed {
   background: #e8edef;
   color: var(--muted);
+}
+
+.property-label--active {
+  background: var(--accent);
+  color: white;
+}
+
+.property-label--negotiating {
+  background: #806b3d;
+  color: white;
+}
+
+.property-label--type {
+  border-color: #b8ccd7;
+  background: transparent;
+  color: var(--accent);
 }
 
 /* Properties */
@@ -511,19 +532,96 @@ select:focus-visible {
 
 .specs dt {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .specs dd {
-  margin-top: 3px;
-  font-size: 14px;
-  line-height: 1.7;
+  margin-top: 5px;
+  font-size: 17px;
+  line-height: 1.75;
 }
+
+.property-list-section { padding-top: 76px; }
+
+.property-filter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 280px));
+  gap: 18px;
+  margin-bottom: 34px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  background: rgba(241, 246, 248, 0.72);
+}
+
+.filter-field {
+  display: grid;
+  gap: 7px;
+}
+
+.filter-field > span:first-child {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.select-wrap {
+  position: relative;
+  display: block;
+}
+
+.select-wrap::after {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  content: "";
+  pointer-events: none;
+  transform: translateY(-70%) rotate(45deg);
+}
+
+.filter-field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 42px 8px 14px;
+  border: 1px solid #b9cbd4;
+  border-radius: 0;
+  appearance: none;
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.filter-field select:hover,
+.filter-field select:focus { border-color: var(--accent); }
+
+.listing-results-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.listing-results-heading p { color: var(--muted); font-size: 15px; }
+.listing-results-heading strong { margin-right: 4px; color: var(--accent); font-size: 24px; font-weight: 500; }
 
 .listing-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 58px 28px;
+}
+
+.sale-listing-grid .listing-card[hidden] { display: none; }
+.sale-listing-grid .listing-card > a { display: flex; height: 100%; flex-direction: column; }
+.sale-listing-grid .listing-card .card-link { margin-top: auto; padding-top: 18px; }
+
+@media (min-width: 1100px) {
+  .sale-listing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sale-listing-grid .listing-card figure { height: 270px; }
 }
 
 .listing-card a {
@@ -547,7 +645,8 @@ select:focus-visible {
   transform: scale(1.025);
 }
 
-.listing-card .meta-row {
+.listing-card .meta-row,
+.listing-card .property-labels {
   margin-top: 20px;
 }
 
@@ -563,6 +662,33 @@ select:focus-visible {
   line-height: 1.9;
 }
 
+.card-price {
+  margin-top: 10px;
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.card-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.card-specs dt {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card-specs dd {
+  margin-top: 4px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
 .listing-card .card-link {
   display: inline-flex;
   align-items: center;
@@ -571,6 +697,45 @@ select:focus-visible {
   color: var(--accent);
   font-size: 14px;
 }
+
+.property-empty {
+  margin-top: 28px;
+  padding: 52px 24px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.property-empty p { color: var(--muted); }
+.property-empty button { margin-top: 18px; padding: 10px 18px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; }
+.property-empty[hidden] { display: none; }
+
+.property-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 68px;
+}
+
+.property-pagination[hidden] { display: none; }
+.page-numbers { display: flex; gap: 8px; }
+
+.property-pagination button {
+  display: inline-grid;
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.property-pagination button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.property-pagination button[aria-current="page"] { border-color: var(--accent); background: var(--accent); color: white; }
+.property-pagination button:disabled { color: #aab4ba; cursor: default; opacity: 0.68; }
 
 /* Parking */
 .parking-note {
@@ -1119,6 +1284,8 @@ select:focus-visible {
     padding: 78px 0;
   }
 
+  .property-list-section { padding-top: 56px; }
+
   .section-head {
     margin-bottom: 38px;
   }
@@ -1150,6 +1317,9 @@ select:focus-visible {
   .voice-list {
     grid-template-columns: 1fr;
   }
+
+  .property-filter { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+  .property-pagination { margin-top: 48px; }
 
   .listing-card figure {
     height: 280px;

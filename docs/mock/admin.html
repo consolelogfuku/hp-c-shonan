@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>管理画面モック | コミュニティ湘南</title>
+    <meta
+      name="description"
+      content="コミュニティ湘南のAIアシスタント付き管理画面モック。物件、画像、お知らせ、トップページを管理できます。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="admin.css" />
+    <script src="admin.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+
+    <header class="topbar">
+      <a class="admin-brand" href="#" aria-label="管理ホーム">
+        <img
+          src="https://www.c-shonan.co.jp/global-image/header/10-logo.png"
+          alt="コミュニティ湘南"
+        />
+        <span>管理画面</span>
+      </a>
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" aria-label="通知">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
+          </svg>
+          <span class="notification-dot"></span>
+        </button>
+        <a class="site-preview-link" href="top.html" target="_blank">公開サイトを確認</a>
+        <button class="account" type="button" aria-label="アカウントメニュー">
+          <span class="avatar">須</span>
+          <span class="account-copy"><b>須川 宣明</b><small>管理者</small></span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="管理メニュー">
+        <nav>
+          <p class="nav-label">メニュー</p>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item is-current" type="button" data-mode="home">
+                <span class="nav-icon" aria-hidden="true">⌂</span><span>ホーム</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="rent">
+                <span class="nav-icon" aria-hidden="true">⌑</span><span>売買物件</span><span class="nav-count">4</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="property">
+                <span class="nav-icon" aria-hidden="true">⌂</span><span>賃貸・貸駐車場</span><span class="nav-count">8</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="news">
+                <span class="nav-icon" aria-hidden="true">▤</span><span>お知らせ</span><span class="nav-count">2</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="works">
+                <span class="nav-icon" aria-hidden="true">▧</span><span>施工事例</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="voices">
+                <span class="nav-icon" aria-hidden="true">◌</span><span>お客様の声</span>
+              </button>
+            </li>
+          </ul>
+
+          <p class="nav-label nav-label-spaced">サイト管理</p>
+          <ul class="nav-list">
+            <li>
+              <button class="nav-item" type="button" data-mode="hero">
+                <span class="nav-icon" aria-hidden="true">▱</span><span>トップページ</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="images">
+                <span class="nav-icon" aria-hidden="true">▦</span><span>画像ライブラリ</span><span class="nav-count">286</span>
+              </button>
+            </li>
+            <li>
+              <button class="nav-item" type="button" data-mode="settings">
+                <span class="nav-icon" aria-hidden="true">⚙</span><span>基本設定</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-help">
+          <span class="spark" aria-hidden="true">✦</span>
+          <div><b>操作に迷ったら</b><p>上のAIアシスタントに、やりたいことをそのまま入力できます。</p></div>
+        </div>
+      </aside>
+
+      <main id="main" class="main-content">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">2026年9月7日 月曜日</p>
+            <h1>おはようございます、須川さん</h1>
+          </div>
+          <button class="secondary-button" type="button" data-mode="property">＋ 新しく登録</button>
+        </div>
+
+        <section class="assistant-card" aria-labelledby="assistant-title">
+          <div class="assistant-mark" aria-hidden="true">✦</div>
+          <div class="assistant-main">
+            <div class="assistant-title-row">
+              <div>
+                <p class="assistant-kicker">AIアシスタント</p>
+                <h2 id="assistant-title">今日は何をしますか？</h2>
+              </div>
+              <span class="assistant-status"><i></i>準備できています</span>
+            </div>
+            <form id="assistant-form" class="assistant-form">
+              <label class="visually-hidden" for="assistant-input">やりたい作業</label>
+              <textarea
+                id="assistant-input"
+                rows="2"
+                placeholder="例：矢畑の売買物件を登録したい、物件写真を見やすく整えたい"
+              ></textarea>
+              <button class="send-button" type="submit">作業をはじめる<span aria-hidden="true">→</span></button>
+            </form>
+            <div class="quick-actions" aria-label="よく使う作業">
+              <button type="button" data-mode="property">売買物件を登録</button>
+              <button type="button" data-mode="images">物件写真を整える</button>
+              <button type="button" data-mode="news">お知らせを書く</button>
+              <button type="button" data-mode="hero">トップ画像を変更</button>
+            </div>
+          </div>
+        </section>
+
+        <div id="assistant-response" class="assistant-response" hidden aria-live="polite"></div>
+
+        <section id="task-workspace" class="task-workspace" aria-live="polite">
+          <div data-panel="home">
+            <div class="section-heading">
+              <div><p class="eyebrow">To do</p><h2>確認が必要なこと</h2></div>
+              <button class="text-button" type="button">すべて見る →</button>
+            </div>
+            <div class="attention-grid">
+              <button class="attention-card" type="button" data-mode="images">
+                <span class="attention-icon image">▦</span>
+                <span><b>写真の見せたい位置を確認</b><small>小島矢畑B区画・8枚</small></span>
+                <span class="card-arrow">→</span>
+              </button>
+              <button class="attention-card" type="button" data-mode="property">
+                <span class="attention-icon draft">⌑</span>
+                <span><b>入力途中の売買物件</b><small>茅ヶ崎市矢畑・昨日更新</small></span>
+                <span class="card-arrow">→</span>
+              </button>
+              <button class="attention-card" type="button" data-mode="news">
+                <span class="attention-icon schedule">◷</span>
+                <span><b>公開予約を確認</b><small>夏季休暇について・7月20日公開</small></span>
+                <span class="card-arrow">→</span>
+              </button>
+            </div>
+
+            <div class="dashboard-grid">
+              <section class="surface recent-surface">
+                <div class="surface-heading"><div><p class="eyebrow">Recent</p><h2>最近の更新</h2></div><button type="button">一覧を見る</button></div>
+                <div class="recent-list">
+                  <article>
+                    <img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="小島矢畑B区画" />
+                    <div><span class="status-badge public">公開中</span><h3>茅ヶ崎市矢畑売地 小島矢畑B区画</h3><p>売買物件・今日 10:24</p></div>
+                    <button type="button" data-mode="property">編集</button>
+                  </article>
+                  <article>
+                    <img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="茅ケ崎市東海岸の施工事例" />
+                    <div><span class="status-badge draft">下書き</span><h3>茅ケ崎市東海岸 N様邸</h3><p>施工事例・昨日 16:40</p></div>
+                    <button type="button">編集</button>
+                  </article>
+                  <article>
+                    <div class="news-thumb">休</div>
+                    <div><span class="status-badge scheduled">予約</span><h3>夏季休暇について</h3><p>お知らせ・7月20日公開予定</p></div>
+                    <button type="button" data-mode="news">編集</button>
+                  </article>
+                </div>
+              </section>
+
+              <aside class="surface overview-surface">
+                <div class="surface-heading"><div><p class="eyebrow">Overview</p><h2>公開状況</h2></div></div>
+                <dl class="overview-list">
+                  <div><dt>売買物件</dt><dd><strong>1</strong>件 公開中</dd></div>
+                  <div><dt>賃貸物件</dt><dd><strong>3</strong>件 掲載中</dd></div>
+                  <div><dt>貸駐車場</dt><dd><strong>4</strong>件 掲載中</dd></div>
+                  <div><dt>下書き</dt><dd><strong>2</strong>件</dd></div>
+                </dl>
+                <p class="sync-status"><i></i>公開サイトは最新です<small>最終更新 今日 10:25</small></p>
+              </aside>
+            </div>
+          </div>
+
+          <div data-panel="images" hidden>
+            <div class="generated-heading">
+              <div><span class="generated-label">✦ AIが作業画面を準備しました</span><h2>物件写真を見やすく整える</h2><p>元画像はそのまま保存されます。写真をクリックして、建物や部屋の見せたい中心を指定してください。</p></div>
+              <div class="workspace-actions"><button class="secondary-button" type="button" data-mode="home">キャンセル</button><button class="primary-button save-action" type="button">8枚を保存</button></div>
+            </div>
+
+            <div class="image-workspace">
+              <aside class="photo-queue">
+                <div class="queue-heading"><b>小島矢畑B区画</b><span>3 / 8枚</span></div>
+                <button class="queue-photo is-selected" type="button" data-image="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" data-alt="小島矢畑B区画の現地写真">
+                  <img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="小島矢畑B区画の現地写真" /><span><b>外観・現地</b><small>主画像</small></span><i>✓</i>
+                </button>
+                <button class="queue-photo" type="button" data-image="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" data-alt="住宅の外観写真">
+                  <img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="住宅の外観写真" /><span><b>参考プラン</b><small>横位置を確認</small></span><i>!</i>
+                </button>
+                <button class="queue-photo" type="button" data-image="https://www.c-shonan.co.jp/global-image/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg" data-alt="明るいリビングの写真">
+                  <img src="https://www.c-shonan.co.jp/global-image/units/img/5279-15-20191219162420_b5dfb25a47a895.jpg" alt="明るいリビングの写真" /><span><b>室内イメージ</b><small>確認済み</small></span><i>✓</i>
+                </button>
+                <button class="upload-more" type="button"><span>＋</span>画像を追加</button>
+              </aside>
+
+              <section class="focus-editor">
+                <div class="editor-toolbar">
+                  <div><b>見せたい中心</b><span>AIの提案位置</span></div>
+                  <button id="reset-focus" type="button">中央に戻す</button>
+                </div>
+                <button id="focus-stage" class="focus-stage" type="button" aria-label="画像の見せたい中心を指定">
+                  <img id="focus-image" src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="小島矢畑B区画の現地写真" />
+                  <span id="focus-point" class="focus-point"><i></i></span>
+                  <span class="stage-help">クリックした場所がすべての表示の中心になります</span>
+                </button>
+                <div class="editor-note"><span aria-hidden="true">✓</span><p><b>元画像は切り取りません</b><small>あとから表示比率が変わっても、再アップロードせず調整できます。</small></p></div>
+              </section>
+
+              <aside class="preview-panel">
+                <div class="preview-heading"><b>公開時のプレビュー</b><span class="live-pill"><i></i>リアルタイム</span></div>
+                <div class="preview-block">
+                  <div class="preview-label"><span>物件一覧</span><small>3 : 2</small></div>
+                  <div class="preview-frame landscape"><img class="focus-preview" src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="横長表示のプレビュー" /></div>
+                </div>
+                <div class="preview-block compact-preview-row">
+                  <div>
+                    <div class="preview-label"><span>スマートフォン</span><small>2 : 3</small></div>
+                    <div class="preview-frame portrait"><img class="focus-preview" src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="縦長表示のプレビュー" /></div>
+                  </div>
+                  <div>
+                    <div class="preview-label"><span>拡大表示</span><small>全体</small></div>
+                    <div class="preview-frame contain"><img id="contain-preview" src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="拡大表示のプレビュー" /></div>
+                  </div>
+                </div>
+                <button id="compare-view" class="compare-button" type="button">拡大表示を確認</button>
+              </aside>
+            </div>
+          </div>
+
+          <div data-panel="property" hidden>
+            <div class="generated-heading">
+              <div><span class="generated-label">✦ AIが入力項目を準備しました</span><h2 id="property-editor-title">売買物件を登録する</h2><p id="property-editor-description">わかる項目から入力してください。不足している情報は公開前にお知らせします。</p></div>
+              <div class="workspace-actions"><button class="secondary-button" type="button" data-mode="home">キャンセル</button><button class="primary-button save-action" type="button">下書き保存</button></div>
+            </div>
+            <form class="property-form surface">
+              <div class="form-grid">
+                <label class="field field-wide"><span>物件名</span><input value="茅ヶ崎市矢畑売地 小島矢畑B区画" /></label>
+                <label class="field"><span>状態</span><select><option>販売中</option><option>商談中</option><option>成約済み</option></select></label>
+                <label class="field"><span id="property-type-label">取引形態</span><select id="property-type-select"><option>売主物件</option><option>仲介物件</option></select></label>
+                <label class="field"><span>価格</span><span class="input-with-unit"><input value="2780" inputmode="numeric" /><i>万円</i></span></label>
+                <label class="field"><span>土地面積</span><span class="input-with-unit"><input value="135.17" /><i>㎡</i></span></label>
+                <label class="field field-wide"><span>所在地</span><input value="神奈川県茅ヶ崎市矢畑" /></label>
+                <label class="field field-wide"><span>紹介文</span><textarea rows="4">整形地で日当たり良好。スーパーやコンビニが徒歩圏にあり、子育て世代にも便利な生活環境です。</textarea></label>
+              </div>
+              <div class="form-photo-box">
+                <div><b>物件写真</b><small>8枚・主画像設定済み</small></div>
+                <div class="mini-photo-row">
+                  <img src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="物件写真" />
+                  <img src="https://www.c-shonan.co.jp/global-image/units/img/10249-10-20210823155914_b61234742609c0.jpg" alt="参考プラン" />
+                  <button type="button" data-mode="images">＋<small>追加・並び替え</small></button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div data-panel="news" hidden>
+            <div class="generated-heading">
+              <div><span class="generated-label">✦ AIが文章作成をお手伝いします</span><h2>お知らせを書く</h2><p>要点を入力すると、公開用の文章とタイトルを整えます。</p></div>
+              <div class="workspace-actions"><button class="secondary-button" type="button" data-mode="home">キャンセル</button><button class="primary-button save-action" type="button">公開を確認</button></div>
+            </div>
+            <div class="editor-layout">
+              <form class="surface news-form">
+                <label class="field"><span>タイトル</span><input value="夏季休暇について" /></label>
+                <label class="field"><span>本文</span><textarea rows="10">誠に勝手ながら、下記の期間を夏季休業とさせていただきます。
+
+休業期間：2026年8月11日（火）〜8月16日（日）</textarea></label>
+                <div class="ai-writing-tip"><span>✦</span><p><b>文章を整えられます</b><small>「もう少しやわらかく」「日付を箇条書きに」など、そのまま入力してください。</small></p><button type="button">整える</button></div>
+              </form>
+              <aside class="surface publish-settings"><h3>公開設定</h3><label class="field"><span>公開状態</span><select><option>予約公開</option><option>今すぐ公開</option><option>下書き</option></select></label><label class="field"><span>公開日時</span><input type="datetime-local" value="2026-07-20T09:00" /></label><div class="public-preview"><b>公開プレビュー</b><p>2026.07.20</p><h4>夏季休暇について</h4></div></aside>
+            </div>
+          </div>
+
+          <div data-panel="hero" hidden>
+            <div class="generated-heading">
+              <div><span class="generated-label">✦ 並び替えるだけで反映できます</span><h2>トップ画像を変更する</h2><p>ドラッグして表示順を変更します。公開前にPCとスマートフォンの見え方を確認できます。</p></div>
+              <div class="workspace-actions"><button class="secondary-button" type="button" data-mode="home">キャンセル</button><button class="primary-button save-action" type="button">変更を保存</button></div>
+            </div>
+            <div class="hero-manager surface">
+              <div class="hero-list">
+                <article><span>1</span><img src="https://www.c-shonan.co.jp/global-image/units/img/1530-13-20191030165417_b5db941a982a97.jpg" alt="茅ヶ崎の海岸" /><div><b>茅ヶ崎の海岸</b><small>公開中・主画像</small></div><button type="button">•••</button></article>
+                <article><span>2</span><img src="https://www.c-shonan.co.jp/global-image/units/img/1639-11-20191108171915_b5dc525030d08c.jpg" alt="江の島と海" /><div><b>江の島と海</b><small>公開中</small></div><button type="button">•••</button></article>
+                <article><span>3</span><img src="https://www.c-shonan.co.jp/global-image/units/img/1530-14-20191030165417_b5db941a983016.jpg" alt="烏帽子岩" /><div><b>烏帽子岩</b><small>公開中</small></div><button type="button">•••</button></article>
+                <button class="add-hero" type="button">＋ 画像を追加</button>
+              </div>
+              <div class="hero-site-preview"><span>PCプレビュー</span><div><img src="https://www.c-shonan.co.jp/global-image/units/img/1530-13-20191030165417_b5db941a982a97.jpg" alt="トップ画像プレビュー" /><p>豊かな自然の中で 大切な家族と紡ぐ かけがえのない時の流れ</p><h3>建築家とともに創る、<br />湘南の憩いのわが家。</h3></div></div>
+            </div>
+          </div>
+
+          <div data-panel="placeholder" hidden></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="lightbox" class="lightbox">
+      <button id="close-lightbox" type="button" aria-label="拡大表示を閉じる">×</button>
+      <img id="lightbox-image" src="https://www.c-shonan.co.jp/global-image/page/632-20260126143808.png" alt="画像全体の拡大表示" />
+      <p>拡大表示では画像全体を見せるため、見切れや初期ズームは発生しません。</p>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden><span>✓</span>下書きを保存しました</div>
+  </body>
+</html>
