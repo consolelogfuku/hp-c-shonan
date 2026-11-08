@@ -13,7 +13,7 @@
     "db:migrate:local": "wrangler d1 migrations apply c-shonan --local",
     "db:migrate:remote": "wrangler d1 migrations apply c-shonan --remote",
     "db:import:legacy": "node scripts/import-legacy-cms.mjs",
-    "test": "node --experimental-strip-types --test tests/news.test.mjs tests/cms-model.test.mjs"
+    "test": "node --experimental-strip-types --test tests/news.test.mjs tests/cms-model.test.mjs tests/voices.test.mjs"
   },
   "dependencies": {
     "@fontsource/klee-one": "^5.2.8",

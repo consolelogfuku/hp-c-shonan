@@ -12,13 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as CommentsRouteImport } from './routes/comments'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as ConceptRouteImport } from './routes/concept'
 import { Route as VoicesRouteImport } from './routes/voices'
 import { Route as WorksRouteImport } from './routes/works'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as CommentsIndexRouteImport } from './routes/comments.index'
+import { Route as CommentsSlugRouteImport } from './routes/comments.$slug'
 import { Route as MediaNameRouteImport } from './routes/media.$name'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
@@ -59,11 +60,6 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CommentsRoute = CommentsRouteImport.update({
-  id: '/comments',
-  path: '/comments',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CompanyRoute = CompanyRouteImport.update({
   id: '/company',
   path: '/company',
@@ -93,6 +89,16 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => AdminRoute,
+} as any)
+const CommentsIndexRoute = CommentsIndexRouteImport.update({
+  id: '/comments/',
+  path: '/comments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommentsSlugRoute = CommentsSlugRouteImport.update({
+  id: '/comments/$slug',
+  path: '/comments/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const MediaNameRoute = MediaNameRouteImport.update({
   id: '/media/$name',
@@ -219,17 +225,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/admin': typeof AdminRouteWithChildren
-  '/comments': typeof CommentsRoute
   '/company': typeof CompanyRoute
   '/concept': typeof ConceptRoute
   '/voices': typeof VoicesRoute
   '/works': typeof WorksRoute
   '/admin/login': typeof AdminLoginRoute
+  '/comments/$slug': typeof CommentsSlugRoute
   '/media/$name': typeof MediaNameRoute
   '/news/$slug': typeof NewsSlugRoute
   '/rent/$slug': typeof RentSlugRoute
   '/sale/$slug': typeof SaleSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/comments/': typeof CommentsIndexRoute
   '/news/': typeof NewsIndexRoute
   '/parking/': typeof ParkingIndexRoute
   '/rent/': typeof RentIndexRoute
@@ -254,17 +261,18 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/comments': typeof CommentsRoute
   '/company': typeof CompanyRoute
   '/concept': typeof ConceptRoute
   '/voices': typeof VoicesRoute
   '/works': typeof WorksRoute
   '/admin/login': typeof AdminLoginRoute
+  '/comments/$slug': typeof CommentsSlugRoute
   '/media/$name': typeof MediaNameRoute
   '/news/$slug': typeof NewsSlugRoute
   '/rent/$slug': typeof RentSlugRoute
   '/sale/$slug': typeof SaleSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/comments': typeof CommentsIndexRoute
   '/news': typeof NewsIndexRoute
   '/parking': typeof ParkingIndexRoute
   '/rent': typeof RentIndexRoute
@@ -291,17 +299,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/admin': typeof AdminRouteWithChildren
-  '/comments': typeof CommentsRoute
   '/company': typeof CompanyRoute
   '/concept': typeof ConceptRoute
   '/voices': typeof VoicesRoute
   '/works': typeof WorksRoute
   '/admin/login': typeof AdminLoginRoute
+  '/comments/$slug': typeof CommentsSlugRoute
   '/media/$name': typeof MediaNameRoute
   '/news/$slug': typeof NewsSlugRoute
   '/rent/$slug': typeof RentSlugRoute
   '/sale/$slug': typeof SaleSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/comments/': typeof CommentsIndexRoute
   '/news/': typeof NewsIndexRoute
   '/parking/': typeof ParkingIndexRoute
   '/rent/': typeof RentIndexRoute
@@ -329,17 +338,18 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/admin'
-    | '/comments'
     | '/company'
     | '/concept'
     | '/voices'
     | '/works'
     | '/admin/login'
+    | '/comments/$slug'
     | '/media/$name'
     | '/news/$slug'
     | '/rent/$slug'
     | '/sale/$slug'
     | '/admin/'
+    | '/comments/'
     | '/news/'
     | '/parking/'
     | '/rent/'
@@ -364,17 +374,18 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
-    | '/comments'
     | '/company'
     | '/concept'
     | '/voices'
     | '/works'
     | '/admin/login'
+    | '/comments/$slug'
     | '/media/$name'
     | '/news/$slug'
     | '/rent/$slug'
     | '/sale/$slug'
     | '/admin'
+    | '/comments'
     | '/news'
     | '/parking'
     | '/rent'
@@ -400,17 +411,18 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/admin'
-    | '/comments'
     | '/company'
     | '/concept'
     | '/voices'
     | '/works'
     | '/admin/login'
+    | '/comments/$slug'
     | '/media/$name'
     | '/news/$slug'
     | '/rent/$slug'
     | '/sale/$slug'
     | '/admin/'
+    | '/comments/'
     | '/news/'
     | '/parking/'
     | '/rent/'
@@ -437,15 +449,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   AdminRoute: typeof AdminRouteWithChildren
-  CommentsRoute: typeof CommentsRoute
   CompanyRoute: typeof CompanyRoute
   ConceptRoute: typeof ConceptRoute
   VoicesRoute: typeof VoicesRoute
   WorksRoute: typeof WorksRoute
+  CommentsSlugRoute: typeof CommentsSlugRoute
   MediaNameRoute: typeof MediaNameRoute
   NewsSlugRoute: typeof NewsSlugRoute
   RentSlugRoute: typeof RentSlugRoute
   SaleSlugRoute: typeof SaleSlugRoute
+  CommentsIndexRoute: typeof CommentsIndexRoute
   NewsIndexRoute: typeof NewsIndexRoute
   ParkingIndexRoute: typeof ParkingIndexRoute
   RentIndexRoute: typeof RentIndexRoute
@@ -480,13 +493,6 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comments': {
-      id: '/comments'
-      path: '/comments'
-      fullPath: '/comments'
-      preLoaderRoute: typeof CommentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/company': {
@@ -530,6 +536,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/comments/': {
+      id: '/comments/'
+      path: '/comments'
+      fullPath: '/comments/'
+      preLoaderRoute: typeof CommentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comments/$slug': {
+      id: '/comments/$slug'
+      path: '/comments/$slug'
+      fullPath: '/comments/$slug'
+      preLoaderRoute: typeof CommentsSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/media/$name': {
       id: '/media/$name'
@@ -736,15 +756,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AdminRoute: AdminRouteWithChildren,
-  CommentsRoute: CommentsRoute,
   CompanyRoute: CompanyRoute,
   ConceptRoute: ConceptRoute,
   VoicesRoute: VoicesRoute,
   WorksRoute: WorksRoute,
+  CommentsSlugRoute: CommentsSlugRoute,
   MediaNameRoute: MediaNameRoute,
   NewsSlugRoute: NewsSlugRoute,
   RentSlugRoute: RentSlugRoute,
   SaleSlugRoute: SaleSlugRoute,
+  CommentsIndexRoute: CommentsIndexRoute,
   NewsIndexRoute: NewsIndexRoute,
   ParkingIndexRoute: ParkingIndexRoute,
   RentIndexRoute: RentIndexRoute,

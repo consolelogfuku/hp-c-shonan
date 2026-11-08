@@ -1,7 +1,7 @@
 import Image from "@/components/AppImage";
 import Link from "@/components/AppLink";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { voices } from "@/lib/site";
+import { voices } from "@/lib/voices";
 import { Reveal } from "./Reveal";
 import { SectionHead } from "./SectionHead";
 
@@ -14,16 +14,16 @@ export function Voices() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-10 grid gap-5 lg:grid-cols-3">
-          {voices.map((v) => (
-            <article key={v.name} className="flex flex-col justify-between border border-line bg-surface p-7">
-              <blockquote className="m-0 text-[17px] leading-[2.1]">「{v.quote}」</blockquote>
+          {voices.slice(0, 3).map((v) => (
+            <article key={v.slug} className="flex flex-col justify-between border border-line bg-surface p-7">
+              <blockquote className="m-0 text-[17px] leading-[2.1]">「{v.body.replace(/\n/g, "").slice(0, 100)}…」</blockquote>
               <footer className="mt-6 flex items-center gap-3.5 text-[14px] leading-[1.6]">
                 <span className="relative h-16 w-16 shrink-0 overflow-hidden bg-tint">
                   <Image src={v.image} alt="" fill sizes="64px" className="object-cover" />
                 </span>
                 <div>
                   <p className="font-hand text-[15px] font-semibold tracking-[0.08em]">{v.name}</p>
-                  <p className="text-muted">{v.when}</p>
+                  <p className="text-muted">{v.dateLabel}</p>
                 </div>
               </footer>
             </article>
