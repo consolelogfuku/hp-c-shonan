@@ -365,6 +365,8 @@
 .home-lead .tcy {
   text-combine-upright: all;
   letter-spacing: 0;
+  position: relative;
+  left: -0.18em;
 }
 .home-gallery {
   padding: 0 var(--home-gutter);
