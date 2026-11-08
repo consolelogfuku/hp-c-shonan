@@ -22,7 +22,7 @@ export function SubpageFrame({ hero, children }: { hero: PageHeroProps; children
 
 export function SectionHead({ title, body }: { title: string; body: string }) {
   return (
-    <div className="subpage-section-head mb-12 grid gap-5 md:grid-cols-[minmax(280px,0.8fr)_minmax(0,1fr)] md:items-end md:gap-16">
+    <div className="subpage-section-head mb-12 grid gap-5 md:grid-cols-[minmax(280px,0.7fr)_minmax(0,1.3fr)] md:items-end md:gap-12">
       <h2 className="text-[clamp(28px,3.2vw,42px)] leading-[1.5]">{title}</h2>
       <p className="max-w-[46em] leading-[2] text-muted">{body}</p>
     </div>

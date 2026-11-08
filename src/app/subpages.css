@@ -22,6 +22,9 @@
 .subpage [id] {
   scroll-margin-top: var(--home-header);
 }
+.subpage main {
+  font-size: clamp(18px, 1.25vw, 20px);
+}
 .subpage .home-header {
   border-bottom: 1px solid #f0f0f0;
 }
@@ -135,6 +138,16 @@
 .subpage-property-detail header h2,
 .subpage #faq h3 {
   color: var(--home-ink);
+}
+.subpage-property-detail p.text-muted,
+.subpage #faq details p {
+  font-size: clamp(18px, 1.25vw, 20px);
+}
+.subpage #faq details summary {
+  font-size: 19px;
+}
+.subpage-property-card dd {
+  font-size: 17px;
 }
 .subpage-property-detail header span[class*="border-[#b8ccd7]"],
 .subpage-property-card span[class*="border-[#b8ccd7]"] {

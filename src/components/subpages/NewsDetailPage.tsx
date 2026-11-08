@@ -20,7 +20,7 @@ export function NewsDetailPage({ article, articles }: { article: NewsArticle; ar
             </div>
             <h2 id="article-title" className="mt-5 break-words text-[clamp(26px,3vw,36px)] leading-[1.65] text-[#213d50]">{article.title}</h2>
           </header>
-          <div className="space-y-6 py-10 text-[16px] leading-[2.1] md:py-12 md:text-[17px]">
+          <div className="space-y-6 py-10 text-[18px] leading-[2.1] md:py-12 md:text-[19px]">
             <ArticleBody content={article.content} body={article.body.join("\n\n")} image={article.image} />
           </div>
         </article>
