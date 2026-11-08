@@ -31,7 +31,7 @@ const gridFour: Photo[] = [
   { src: unit("9964-29"), alt: "対面式のキッチン" },
   { src: work("kagawa/21"), alt: "吹き抜けを見下ろす" },
   { src: work("shimoterao/12"), alt: "木の手すりの階段" },
-  { src: work("higashikaigan/19"), alt: "造作の書斎" },
+  { src: unit("5275-21"), alt: "木目の天井がある明るいLDK" },
   { src: work("kagawa/15"), alt: "ダイニング" },
   { src: work("kowada/16"), alt: "中庭を囲む2階" },
   { src: work("shimoterao/24"), alt: "洗面室" },
