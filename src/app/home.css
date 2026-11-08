@@ -548,6 +548,7 @@
 }
 .home-links .home-wrap {
   display: grid;
+  max-width: 960px;
   grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: 32px;
 }
@@ -611,16 +612,11 @@
   font-size: 26px;
   letter-spacing: 0.2em;
 }
-.home-news-head .more {
-  margin-top: 8px;
-  font-size: 15px;
-  letter-spacing: 0.08em;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.home-news ul {
+.home-news-content {
   flex: 999 1 480px;
   min-width: 0;
+}
+.home-news ul {
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--home-line);
@@ -642,6 +638,18 @@
   letter-spacing: 0.08em;
   color: var(--home-muted);
   font-variant-numeric: tabular-nums;
+}
+.home-news-more {
+  display: table;
+  margin: 20px 0 0 auto;
+  padding: 4px 0;
+  border-bottom: 1px solid currentColor;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+}
+.home-news-more:focus-visible {
+  outline: 3px solid #1b76aa;
+  outline-offset: 3px;
 }
 
 /* お問い合わせ */

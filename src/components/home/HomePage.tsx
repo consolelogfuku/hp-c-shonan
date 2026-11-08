@@ -53,9 +53,8 @@ const worksColumns: Photo[][] = [
 ];
 
 const entries = [
-  { id: "concept", en: "CONCEPT", ja: "コンセプト", href: "/concept/", photo: { src: "/images/top/sea-beach.jpg", alt: "夕暮れの湘南の浜辺" }, note: true },
-  { id: "voices", en: "VOICES", ja: "お客様の声", href: "/comments/", photo: { src: "/images/top/thanks2.jpg", alt: "お客様との食事会の様子" }, note: false },
-  { id: "company", en: "COMPANY", ja: "会社案内", href: "/company/", photo: { src: work("ninomiya/01"), alt: "白い外観の住まい" }, note: false },
+  { id: "voices", en: "VOICES", ja: "お客様の声", href: "/comments/", photo: { src: "/images/top/thanks2.jpg", alt: "お客様との食事会の様子" } },
+  { id: "company", en: "COMPANY", ja: "会社案内", href: "/company/", photo: { src: work("ninomiya/01"), alt: "白い外観の住まい" } },
 ] as const;
 
 export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
@@ -178,7 +177,6 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
               <Link key={entry.id} id={entry.id} href={entry.href} className="home-link-card">
                 <span className="ph">
                   <img src={entry.photo.src} alt={entry.photo.alt} loading="lazy" decoding="async" />
-                  {entry.note && <span className="home-note">写真はイメージです</span>}
                 </span>
                 <span className="cap">
                   <span className="en">{entry.en}</span>
@@ -194,18 +192,20 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
             <div className="home-news-head">
               <span className="en">NEWS</span>
               <h2 className="mincho">お知らせ</h2>
-              <Link href="/news/" className="more">お知らせ一覧</Link>
             </div>
-            <ul>
-              {articles.slice(0, 3).map((article) => (
-                <li key={article.slug}>
-                  <Link href={newsArticleHref(article.slug)}>
-                    <time dateTime={article.date}>{formatNewsDate(article.date)}</time>
-                    <span>{article.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="home-news-content">
+              <ul>
+                {articles.slice(0, 3).map((article) => (
+                  <li key={article.slug}>
+                    <Link href={newsArticleHref(article.slug)}>
+                      <time dateTime={article.date}>{formatNewsDate(article.date)}</time>
+                      <span>{article.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/news/" className="home-news-more" aria-label="お知らせ一覧を見る">more <span aria-hidden>→</span></Link>
+            </div>
           </div>
         </section>
 
