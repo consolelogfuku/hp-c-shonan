@@ -70,6 +70,11 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
           </div>
         </section>
 
+        <nav className="home-quick-links" aria-label="主なご案内">
+          <Link href="/works/">施工事例を見る</Link>
+          <Link href="/sale/">販売中の物件を見る</Link>
+        </nav>
+
         <section className="home-lead">
           <p className="mincho">
             茅ヶ崎で<span className="tcy">26</span>年。<br />

@@ -312,6 +312,35 @@
   text-align: center;
   text-shadow: 0 2px 16px rgba(11, 26, 36, 0.45);
 }
+.home-quick-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px var(--home-gutter) 0;
+}
+.home .home-quick-links a {
+  display: grid;
+  min-height: 52px;
+  place-items: center;
+  border: 1px solid var(--home-ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+.home .home-quick-links a:first-child {
+  background: var(--home-ink);
+  color: #ffffff;
+}
+.home .home-quick-links a:hover {
+  background: #444444;
+  color: #ffffff;
+}
+.home .home-quick-links a:focus-visible {
+  outline: 3px solid #1b76aa;
+  outline-offset: 3px;
+}
 
 /* 写真のまとまり */
 .home-wrap {
@@ -806,9 +835,24 @@
     padding-bottom: 16px;
   }
   .home .home-hero h1 {
-    padding: 0 8px;
-    font-size: 32px;
-    letter-spacing: 0.02em;
+    box-sizing: border-box;
+    padding: 16px 10px;
+    background: linear-gradient(90deg, rgba(15, 25, 30, 0.55), rgba(15, 25, 30, 0.38));
+    font-size: clamp(25px, 7vw, 30px);
+    letter-spacing: 0;
+  }
+  .home-hero {
+    height: clamp(480px, calc(100svh - var(--home-header) - 110px), 660px);
+    min-height: 480px;
+  }
+  .home-quick-links {
+    gap: 8px;
+    padding: 20px 20px 0;
+  }
+  .home .home-quick-links a {
+    min-height: 50px;
+    padding: 0 6px;
+    font-size: 13px;
   }
   .home-lead {
     padding: 72px 20px;
