@@ -13,8 +13,8 @@
   min-height: 100vh;
   background: #ffffff;
   color: var(--home-ink);
-  font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
-  font-weight: 300;
+  font-family: var(--font-mincho);
+  font-weight: 400;
   letter-spacing: normal;
   line-height: 1.9;
 }
@@ -29,7 +29,7 @@
   scroll-margin-top: var(--home-header);
 }
 .home .en {
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
 }
 .home .mincho {
   font-family: "Shippori Mincho B1", serif;
@@ -75,7 +75,7 @@
   background: transparent;
   color: var(--home-ink);
   cursor: pointer;
-  font-family: "Cormorant Garamond", serif;
+  font-family: inherit;
   font-size: 17px;
   letter-spacing: 0.24em;
 }
@@ -254,6 +254,7 @@
   padding: 0 22px 0 34px;
   background: var(--home-ink);
   color: #ffffff;
+  font-family: var(--font-mincho);
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -429,7 +430,8 @@
 .home-pillar h2,
 .home-concept h2 {
   margin: 0;
-  font-weight: 300;
+  font-family: var(--font-mincho);
+  font-weight: 400;
   letter-spacing: 0.06em;
 }
 .home-pillar h2 {
@@ -439,6 +441,7 @@
 .home-pillar p,
 .home-concept p {
   margin: 28px 0 0;
+  font-family: var(--font-mincho);
   font-size: 17px;
   line-height: 2.2;
   letter-spacing: 0.06em;

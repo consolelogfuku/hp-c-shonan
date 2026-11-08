@@ -30,7 +30,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-on-accent: var(--on-accent);
   --font-mincho: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  --font-hand: "Klee One", "Noto Sans JP", sans-serif;
+  --font-hand: var(--font-mincho);
   --radius-none: 0px;
 }
 
