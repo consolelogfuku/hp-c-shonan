@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/top-page-renewal
   workflow_dispatch:
 
 permissions:
