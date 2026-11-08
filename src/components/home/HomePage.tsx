@@ -76,7 +76,7 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
 
         <section className="home-lead">
           <p className="mincho">
-            茅ヶ崎で<span className="tcy">26</span>年。<br />
+            茅ヶ崎で<span className="tcy"><span>26</span></span>年。<br />
             土地探しから設計、<br />
             完成後のメンテナンスまで、<br />
             地元の不動産会社が<br />

@@ -353,7 +353,7 @@
   justify-content: center;
   padding: 120px var(--home-gutter);
 }
-/* 縦書き（右から左へ読む）。「26」は縦中横にする */
+/* 縦書き（右から左へ読む）。数字は正方形の枠内に中央配置する */
 .home .home-lead p {
   margin: 0;
   writing-mode: vertical-rl;
@@ -363,10 +363,17 @@
   letter-spacing: 0.12em;
 }
 .home-lead .tcy {
-  text-combine-upright: all;
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  writing-mode: horizontal-tb;
   letter-spacing: 0;
-  position: relative;
-  left: -0.45em;
+  line-height: 1;
+}
+.home-lead .tcy > span {
+  font-size: 0.85em;
 }
 .home-gallery {
   padding: 0 var(--home-gutter);
