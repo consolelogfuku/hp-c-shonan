@@ -82,14 +82,18 @@ export function HomePage({ articles }: { articles: readonly NewsArticle[] }) {
 
         <section className="home-gallery" id="works">
           <div className="home-wrap">
-            <Photo photo={{ src: unit("10249-15"), alt: "白い手すりの階段がある玄関ホール" }} className="aspect-[16/9]" />
+            <Photo photo={{ src: unit("9964-10"), alt: "青空と白い外観の住まい" }} className="aspect-[16/9]" />
             <div className="home-grid-2">
               <Photo photo={{ src: work("shimoterao/08"), alt: "無垢床のLDK" }} className="aspect-[4/3]" />
               <Photo photo={{ src: work("kowada/15"), alt: "中庭のウッドデッキ" }} className="aspect-[4/3]" />
             </div>
           </div>
         </section>
-        <Photo photo={{ src: unit("9964-10"), alt: "青空と白い外観の住まい" }} className="home-wide" />
+        <div className="home-band">
+          <div className="home-wrap">
+            <Photo photo={{ src: unit("5279-10"), alt: "白い板張りと大きな切妻屋根の外観" }} className="aspect-[3/2]" />
+          </div>
+        </div>
         <div className="home-band">
           <div className="home-grid-4 home-grid-portrait home-wrap">
             {gridPortrait.map((photo) => <Photo key={photo.src} photo={photo} />)}

@@ -349,12 +349,8 @@
   grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
   gap: 16px;
 }
-.home-wide {
-  height: 820px;
-  margin-top: 16px;
-}
 /* 外観写真は屋根が切れないよう、少し上寄りで切り取る */
-.home .home-wide img {
+.home .home-gallery .home-wrap > .ph img {
   object-position: 50% 30%;
 }
 .home-band {
@@ -820,9 +816,6 @@
   .home .home-lead p {
     font-size: 20px;
     letter-spacing: 0.08em;
-  }
-  .home-wide {
-    height: 280px;
   }
   .home-grid-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
